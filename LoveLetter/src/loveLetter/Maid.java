@@ -3,20 +3,32 @@ package loveLetter;
 public class Maid extends Card {
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Mucama";
 	}
 
 	@Override
 	public CardType getType() {
-		// TODO Auto-generated method stub
 		return CardType.maid;
 	}
 
 	@Override
 	public int getLevel() {
-		// TODO Auto-generated method stub
 		return 4;
+	}
+
+	@Override
+	public boolean shouldSelectAPlayer() {
+		return false;
+	}
+
+	@Override
+	public boolean isPlayable() {
+		return true;
+	}
+
+	@Override
+	public void play() {
+		// TODO Add actions		
 	}
 
 }

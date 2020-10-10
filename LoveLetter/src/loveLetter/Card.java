@@ -8,4 +8,9 @@ public abstract class Card {
 	
 	public abstract int getLevel();
 
+	public abstract boolean shouldSelectAPlayer();
+	
+	public abstract boolean isPlayable();
+	
+	public abstract void play();
 }
