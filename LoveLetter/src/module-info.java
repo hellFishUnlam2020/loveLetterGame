@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author maurogonzalez
+ *
+ */
+module LoveLetter {
+}
