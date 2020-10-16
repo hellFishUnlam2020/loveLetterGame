@@ -13,7 +13,7 @@ public class Match {
 	private static final int MIN_PLAYERS = 2;
 	private static final int MAX_PLAYERS = 4;
 
-	public Match(ArrayList<Player> playersList, int affecTok) { //obligatorios para comenzar la partida
+	public Match(List<Player> playersList, int affecTok) { //obligatorios para comenzar la partida
 																
 		try {
 
@@ -76,6 +76,18 @@ public class Match {
 			throw new Exception("La cantidad de jugadores es insuficiente o excede el límite");
 		}
 
+	}
+	
+	public void startMatch() {
+		RoundGame roundGame = new RoundGame(players);
+		roundGame.startRound();
+		mostarJugadores();
+	}
+	
+	public void mostarJugadores() {
+		for (Player player : players) {
+			System.out.println(player);
+		}
 	}
 
 }
