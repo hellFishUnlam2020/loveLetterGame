@@ -1,6 +1,6 @@
 package loveLetter;
 
-public class Deck {
+public class Deck implements CardRemovable {
 	private Card[] cards;
 	private int nextPositionCard;
 	private int eliminatedPsition;
