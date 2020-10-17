@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 public class RoundGameTest {
 
 	RoundGame roundGame;
-	CardRemovable deck;
+	Deckable deck;
 	List<Player> players;
  
     @AfterEach
@@ -26,7 +26,7 @@ public class RoundGameTest {
 	public void testThatStarRoundGaveCards() {
 		createPlayerListOfTwoWithoutCards();
 		Card expectedCard = new Guard();
-    	deck = new CardRemovableMock(expectedCard, 4);
+    	deck = new DeckableMock(expectedCard, 4);
     	roundGame = new RoundGame(players, deck);
 
     	roundGame.startRound();
@@ -38,7 +38,7 @@ public class RoundGameTest {
 	@Test
 	public void testThatGetRoundWinnerGaveFirstAsWinner() {
 		createPlayerListOfTwoWithCards();
-    	deck = new CardRemovableMock(null, 4);
+    	deck = new DeckableMock(null, 4);
     	roundGame = new RoundGame(players, deck);
 
     	Player winner =  roundGame.getRoundWinner();
@@ -49,7 +49,7 @@ public class RoundGameTest {
 	@Test
 	public void testThatGetRoundWinnerGaveSecondAsWinnerWithEqualsCards() {
 		createPlayerListOfTwoWithEqualsCards();
-    	deck = new CardRemovableMock(null, 4);
+    	deck = new DeckableMock(null, 4);
     	roundGame = new RoundGame(players, deck);
 
     	Player winner =  roundGame.getRoundWinner();
@@ -74,7 +74,7 @@ public class RoundGameTest {
 		players.add(player1);
 		players.add(player2);
 		
-    	deck = new CardRemovableMock(null, 4);
+    	deck = new DeckableMock(null, 4);
     	roundGame = new RoundGame(players, deck);
 
     	Player winner =  roundGame.getRoundWinner();
@@ -86,7 +86,7 @@ public class RoundGameTest {
 	public void testIncreasePoints() {
 		createPlayerListOfTwoWithCards();
 		
-		deck = new CardRemovableMock(null, 4);
+		deck = new DeckableMock(null, 4);
 		
 		RoundGame round = new RoundGame(players, deck);
 		round.startRound();

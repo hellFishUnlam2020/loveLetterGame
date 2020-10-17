@@ -1,11 +1,11 @@
 package loveLetter;
 
-public class CardRemovableMock implements CardRemovable {
+public class DeckableMock implements Deckable {
 	
 	public Card cardToReturn = null;
 	public int remainingCardsToReturn = 0;
 	
-	public CardRemovableMock(Card cardToReturn, int remainingCardsToReturn) {
+	public DeckableMock(Card cardToReturn, int remainingCardsToReturn) {
 		this.cardToReturn = cardToReturn;
 		this.remainingCardsToReturn = remainingCardsToReturn;
 	}

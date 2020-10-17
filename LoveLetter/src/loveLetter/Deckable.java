@@ -1,6 +1,6 @@
 package loveLetter;
 
-public interface CardRemovable {
+public interface Deckable {
 	public Card popCard();
 	public int getRemainingCards();
 	public void mixCards();

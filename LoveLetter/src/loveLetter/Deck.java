@@ -1,6 +1,6 @@
 package loveLetter;
 
-public class Deck implements CardRemovable {
+public class Deck implements Deckable {
 	private Card[] cards;
 	private int nextPositionCard;
 	private int eliminatedPsition;
@@ -26,7 +26,7 @@ public class Deck implements CardRemovable {
 		cards[5] = new Priest();
 		cards[6] = new Priest();
 
-		// Creamos 2 cartas Barón
+		// Creamos 2 cartas Barï¿½n
 		cards[7] = new Baron();
 		cards[8] = new Baron();
 

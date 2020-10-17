@@ -5,11 +5,11 @@ import java.util.List;
 public class RoundGame {
 
 	private List<Player> players;
-	private CardRemovable deck;
+	private Deckable deck;
 	private int playersInRound;
 	private int playerPlaying = 0;
 
-	public RoundGame(List<Player> players, CardRemovable deck) {
+	public RoundGame(List<Player> players, Deckable deck) {
 		this.players = players;
 		this.deck = deck;
 	}
