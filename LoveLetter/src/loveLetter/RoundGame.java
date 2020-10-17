@@ -31,6 +31,8 @@ public class RoundGame {
 			player.addCard(deck.popCard());
 			player.setCantRoundPlayedCards(0);
 		}
+		
+		nextTurn();
 	}
 
 	public Player getRoundWinner() {
@@ -51,7 +53,7 @@ public class RoundGame {
 		return winnerPlayer;
 	}
 
-	public void nextTurn() {
+	private void nextTurn() {
 		while( playersInRound > 1 && deck.getRemainingCards() > 0) {
 			playTurn();
 		}
@@ -63,14 +65,20 @@ public class RoundGame {
 		
 		turnPlayer.addCard(deck.popCard());
 		
-		//askToPeekCard
-		//Play  it
+		//TODO: El jugador debe elegir la carta. Fake
+		Card cardChoosed = deck.popCard();
+		
+		cardChoosed.play();
 	} 
 	
 	private void finishRound() {
-		//check that  is the only player
-		
-		//otherwise getRoundWinner
+		Player winner;
+		if(playersInRound == 1) {
+			winner = this.players.get(0);
+		} else {
+			winner = getRoundWinner();
+		}
+		//TODO: actualizarle los puntos.
 	} 
 	
 	
@@ -83,7 +91,7 @@ public class RoundGame {
 	}
 	
 	public void eliminatePlayerFromRound(Player player) {
-		//update player
+		this.players.remove(player);	
 		playersInRound--;
 	}
 	
