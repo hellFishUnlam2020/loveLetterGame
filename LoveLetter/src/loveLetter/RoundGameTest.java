@@ -57,7 +57,30 @@ public class RoundGameTest {
     	Assert.assertEquals(players.get(1) , winner);
 	}
 
-	
+	@Test
+	public void testThatGetRoundWinnerForTheSameCardButMoreDiscards() {
+		
+		// Jugador con carta Guardia y con 3 descartes
+		Player player1 =  new Player("Sergio");
+		player1.addCard(new Guard());
+		player1.setCantRoundPlayedCards(3);
+		
+		// Jugador con carta Guardia y con 4 descartes (Ganador)
+		Player player2 =  new Player("Sebastian");
+		player2.addCard(new Guard());
+		player2.setCantRoundPlayedCards(4);
+		
+		players = new ArrayList<Player>();
+		players.add(player1);
+		players.add(player2);
+		
+    	deck = new CardRemovableMock(null, 4);
+    	roundGame = new RoundGame(players, deck);
+
+    	Player winner =  roundGame.getRoundWinner();
+    	
+    	Assert.assertEquals(players.get(1) , winner);
+	}
 	
 	
 	
