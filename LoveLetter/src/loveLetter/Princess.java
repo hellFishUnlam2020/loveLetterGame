@@ -28,7 +28,7 @@ public class Princess extends Card {
 	}
 
 	@Override
-	public void play() {
+	public void play(Player player, Card card) {
 		//It's not playable, otherwise the player lose
 	}
 }

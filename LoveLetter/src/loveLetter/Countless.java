@@ -27,7 +27,7 @@ public class Countless extends Card {
 	}
 
 	@Override
-	public void play() {
+	public void play(Player player, Card card) {
 		// TODO Add actions
 	}
 }

@@ -12,5 +12,5 @@ public abstract class Card {
 	
 	public abstract boolean isPlayable();
 	
-	public abstract void play();
+	public abstract void play(Player player, Card card);
 }

@@ -80,7 +80,7 @@ public class Player implements Comparable<Player> {
 		 * aca deberiamos seleccionar una carta de las 2 que tenemos en mano, por el
 		 * momento elegimos siempre la primera
 		 */
-		cards.get(1).play();
+		cards.get(1).play(null, null);
 		this.cantRoundPlayedCards++;
 	}
 
