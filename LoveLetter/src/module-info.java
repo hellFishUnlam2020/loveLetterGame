@@ -5,7 +5,7 @@
  * @author maurogonzalez
  *
  */
-module LoveLetter {
-	requires org.junit.jupiter.api;
-	requires junit;
-}
+//module LoveLetter {
+//	requires org.junit.jupiter.api;
+//	requires junit;
+//}

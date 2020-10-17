@@ -58,8 +58,8 @@ public class Player implements Comparable<Player> {
 		this.cards.add(card);
 	}
 
-	public void increaseMatchPoint(int points) {
-		this.matchPoints += points;
+	public void increaseMatchPoint() {
+		this.matchPoints ++;
 	}
 
 	public int getCantRoundPlayedCards() {

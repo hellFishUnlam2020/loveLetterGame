@@ -82,6 +82,19 @@ public class RoundGameTest {
     	Assert.assertEquals(players.get(1) , winner);
 	}
 	
+	@Test
+	public void testIncreasePoints() {
+		createPlayerListOfTwoWithCards();
+		
+		deck = new CardRemovableMock(null, 4);
+		
+		RoundGame round = new RoundGame(players, deck);
+		round.startRound();
+		
+		Assert.assertEquals(1, round.getRoundWinner().getMatchPoints());
+		
+	}
+	
 	
 	
 	public void createPlayerListOfTwoWithCards() {
