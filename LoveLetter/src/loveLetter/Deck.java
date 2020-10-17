@@ -77,9 +77,4 @@ public class Deck {
 		return this.remainingCards;
 	}
 	
-	public void printCards() {
-		for (int i = 0; i < cards.length; i++) {
-			System.out.println("Tipo de carta = " + cards[i].getName() + " Posición de carta = " + i);
-		}
-	}
 }

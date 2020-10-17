@@ -81,13 +81,7 @@ public class Match {
 	public void startMatch() {
 		RoundGame roundGame = new RoundGame(players);
 		roundGame.startRound();
-		mostarJugadores();
+		System.out.println(roundGame.getRoundWinner());
 	}
 	
-	public void mostarJugadores() {
-		for (Player player : players) {
-			System.out.println(player);
-		}
-	}
-
 }
