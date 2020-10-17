@@ -22,7 +22,6 @@ public class RoundGameTest {
     	players = null;
     }
 
-	
 	@Test
 	public void testThatStarRoundGaveCards() {
 		createPlayerListOfTwoWithoutCards();
@@ -47,6 +46,20 @@ public class RoundGameTest {
     	Assert.assertEquals(players.get(0) , winner);
 	}
 
+	@Test
+	public void testThatGetRoundWinnerGaveSecondAsWinnerWithEqualsCards() {
+		createPlayerListOfTwoWithEqualsCards();
+    	deck = new CardRemovableMock(null, 4);
+    	roundGame = new RoundGame(players, deck);
+
+    	Player winner =  roundGame.getRoundWinner();
+    	
+    	Assert.assertEquals(players.get(1) , winner);
+	}
+
+	
+	
+	
 	
 	public void createPlayerListOfTwoWithCards() {
 		players = new ArrayList<Player>();
@@ -59,6 +72,19 @@ public class RoundGameTest {
 		players.add(juan);
 		players.add(jose);
 	}
+	
+	public void createPlayerListOfTwoWithEqualsCards() {
+		players = new ArrayList<Player>();
+		
+		Player juan =  new Player("Juan");
+		juan.addCard(new Guard());
+		Player jose =  new Player("Jose");
+		jose.addCard(new Guard());
+
+		players.add(juan);
+		players.add(jose);
+	}
+
 	
 	public void createPlayerListOfTwoWithoutCards() {
 		players = new ArrayList<Player>();
