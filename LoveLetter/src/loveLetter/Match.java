@@ -13,6 +13,7 @@ public class Match {
 	private static final int MIN_PLAYERS = 2;
 	private static final int MAX_PLAYERS = 4;
 	private Deck deck = new Deck();
+	private RoundGame roundGame;
 
 	public Match(List<Player> playersList, int affecTok) { //obligatorios para comenzar la partida
 																
@@ -79,10 +80,24 @@ public class Match {
 
 	}
 	
-	public void startMatch() {
-		RoundGame roundGame = new RoundGame(players, this.deck);
+	public void startRound() {
+		
+		roundGame = new RoundGame(players, this.deck);	
 		roundGame.startRound();
 		System.out.println(roundGame.getRoundWinner());
+	}
+	
+	public void startMatch() {
+		
+	/*	try {
+			
+			validateStartMatch(); */
+			for (Player player : players)
+				player.setMatch(this);
+			
+	/*	}catch(Exception exception) {
+			exception.getMessage();
+		}*/
 	}
 	
 }
