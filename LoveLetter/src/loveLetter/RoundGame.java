@@ -7,6 +7,7 @@ public class RoundGame {
 	private List<Player> players;
 	private CardRemovable deck;
 	private int playersInRound;
+	private int playerPlaying = 0;
 
 	public RoundGame(List<Player> players, CardRemovable deck) {
 		this.players = players;
@@ -57,17 +58,33 @@ public class RoundGame {
 		finishRound();
 	}
 
-	public void playTurn() {
-		//pick player
-		//add  card
+	private void playTurn() {
+		Player turnPlayer = peekAPlayer();
+		
+		turnPlayer.addCard(deck.popCard());
 		
 		//askToPeekCard
 		//Play  it
 	} 
 	
-	public void finishRound() {
+	private void finishRound() {
 		//check that  is the only player
 		
 		//otherwise getRoundWinner
 	} 
+	
+	
+	private Player peekAPlayer() {
+		playerPlaying++;
+		if( playerPlaying >= this.players.size() ) {
+			playerPlaying = 0;
+		}
+		return this.players.get(playerPlaying);	
+	}
+	
+	public void eliminatePlayerFromRound(Player player) {
+		//update player
+		playersInRound--;
+	}
+	
 }
