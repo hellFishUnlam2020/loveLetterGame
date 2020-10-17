@@ -6,6 +6,7 @@ public class RoundGame {
 
 	private List<Player> players;
 	private CardRemovable deck;
+	private int playersInRound;
 
 	public RoundGame(List<Player> players, CardRemovable deck) {
 		this.players = players;
@@ -13,6 +14,8 @@ public class RoundGame {
 	}
 
 	public void startRound() {
+		playersInRound = this.players.size();
+		
 		// Construimos maso de cartas
 		deck.createCards();
 
@@ -46,4 +49,25 @@ public class RoundGame {
 
 		return winnerPlayer;
 	}
+
+	public void nextTurn() {
+		while( playersInRound > 1 && deck.getRemainingCards() > 0) {
+			playTurn();
+		}
+		finishRound();
+	}
+
+	public void playTurn() {
+		//pick player
+		//add  card
+		
+		//askToPeekCard
+		//Play  it
+	} 
+	
+	public void finishRound() {
+		//check that  is the only player
+		
+		//otherwise getRoundWinner
+	} 
 }
