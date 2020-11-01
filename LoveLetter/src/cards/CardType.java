@@ -1,4 +1,4 @@
-package loveLetter;
+package cards;
 
 public enum CardType {
 	guard,

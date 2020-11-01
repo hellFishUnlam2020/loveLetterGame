@@ -1,19 +1,21 @@
-package loveLetter;
+package cards;
 
-public class Priest extends Card {
+import loveLetter.Player;
+
+public class Baron extends Card {
 	@Override
 	public String getName() {
-		return "Sacerdote";
+		return "Baron";
 	}
 
 	@Override
 	public CardType getType() {
-		return CardType.priest;
+		return CardType.baron;
 	}
 
 	@Override
 	public int getLevel() {
-		return 2;
+		return 3;
 	}
 
 	@Override
@@ -28,7 +30,6 @@ public class Priest extends Card {
 
 	@Override
 	public void play(Player player, Card card) {
-		// TODO Add actions		
+		// TODO Add actions
 	}
-
 }

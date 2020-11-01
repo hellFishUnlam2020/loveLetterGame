@@ -1,19 +1,21 @@
-package loveLetter;
+package cards;
 
-public class Maid extends Card {
+import loveLetter.Player;
+
+public class Countless extends Card {
 	@Override
 	public String getName() {
-		return "Mucama";
+		return "Condesa";
 	}
 
 	@Override
 	public CardType getType() {
-		return CardType.maid;
+		return CardType.countless;
 	}
 
 	@Override
 	public int getLevel() {
-		return 4;
+		return 7;
 	}
 
 	@Override
@@ -28,7 +30,6 @@ public class Maid extends Card {
 
 	@Override
 	public void play(Player player, Card card) {
-		// TODO Add actions		
+		// TODO Add actions
 	}
-
 }

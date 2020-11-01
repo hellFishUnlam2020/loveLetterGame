@@ -1,37 +1,36 @@
-package loveLetter;
+package cards;
 
-public class Prince extends Card {
+import loveLetter.Player;
+
+public class Princess extends Card {
+
 	@Override
 	public String getName() {
-		return "Principe";
+		return "Princesa";
 	}
 
 	@Override
 	public CardType getType() {
-		return CardType.prince;
+		return CardType.princess;
 	}
 
 	@Override
 	public int getLevel() {
-		return 5;
+		return 8;
 	}
 
 	@Override
 	public boolean shouldSelectAPlayer() {
-		return true;
+		return false;
 	}
 
 	@Override
 	public boolean isPlayable() {
-		//TODO check for a Countless
-		//Its not playable when the player has a Countless
-		return true;
+		return false;
 	}
 
 	@Override
 	public void play(Player player, Card card) {
-		// TODO Add actions
-		
+		//It's not playable, otherwise the player lose
 	}
-
 }

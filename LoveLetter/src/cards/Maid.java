@@ -1,24 +1,26 @@
-package loveLetter;
+package cards;
 
-public class Baron extends Card {
+import loveLetter.Player;
+
+public class Maid extends Card {
 	@Override
 	public String getName() {
-		return "Baron";
+		return "Mucama";
 	}
 
 	@Override
 	public CardType getType() {
-		return CardType.baron;
+		return CardType.maid;
 	}
 
 	@Override
 	public int getLevel() {
-		return 3;
+		return 4;
 	}
 
 	@Override
 	public boolean shouldSelectAPlayer() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -28,6 +30,7 @@ public class Baron extends Card {
 
 	@Override
 	public void play(Player player, Card card) {
-		// TODO Add actions
+		// TODO Add actions		
 	}
+
 }

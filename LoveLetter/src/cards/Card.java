@@ -1,4 +1,6 @@
-package loveLetter;
+package cards;
+
+import loveLetter.Player;
 
 public abstract class Card {
 		

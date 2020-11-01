@@ -1,34 +1,36 @@
-package loveLetter;
+package cards;
 
-public class Princess extends Card {
+import loveLetter.Player;
 
+public class Priest extends Card {
 	@Override
 	public String getName() {
-		return "Princesa";
+		return "Sacerdote";
 	}
 
 	@Override
 	public CardType getType() {
-		return CardType.princess;
+		return CardType.priest;
 	}
 
 	@Override
 	public int getLevel() {
-		return 8;
+		return 2;
 	}
 
 	@Override
 	public boolean shouldSelectAPlayer() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isPlayable() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public void play(Player player, Card card) {
-		//It's not playable, otherwise the player lose
+		// TODO Add actions		
 	}
+
 }
