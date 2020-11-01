@@ -33,4 +33,9 @@ public class Guard extends Card {
 		// TODO Add actions
 		
 	}
+
+	@Override
+	public String getCardImageName() {
+		return "images/guard.jpg";
+	}
 }

@@ -32,4 +32,10 @@ public class Baron extends Card {
 	public void play(Player player, Card card) {
 		// TODO Add actions
 	}
+
+	@Override
+	public String getCardImageName() {
+		// TODO Auto-generated method stub
+		return "images/baron.jpg";
+	}
 }

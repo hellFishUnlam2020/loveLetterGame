@@ -33,4 +33,8 @@ public class Maid extends Card {
 		// TODO Add actions		
 	}
 
+	@Override
+	public String getCardImageName() {
+		return "images/mucama.jpg";
+	}
 }

@@ -33,4 +33,9 @@ public class Princess extends Card {
 	public void play(Player player, Card card) {
 		//It's not playable, otherwise the player lose
 	}
+	
+	@Override
+	public String getCardImageName() {
+		return "images/princesa.jpg";
+	}
 }

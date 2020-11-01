@@ -35,4 +35,9 @@ public class King extends Card {
 		// TODO Add actions
 		
 	}
+	
+	@Override
+	public String getCardImageName() {
+		return "images/rey.jpg";
+	}
 }

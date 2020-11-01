@@ -32,4 +32,9 @@ public class Countless extends Card {
 	public void play(Player player, Card card) {
 		// TODO Add actions
 	}
+
+	@Override
+	public String getCardImageName() {
+		return "images/condesa.jpg";
+	}
 }

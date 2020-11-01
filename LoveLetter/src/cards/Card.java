@@ -3,6 +3,8 @@ package cards;
 import loveLetter.Player;
 
 public abstract class Card {
+	
+	public abstract String getCardImageName();
 		
 	public abstract String getName();
 	

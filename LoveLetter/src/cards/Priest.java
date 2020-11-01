@@ -33,4 +33,8 @@ public class Priest extends Card {
 		// TODO Add actions		
 	}
 
+	@Override
+	public String getCardImageName() {
+		return "images/sacerdote.jpg";
+	}
 }
