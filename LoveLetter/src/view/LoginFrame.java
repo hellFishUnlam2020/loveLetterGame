@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.AWTEvent;
-import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 

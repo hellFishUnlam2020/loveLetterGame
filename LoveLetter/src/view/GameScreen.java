@@ -1,19 +1,16 @@
 package view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
-import java.awt.Color;
 import javax.swing.JLabel;
-
-import viewCommunication.UserLoggable;
-
+import javax.swing.JButton;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Font;
-import java.awt.Toolkit;
-import javax.swing.JButton;
-import javax.swing.JSlider;
+import java.awt.EventQueue;
+
+import viewCommunication.UserLoggable;
+import loveLetter.Deck;
 
 public class GameScreen implements UserLoggable {
 
@@ -34,7 +31,6 @@ public class GameScreen implements UserLoggable {
 	 */
 	private void initialize() {
 		gameFrame = new JFrame();
-		gameFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(GameScreen.class.getResource("/images/icon.jpg")));
 		gameFrame.setFont(new Font("Dialog", Font.PLAIN, 16));
 		gameFrame.setTitle("Love Letter");
 		gameFrame.getContentPane().setBackground(new Color(46, 139, 87));
@@ -55,6 +51,15 @@ public class GameScreen implements UserLoggable {
 			}
 		});
 		gameFrame.getContentPane().add(loginButton);
+		
+		JButton btnNewButton = new JButton("Ver las cartas");
+		btnNewButton.setBounds(48, 348, 117, 29);
+		gameFrame.getContentPane().add(btnNewButton);
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				showCardPickerFrame();
+			}
+		});
 
 	}
 	
@@ -65,6 +70,15 @@ public class GameScreen implements UserLoggable {
 		loginFrame.setVisible(true);
 		loginFrame.setLocationRelativeTo(this.gameFrame);
 	}
+		
+	public void showCardPickerFrame() {
+		Deck deck = new Deck();
+		CardPickerFrame cardPicker = new CardPickerFrame(deck.getCards());
+		cardPicker.setVisible(true);
+		cardPicker.setFocusable(true);
+		cardPicker.requestFocusInWindow();
+	}
+
 	
 	
 	public void startGame() {
