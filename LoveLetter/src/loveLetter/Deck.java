@@ -87,4 +87,17 @@ public class Deck implements Deckable {
 		return this.remainingCards;
 	}
 	
+	public Card[] getCards() {
+		Card [] cards = new Card [8];
+		cards[0] = new Guard();
+		cards[1] = new Priest();
+		cards[2] = new Baron();
+		cards[3] = new Maid();
+		cards[4] = new Prince();
+		cards[5] = new King();
+		cards[6] = new Countless();
+		cards[7] = new Princess();
+		
+		return cards;
+	}
 }
