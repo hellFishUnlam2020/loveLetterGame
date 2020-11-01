@@ -2,6 +2,8 @@ package loveLetter;
 
 import java.util.List;
 
+import cards.Card;
+
 public class RoundGame {
 
 	private List<Player> players;

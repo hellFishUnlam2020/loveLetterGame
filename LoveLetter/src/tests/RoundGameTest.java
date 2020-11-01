@@ -1,12 +1,20 @@
-package loveLetter;
+package tests;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
+import cards.Card;
+import cards.Guard;
+import cards.King;
+import cards.Priest;
+import loveLetter.Deckable;
+import loveLetter.DeckableMock;
+import loveLetter.Player;
+import loveLetter.RoundGame;
 
 
 public class RoundGameTest {
@@ -15,7 +23,6 @@ public class RoundGameTest {
 	Deckable deck;
 	List<Player> players;
  
-    @AfterEach
     public void finalize() {
     	deck = null;
     	roundGame = null;
@@ -33,6 +40,8 @@ public class RoundGameTest {
     	Card card = players.get(0).getCards().get(0);
     	
     	Assert.assertEquals(card.getType(), expectedCard.getType());
+    	
+    	finalize();
 	}
 	
 	@Test
@@ -44,6 +53,8 @@ public class RoundGameTest {
     	Player winner =  roundGame.getRoundWinner();
     	
     	Assert.assertEquals(players.get(0) , winner);
+    	
+    	finalize();
 	}
 
 	@Test
@@ -55,6 +66,7 @@ public class RoundGameTest {
     	Player winner =  roundGame.getRoundWinner();
     	
     	Assert.assertEquals(players.get(1) , winner);
+    	finalize();
 	}
 
 	@Test
@@ -80,6 +92,7 @@ public class RoundGameTest {
     	Player winner =  roundGame.getRoundWinner();
     	
     	Assert.assertEquals(players.get(1) , winner);
+    	finalize();
 	}
 	
 	@Test
@@ -92,7 +105,7 @@ public class RoundGameTest {
 		round.startRound();
 		
 		Assert.assertEquals(1, round.getRoundWinner().getMatchPoints());
-		
+    	finalize();
 	}
 	
 	

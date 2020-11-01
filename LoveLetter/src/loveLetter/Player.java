@@ -3,6 +3,8 @@ package loveLetter;
 import java.util.LinkedList;
 import java.util.List;
 
+import cards.Card;
+
 public class Player implements Comparable<Player> {
 	private String name;
 	private int matchPoints;

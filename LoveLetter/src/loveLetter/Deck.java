@@ -1,5 +1,15 @@
 package loveLetter;
 
+import cards.Baron;
+import cards.Card;
+import cards.Countless;
+import cards.Guard;
+import cards.King;
+import cards.Maid;
+import cards.Priest;
+import cards.Prince;
+import cards.Princess;
+
 public class Deck implements Deckable {
 	private Card[] cards;
 	private int nextPositionCard;

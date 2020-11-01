@@ -1,5 +1,7 @@
 package loveLetter;
 
+import cards.Card;
+
 public class DeckableMock implements Deckable {
 	
 	public Card cardToReturn = null;

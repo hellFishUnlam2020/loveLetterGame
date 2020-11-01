@@ -1,5 +1,8 @@
 package loveLetter;
 
+import cards.Card;
+import cards.Guard;
+
 public class RuleAdmin {
 	
 	public static final RuleAdmin ruleAdmin = new RuleAdmin();
