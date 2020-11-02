@@ -16,58 +16,52 @@ public class CardPickerFrame extends JFrame {
 	private static final long serialVersionUID = -4486080160427752361L;
 	private Card [] cards;
 
-	
 	/**
 	 * Create the frame.
 	 */
 	public CardPickerFrame(Card [] cards) {
-		
-		
-	      Box verticalBox = Box.createVerticalBox();
+		this.cards = cards;
+
+		JFrame pickerFrame = new JFrame();
+	    pickerFrame.setTitle("Cartas");
+	    pickerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    pickerFrame.setLocationByPlatform(true);
+
+		Box verticalBox = Box.createVerticalBox();
+	    
+		if(cards.length < 4) {
+			verticalBox.add(createCardsBox(0, cards.length));
+		    pickerFrame.setSize(1000, 500);
+
+		} else {
+			int cardsCount = cards.length / 2;
+			verticalBox.add(createCardsBox(0,cardsCount));
+		    verticalBox.add(createCardsBox(cardsCount, cards.length - cardsCount));
+		    pickerFrame.setSize(1300, 850);
+		}
 	      
-	      Box upperBox = Box.createHorizontalBox();
-	      
-	      for(int i=0; i<4; i++) {
-	    	  
-	    	  Card card = cards[i];
-	    	  ImageIcon cardImage = new ImageIcon(card.getCardImageName());
+	    pickerFrame.getContentPane().add(verticalBox);
+	    pickerFrame.setVisible(true);
+	}
+	
+	public Box createCardsBox(int offset, int cardsCount) {
+	    Box box = Box.createHorizontalBox();
 
-	          JButton button = new JButton(new ImageIcon((cardImage.getImage()).getScaledInstance(300, 400, java.awt.Image.SCALE_SMOOTH)));
-	          button.setSize(200, 300);
-	          button.addActionListener(new ActionListener() {
-	        	  public void actionPerformed(ActionEvent arg0) {
-	        		  showCardPreview(card);
-	        	  }
-	          });
+		for(int i=offset; i < (offset+cardsCount); i++) {
+			Card card = this.cards[i];
+						
+			ImageIcon cardImage = new ImageIcon(card.getCardImageName());
 
-	          upperBox.add(button);
-	      }
-	      Box bottomBox = Box.createHorizontalBox();
-	      for(int i=4; i<8; i++) {
-	    	  Card card = cards[i];
-	    	  ImageIcon cardImage = new ImageIcon(card.getCardImageName());
-
-	          JButton button = new JButton(new ImageIcon((cardImage.getImage()).getScaledInstance(300, 400, java.awt.Image.SCALE_SMOOTH)));
-	          button.setSize(200, 300);
-	          button.addActionListener(new ActionListener() {
-	        	  public void actionPerformed(ActionEvent arg0) {
-	        		  showCardPreview(card);
-	        	  }
-	          });
-	          
-	          bottomBox.add(button);
-	      }
-
-	      verticalBox.add(upperBox);
-	      verticalBox.add(bottomBox);
-	      
-	      JFrame frmCartas = new JFrame();
-	      frmCartas.setTitle("Cartas");
-	      frmCartas.getContentPane().add(verticalBox);
-	      frmCartas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	      frmCartas.setLocationByPlatform(true);
-	      frmCartas.setSize(1300, 850);
-	      frmCartas.setVisible(true);
+			JButton button = new JButton(new ImageIcon((cardImage.getImage()).getScaledInstance(300, 400, java.awt.Image.SCALE_SMOOTH)));
+			button.setSize(200, 300);
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					showCardPreview(card);
+				}
+			});
+			box.add(button);
+		}
+		return box;
 	}
 	
 	public void showCardPreview(Card card) {
