@@ -2,6 +2,9 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import cards.Card;
+
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -9,10 +12,11 @@ import java.awt.event.ActionListener;
 import java.awt.Font;
 import java.awt.EventQueue;
 
+import viewCommunication.CardEligible;
 import viewCommunication.UserLoggable;
 import loveLetter.Deck;
 
-public class GameScreen implements UserLoggable {
+public class GameScreen implements UserLoggable, CardEligible {
 
 	private JFrame gameFrame;
 	private boolean isLogged = false;
@@ -77,16 +81,14 @@ public class GameScreen implements UserLoggable {
 		cardPicker.setVisible(true);
 		cardPicker.setFocusable(true);
 		cardPicker.requestFocusInWindow();
+		cardPicker.setCardEligile(this);
 	}
 
-	
-	
 	public void startGame() {
 		if(!isLogged) {
 			showLoginFrame();
 		}
 	}
-	
 	
 	/**
 	 * Launch the application.
@@ -111,5 +113,14 @@ public class GameScreen implements UserLoggable {
 		welcomeLabel.setText("Bienvenido " + name);
 		welcomeLabel.setVisible(true);
 		loginButton.setVisible(false);
+	}
+
+	@Override
+	public void cardElected(Card card) {
+		CardPreviewFrame cardPreview = new CardPreviewFrame(card);
+		cardPreview.setVisible(true);
+		cardPreview.setFocusable(true);
+		cardPreview.requestFocusInWindow();
+		cardPreview.init();		
 	}
 }

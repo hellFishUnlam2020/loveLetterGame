@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.JFrame;
 import cards.Card;
+import viewCommunication.CardEligible;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
@@ -15,6 +17,11 @@ public class CardPickerFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = -4486080160427752361L;
 	private Card [] cards;
+	private CardEligible cardEligile;
+	
+	public void setCardEligile(CardEligible cardEligile) {
+		this.cardEligile = cardEligile;
+	}
 
 	/**
 	 * Create the frame.
@@ -56,7 +63,7 @@ public class CardPickerFrame extends JFrame {
 			button.setSize(200, 300);
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					showCardPreview(card);
+					cardElected(card);
 				}
 			});
 			box.add(button);
@@ -64,11 +71,7 @@ public class CardPickerFrame extends JFrame {
 		return box;
 	}
 	
-	public void showCardPreview(Card card) {
-		CardPreviewFrame cardPreview = new CardPreviewFrame(card);
-		cardPreview.setVisible(true);
-		cardPreview.setFocusable(true);
-		cardPreview.requestFocusInWindow();
-		cardPreview.init();
+	public void cardElected(Card card) {
+		cardEligile.cardElected(card);
 	}
 }
