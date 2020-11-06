@@ -1,14 +1,16 @@
 package view;
 
-import javax.swing.JFrame;
-import cards.Card;
-import viewCommunication.CardEligible;
-
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+import cards.Card;
+import viewCommunication.CardEligible;
 
 public class CardPickerFrame extends JFrame {
 
@@ -29,10 +31,17 @@ public class CardPickerFrame extends JFrame {
 	public CardPickerFrame(Card [] cards) {
 		this.cards = cards;
 
+//		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+		
 		JFrame pickerFrame = new JFrame();
 	    pickerFrame.setTitle("Cartas");
+	    pickerFrame.setUndecorated(true);
 	    pickerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    pickerFrame.setLocationByPlatform(true);
+		
+//		setUndecorated(true);
+//		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+//		setPreferredSize(new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight()));
 
 		Box verticalBox = Box.createVerticalBox();
 	    
@@ -49,6 +58,7 @@ public class CardPickerFrame extends JFrame {
 	      
 	    pickerFrame.getContentPane().add(verticalBox);
 	    pickerFrame.setVisible(true);
+	    pickerFrame.setLocationRelativeTo(null);
 	}
 	
 	public Box createCardsBox(int offset, int cardsCount) {
@@ -59,7 +69,7 @@ public class CardPickerFrame extends JFrame {
 						
 			ImageIcon cardImage = new ImageIcon(card.getCardImageName());
 
-			JButton button = new JButton(new ImageIcon((cardImage.getImage()).getScaledInstance(300, 400, java.awt.Image.SCALE_SMOOTH)));
+			JButton button = new JButton(new ImageIcon((cardImage.getImage()).getScaledInstance(300, 400, Image.SCALE_SMOOTH)));
 			button.setSize(200, 300);
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {

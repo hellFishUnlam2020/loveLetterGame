@@ -25,7 +25,7 @@ public class LoginFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -2468719791156400022L;
-	private JPanel logPanel;
+	private JPanel panel;
 //	private JTextField nameTextField;
 	private UserLoggable userLoggable;
 	private JLabel loginErrorLabel;
@@ -39,21 +39,21 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		ImageIcon image = new ImageIcon(LoginFrame.class.getResource("/Images/login.jpg"));
+		ImageIcon back = new ImageIcon(LoginFrame.class.getResource("/Images/login.jpg"));
+
+//		setTitle("Antes de arrancar");
 		
+		setPreferredSize(new Dimension(back.getIconWidth(), back.getIconHeight()));
 		setResizable(false);
 		setUndecorated(true);
-//		setTitle("Antes de arrancar");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setPreferredSize(new Dimension(image.getIconWidth(), image.getIconHeight()));
-		setSize(image.getIconWidth(), image.getIconHeight());
+		setSize(back.getIconWidth(), back.getIconHeight());
+		setLocationRelativeTo(null);
 		
-		Dimension frameSize = getSize();
-
-		logPanel = new JPanel();
-		logPanel.setBounds(0, 0, frameSize.width, frameSize.width);
-		logPanel.setLayout(null);
-		getContentPane().add(logPanel);
+		panel = new JPanel();
+		panel.setBounds(0, 0, getWidth(), getHeight());
+		panel.setLayout(null);
+		getContentPane().add(panel);
 		
 
 //		contentPane = new JPanel();
@@ -67,7 +67,7 @@ public class LoginFrame extends JFrame {
 		userField.setText("UserName");
 		userField.setOpaque(false);
 		userField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255,255,255)));
-		userField.setBounds(frameSize.width/2-size.width/2, 5, size.width, size.height);
+		userField.setBounds(panel.getWidth()/2-size.width/2, 5, size.width, size.height);
 		userField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -81,15 +81,15 @@ public class LoginFrame extends JFrame {
 					userField.setText("");
 			}
 		});
-		logPanel.add(userField);
+		panel.add(userField);
 		
 		JPasswordField passField = new JPasswordField();
 		passField.setForeground(Color.white);
 		passField.setText("contraseña");
 		passField.setOpaque(false);
 		passField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255,255,255)));
-		passField.setBounds(frameSize.width/2-size.width/2, size.height+5, size.width, size.height);
-		logPanel.add(passField);
+		passField.setBounds(panel.getWidth()/2-size.width/2, size.height+5, size.width, size.height);
+		panel.add(passField);
 		
 //		JLabel titleLabel = new JLabel("Login");
 //		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -121,7 +121,7 @@ public class LoginFrame extends JFrame {
 		enterButton.setContentAreaFilled(false);
 		enterButton.setBorder(null);
 		enterButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		enterButton.setBounds(frameSize.width/2-size.width/2, size.height*2+25, size.width, size.height);
+		enterButton.setBounds(panel.getWidth()/2-size.width/2, size.height*2+25, size.width, size.height);
 		enterButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -132,14 +132,15 @@ public class LoginFrame extends JFrame {
 				}
 			}
 		});
-		enterButton.requestFocusInWindow();
-		logPanel.add(enterButton);
+		panel.add(enterButton);
+		
 		JLabel backgroundLabel = new JLabel("");
-		backgroundLabel.setIcon(image);
-		backgroundLabel.setBounds(0, 0, image.getIconWidth(), image.getIconHeight());
-		logPanel.add(backgroundLabel);
+		backgroundLabel.setIcon(back);
+		backgroundLabel.setBounds(0, 0, back.getIconWidth(), back.getIconHeight());
+		panel.add(backgroundLabel);
 		
 		pack();
+		setVisible(true);
 	}
 	
 	private boolean isValidUserName() {
