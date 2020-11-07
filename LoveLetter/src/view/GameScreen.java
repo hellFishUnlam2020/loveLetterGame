@@ -153,7 +153,7 @@ public class GameScreen implements UserLoggable, CardEligible {
 		panel.add(dadosButton);
 		
 		JLabel backgroundImage = new JLabel("");
-		backgroundImage.setIcon(back);
+		backgroundImage.setIcon(new ImageIcon(scaledBack));
 		backgroundImage.setBounds(0, 0, panel.getWidth(), panel.getHeight());
 		panel.add(backgroundImage);
 		
