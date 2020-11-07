@@ -39,7 +39,7 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		ImageIcon back = new ImageIcon(LoginFrame.class.getResource("/Images/login.jpg"));
+		ImageIcon back = new ImageIcon(LoginFrame.class.getResource("/Images/login_main/login.jpg"));
 
 //		setTitle("Antes de arrancar");
 		

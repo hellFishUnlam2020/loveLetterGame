@@ -35,7 +35,6 @@ public class Baron extends Card {
 
 	@Override
 	public String getCardImageName() {
-		// TODO Auto-generated method stub
-		return "images/baron.jpg";
+		return "/images/Baron.png";
 	}
 }

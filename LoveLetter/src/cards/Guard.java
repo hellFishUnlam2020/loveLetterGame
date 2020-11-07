@@ -36,6 +36,6 @@ public class Guard extends Card {
 
 	@Override
 	public String getCardImageName() {
-		return "images/guard.jpg";
+		return "/images/Guardia.png";
 	}
 }

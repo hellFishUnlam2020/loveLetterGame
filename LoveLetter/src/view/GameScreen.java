@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,40 +45,31 @@ public class GameScreen implements UserLoggable, CardEligible {
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		Dimension screenDim = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
 		
-		ImageIcon back = new ImageIcon(GameScreen.class.getResource("/Images/fondo.png"));
+		ImageIcon back = new ImageIcon(GameScreen.class.getResource("/images/login_main/fondo.png"));
 		Image scaledBack = back.getImage().getScaledInstance(screenDim.width, screenDim.height, Image.SCALE_SMOOTH);
-	
-		Double relationX = (double)screenDim.width/back.getIconWidth();
-		Double relationY = (double)screenDim.height/back.getIconHeight();
 		
+		double aspectRelX = (double)screenDim.width/back.getIconWidth();
+		double aspectRelY = (double)screenDim.height/back.getIconHeight();
 		
-		ImageIcon play = new ImageIcon(GameScreen.class.getResource("/images/Login/Capa 1.png"));
-		Image scaledPlay = play.getImage().getScaledInstance((int)(relationX*play.getIconWidth()), (int)(relationY*play.getIconHeight()), Image.SCALE_SMOOTH);
+		ImageIcon play = new ImageIcon(GameScreen.class.getResource("/images/login_main/playButton.png"));
+		Image scaledPlay = play.getImage().getScaledInstance((int)Math.ceil(aspectRelX*play.getIconWidth()), (int)Math.ceil(aspectRelY*play.getIconHeight()), Image.SCALE_SMOOTH);
 		
-		ImageIcon profile = new ImageIcon(GameScreen.class.getResource("/images/Login/Capa 2.png"));
-		Image scaledProfile = profile.getImage().getScaledInstance((int)(relationX*profile.getIconWidth()), (int)(relationY*profile.getIconHeight()), Image.SCALE_SMOOTH);
+		ImageIcon profile = new ImageIcon(GameScreen.class.getResource("/images/login_main/profileButton.png"));
+		Image scaledProfile = profile.getImage().getScaledInstance((int)Math.ceil(aspectRelX*profile.getIconWidth()), (int)Math.ceil(aspectRelY*profile.getIconHeight()), Image.SCALE_SMOOTH);
 		
-		ImageIcon config = new ImageIcon(GameScreen.class.getResource("/images/Login/Capa 4.png"));
-		Image scaledConfig = config.getImage().getScaledInstance((int)(relationX*config.getIconWidth()), (int)(relationY*config.getIconHeight()), Image.SCALE_SMOOTH);
+		ImageIcon config = new ImageIcon(GameScreen.class.getResource("/images/login_main/configButton.png"));
+		Image scaledConfig = config.getImage().getScaledInstance((int)Math.ceil(aspectRelX*config.getIconWidth()), (int)Math.ceil(aspectRelY*config.getIconHeight()), Image.SCALE_SMOOTH);
 		
-		ImageIcon exit = new ImageIcon(GameScreen.class.getResource("/images/Login/Capa 5.png"));
-		Image scaledExit = exit.getImage().getScaledInstance((int)(relationX*exit.getIconWidth()), (int)(relationY*exit.getIconHeight()), Image.SCALE_SMOOTH);
+		ImageIcon exit = new ImageIcon(GameScreen.class.getResource("/images/login_main/exitButton.png"));
+		Image scaledExit = exit.getImage().getScaledInstance((int)Math.ceil(aspectRelX*exit.getIconWidth()), (int)Math.ceil(aspectRelY*exit.getIconHeight()), Image.SCALE_SMOOTH);
 		
-		ImageIcon dados = new ImageIcon(GameScreen.class.getResource("/images/Login/capa 3.png"));
-		Image scaledDados = dados.getImage().getScaledInstance((int)(relationX*dados.getIconWidth()), (int)(relationY*dados.getIconHeight()), Image.SCALE_SMOOTH);
+		ImageIcon dados = new ImageIcon(GameScreen.class.getResource("/images/login_main/dadosButton.png"));
+		Image scaledDados = dados.getImage().getScaledInstance((int)Math.ceil(aspectRelX*dados.getIconWidth()), (int)Math.ceil(aspectRelY*dados.getIconHeight()), Image.SCALE_SMOOTH);
 		gameFrame = new JFrame();
-		
-//		gameFrame.setFont(new Font("Dialog", Font.PLAIN, 16));
-//		gameFrame.setTitle("Love Letter");
-//		gameFrame.getContentPane().setBackground(new Color(46, 139, 87));
-//		gameFrame.setBounds(100, 100, 800, 581);
-//		gameFrame.setPreferredSize(JFrame.);
-//		gameFrame.getContentPane().setLayout(null);
 		
 		gameFrame.setResizable(false);
 		gameFrame.setUndecorated(true);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		gameFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		gameFrame.setSize(screenDim.width, screenDim.height);
 		gameFrame.setLocationRelativeTo(null);
 	
@@ -95,9 +87,9 @@ public class GameScreen implements UserLoggable, CardEligible {
 		playButton.setOpaque(false);
 		playButton.setIcon(new ImageIcon(scaledPlay));
 		playButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		playButton.setBounds(839, 737, 242, 160);
-		playButton.setBounds((int)(839*relationX), (int)(737*relationY), playButton.getIcon().getIconWidth(),playButton.getIcon().getIconHeight());
+		playButton.setBounds((int)Math.ceil(840*aspectRelX), (int)Math.floor(745*aspectRelY), playButton.getIcon().getIconWidth(),playButton.getIcon().getIconHeight());
 		playButton.setBorder(null);
+		playButton.setToolTipText("Play");
 		panel.add(playButton);
 		
 		JButton profileButton = new JButton("");
@@ -107,8 +99,9 @@ public class GameScreen implements UserLoggable, CardEligible {
 		profileButton.setOpaque(false);
 		profileButton.setIcon(new ImageIcon(scaledProfile));
 		profileButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		profileButton.setBounds((int)(889*relationX), (int)(885*relationY), profileButton.getIcon().getIconWidth(), profileButton.getIcon().getIconHeight());
+		profileButton.setBounds((int)Math.ceil(916*aspectRelX), (int)Math.floor(967*aspectRelY), profileButton.getIcon().getIconWidth(), profileButton.getIcon().getIconHeight());
 		profileButton.setBorder(null);
+		profileButton.setToolTipText("Profile");
 		panel.add(profileButton);
 		
 		JButton configButton = new JButton("");
@@ -118,8 +111,9 @@ public class GameScreen implements UserLoggable, CardEligible {
 		configButton.setOpaque(false);
 		configButton.setIcon(new ImageIcon(scaledConfig));
 		configButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		configButton.setBounds((int)(1061*relationX), (int)(965*relationY), configButton.getIcon().getIconWidth(), configButton.getIcon().getIconHeight());
+		configButton.setBounds((int)Math.ceil(1068*aspectRelX), (int)Math.floor(967*aspectRelY), configButton.getIcon().getIconWidth(), configButton.getIcon().getIconHeight());
 		configButton.setBorder(null);
+		configButton.setToolTipText("Configuration");
 		panel.add(configButton);
 
 		JButton exitButton = new JButton("");
@@ -129,7 +123,7 @@ public class GameScreen implements UserLoggable, CardEligible {
 		exitButton.setOpaque(false);
 		exitButton.setIcon(new ImageIcon(scaledExit));
 		exitButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		exitButton.setBounds((int)(1727*relationX), (int)(83*relationY), exitButton.getIcon().getIconWidth(), exitButton.getIcon().getIconHeight());
+		exitButton.setBounds((int)Math.ceil(1727*aspectRelX), (int)Math.ceil(84*aspectRelY), exitButton.getIcon().getIconWidth(), exitButton.getIcon().getIconHeight());
 		exitButton.setBorder(null);
 		exitButton.setToolTipText("Exit");
 		exitButton.addMouseListener(new MouseAdapter() {
@@ -147,9 +141,9 @@ public class GameScreen implements UserLoggable, CardEligible {
 		dadosButton.setOpaque(false);
 		dadosButton.setIcon(new ImageIcon(scaledDados));
 		dadosButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		dadosButton.setBounds((int)(763*relationX), (int)(965*relationY), dadosButton.getIcon().getIconWidth(), dadosButton.getIcon().getIconHeight());
+		dadosButton.setBounds((int)Math.ceil(763*aspectRelX), (int)Math.ceil(967*aspectRelY), dadosButton.getIcon().getIconWidth(), dadosButton.getIcon().getIconHeight());
 		dadosButton.setBorder(null);
-		dadosButton.setToolTipText("DadosButton");
+		dadosButton.setToolTipText("Cards");
 		dadosButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -158,31 +152,8 @@ public class GameScreen implements UserLoggable, CardEligible {
 		});
 		panel.add(dadosButton);
 		
-//		welcomeLabel = new JLabel("");
-//		welcomeLabel.setBounds(61, 40, 203, 40);
-//		welcomeLabel.setVisible(false);
-//		gameFrame.getContentPane().add(welcomeLabel);
-//
-//		loginButton = new JButton("Entrar");
-//		loginButton.setBounds(367, 236, 117, 29);
-//		loginButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				showLoginFrame();
-//			}
-//		});
-//		gameFrame.getContentPane().add(loginButton);
-//
-//		JButton btnNewButton = new JButton("Ver las cartas");
-//		btnNewButton.setBounds(48, 348, 117, 29);
-//		gameFrame.getContentPane().add(btnNewButton);
-//		btnNewButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				showCardPickerFrame();
-//			}
-//		});
-		
 		JLabel backgroundImage = new JLabel("");
-		backgroundImage.setIcon(new ImageIcon(scaledBack));
+		backgroundImage.setIcon(back);
 		backgroundImage.setBounds(0, 0, panel.getWidth(), panel.getHeight());
 		panel.add(backgroundImage);
 		
