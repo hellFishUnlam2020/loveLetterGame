@@ -1,6 +1,7 @@
 package cards;
 
 import loveLetter.Player;
+import loveLetter.RuleAdmin;
 
 public class Maid extends Card {
 	@Override
@@ -29,8 +30,18 @@ public class Maid extends Card {
 	}
 
 	@Override
-	public void play(Player player, Card card) {
-		// TODO Add actions		
+	public void play(Player currentPlayer) {
+
+		applyEffect(currentPlayer, null);
+
+	}
+
+	@Override
+	public void applyEffect(Player currentPlayer, Player targetPlayer) {
+
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		admin.applySafeBlock(currentPlayer);
+
 	}
 
 	@Override

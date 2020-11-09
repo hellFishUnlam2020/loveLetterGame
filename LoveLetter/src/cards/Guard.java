@@ -1,6 +1,7 @@
 package cards;
 
 import loveLetter.Player;
+import loveLetter.RuleAdmin;
 
 public class Guard extends Card {
 	@Override
@@ -29,11 +30,25 @@ public class Guard extends Card {
 	}
 
 	@Override
-	public void play(Player player, Card card) {
-		// TODO Add actions
+	public void play(Player currentPlayer) {
 		
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		Player targetPlayer = admin.choosePlayer();
+	
+		applyEffect(currentPlayer,targetPlayer);
 	}
+	
+	@Override
+	public void applyEffect(Player currentPlayer, Player targetPlayer) {
 
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		String cardName = admin.chooseCardName(currentPlayer);	//enves de elegir un nombre de carta, podria ser elegir un type de carta
+		
+		if( targetPlayer.getCards().get(0).getName().contentEquals(cardName)) //verificamos si adivino la carta 
+			admin.disablePlayerFromRound(targetPlayer); //se deshabilita el player en la ronda
+
+	}
+	
 	@Override
 	public String getCardImageName() {
 		return "/images/Guardia.png";

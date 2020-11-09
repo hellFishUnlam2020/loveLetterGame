@@ -69,12 +69,24 @@ public class RoundGame {
 
 	private void playTurn() {
 		Player turnPlayer = peekAPlayer();
-
-		turnPlayer.addCard(deck.popCard());
+		Card card = deck.popCard();
+		turnPlayer.addCard(card);
+		
+		/*Por cada carta que se levanta del mazo deberia comprobarse si el jugador posee
+		 * la Condesa+Principe o Condesa+Rey. De ser asi, se juega la Condesa obligatoriamente.
+		 * 
+		 * RuleAdmin admin = RuleAdmin.getRuleadmin();
+		 * if( admin.playerHasCountessCard(turnPlayer) )
+		 * 		if(admin.playerHasToPlayCountessCard(turnPlayer)){
+		 * 						
+		 * 				card.play();
+		 * 			}	
+		 * 		}
+		 */
 
 		// TODO: El jugador debe elegir la carta. Fake
 		Card cardChoosed = deck.popCard();
-
+		
 		//cardChoosed.play();
 		eliminatePlayerFromRound(turnPlayer); // Despues de jugar se elimina(Solo para Tests)
 	}
