@@ -5,7 +5,7 @@ import loveLetter.Player;
 public class Maid extends Card {
 	@Override
 	public String getName() {
-		return "Mucama";
+		return "Sirvienta";
 	}
 
 	@Override

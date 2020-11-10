@@ -5,7 +5,7 @@ import loveLetter.Player;
 public class Priest extends Card {
 	@Override
 	public String getName() {
-		return "Sacerdote";
+		return "Espia";
 	}
 
 	@Override

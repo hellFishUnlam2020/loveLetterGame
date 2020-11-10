@@ -1,18 +1,15 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import cards.Card;
 
@@ -22,8 +19,7 @@ public class CardPreviewFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -4312502719334838350L;
-	private JPanel contentPane;
-	DrawPanel drawPanel;	
+	private DrawPanel drawPanel;
 	private BufferedImage cardImage;
 	private Card card;
 
@@ -31,27 +27,29 @@ public class CardPreviewFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public CardPreviewFrame(Card card) {
+		setIconImage(Toolkit.getDefaultToolkit()
+				.getImage(CardPreviewFrame.class.getResource("/images/login_main/logo.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 712, 722);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
-		this.card = card;
-		
-		this.setTitle(card.getName());
-	}
+		setResizable(false);
+		setSize(new Dimension(500,500));
 	
+		this.card = card;
+		setTitle(card.getName());
+	}
+
 	public void init() {
+		
 		try {
-			cardImage = ImageIO.read(new File(card.getCardImageName()));
-		} catch (IOException e1) {
-			e1.printStackTrace();
+			cardImage = ImageIO.read(CardPreviewFrame.class.getResource(card.getCardImageName()));
+			setSize(new Dimension(cardImage.getWidth()+16, cardImage.getHeight()+38));
+			setLocationRelativeTo(null);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		drawPanel = new DrawPanel();
-		contentPane.add(drawPanel);
+		getContentPane().add(drawPanel);
 	}
-	
+
 	public void display() {
 		drawPanel.repaint();
 	}
@@ -59,10 +57,10 @@ public class CardPreviewFrame extends JFrame {
 	private class DrawPanel extends JPanel {
 
 		private static final long serialVersionUID = 402497620181405758L;
-		
+
 		public DrawPanel() {
 		}
-		
+
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);

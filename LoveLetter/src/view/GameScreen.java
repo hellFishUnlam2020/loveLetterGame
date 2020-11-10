@@ -3,13 +3,14 @@ package view;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
-import java.text.DecimalFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,9 +28,8 @@ public class GameScreen implements UserLoggable, CardEligible {
 	private JFrame gameFrame;
 	private JPanel panel;
 	private boolean isLogged = false;
-	JLabel welcomeLabel;
-	JButton loginButton;
-
+	private double aspectRelX;
+	private  double aspectRelY;
 	/**
 	 * Create the application.
 	 */
@@ -48,25 +48,11 @@ public class GameScreen implements UserLoggable, CardEligible {
 		ImageIcon back = new ImageIcon(GameScreen.class.getResource("/images/login_main/fondo.png"));
 		Image scaledBack = back.getImage().getScaledInstance(screenDim.width, screenDim.height, Image.SCALE_SMOOTH);
 		
-		double aspectRelX = (double)screenDim.width/back.getIconWidth();
-		double aspectRelY = (double)screenDim.height/back.getIconHeight();
-		
-		ImageIcon play = new ImageIcon(GameScreen.class.getResource("/images/login_main/playButton.png"));
-		Image scaledPlay = play.getImage().getScaledInstance((int)Math.ceil(aspectRelX*play.getIconWidth()), (int)Math.ceil(aspectRelY*play.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		ImageIcon profile = new ImageIcon(GameScreen.class.getResource("/images/login_main/profileButton.png"));
-		Image scaledProfile = profile.getImage().getScaledInstance((int)Math.ceil(aspectRelX*profile.getIconWidth()), (int)Math.ceil(aspectRelY*profile.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		ImageIcon config = new ImageIcon(GameScreen.class.getResource("/images/login_main/configButton.png"));
-		Image scaledConfig = config.getImage().getScaledInstance((int)Math.ceil(aspectRelX*config.getIconWidth()), (int)Math.ceil(aspectRelY*config.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		ImageIcon exit = new ImageIcon(GameScreen.class.getResource("/images/login_main/exitButton.png"));
-		Image scaledExit = exit.getImage().getScaledInstance((int)Math.ceil(aspectRelX*exit.getIconWidth()), (int)Math.ceil(aspectRelY*exit.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		ImageIcon dados = new ImageIcon(GameScreen.class.getResource("/images/login_main/dadosButton.png"));
-		Image scaledDados = dados.getImage().getScaledInstance((int)Math.ceil(aspectRelX*dados.getIconWidth()), (int)Math.ceil(aspectRelY*dados.getIconHeight()), Image.SCALE_SMOOTH);
+		aspectRelX = (double)screenDim.width/back.getIconWidth();
+		aspectRelY = (double)screenDim.height/back.getIconHeight();
+				
 		gameFrame = new JFrame();
-		
+		gameFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(GameScreen.class.getResource("/images/login_main/logo.png")));
 		gameFrame.setResizable(false);
 		gameFrame.setUndecorated(true);
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,7 +65,27 @@ public class GameScreen implements UserLoggable, CardEligible {
 		
 		gameFrame.getContentPane().add(panel);
 		
+		addPlayButton();		
+		addProfileButton();
+		addConfigButton();
+		addExitBuuton();
+		addShowCardsButton();
 		
+		JLabel backgroundImage = new JLabel("");
+		backgroundImage.setFont(new Font("Vivaldi", Font.BOLD, 30));
+		backgroundImage.setIcon(new ImageIcon(scaledBack));
+		backgroundImage.setBounds(0, 0, panel.getWidth(), panel.getHeight());
+		panel.add(backgroundImage);
+		
+	}
+	
+	//---------------------------------------------------------------
+	//Screen config
+	
+	private void addPlayButton() {
+		ImageIcon play = new ImageIcon(GameScreen.class.getResource("/images/login_main/playButton.png"));
+		Image scaledPlay = play.getImage().getScaledInstance((int)Math.ceil(aspectRelX*play.getIconWidth()), (int)Math.ceil(aspectRelY*play.getIconHeight()), Image.SCALE_SMOOTH);				
+
 		JButton playButton = new JButton("");
 		playButton.setContentAreaFilled(false);
 		playButton.setBorderPainted(false);
@@ -91,6 +97,13 @@ public class GameScreen implements UserLoggable, CardEligible {
 		playButton.setBorder(null);
 		playButton.setToolTipText("Play");
 		panel.add(playButton);
+
+	}
+	
+	
+	private void addProfileButton() {
+		ImageIcon profile = new ImageIcon(GameScreen.class.getResource("/images/login_main/profileButton.png"));
+		Image scaledProfile = profile.getImage().getScaledInstance((int)Math.ceil(aspectRelX*profile.getIconWidth()), (int)Math.ceil(aspectRelY*profile.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		JButton profileButton = new JButton("");
 		profileButton.setContentAreaFilled(false);
@@ -103,7 +116,13 @@ public class GameScreen implements UserLoggable, CardEligible {
 		profileButton.setBorder(null);
 		profileButton.setToolTipText("Profile");
 		panel.add(profileButton);
-		
+
+	}	
+
+	private void addConfigButton() {
+		ImageIcon config = new ImageIcon(GameScreen.class.getResource("/images/login_main/configButton.png"));
+		Image scaledConfig = config.getImage().getScaledInstance((int)Math.ceil(aspectRelX*config.getIconWidth()), (int)Math.ceil(aspectRelY*config.getIconHeight()), Image.SCALE_SMOOTH);
+
 		JButton configButton = new JButton("");
 		configButton.setContentAreaFilled(false);
 		configButton.setBorderPainted(false);
@@ -114,7 +133,18 @@ public class GameScreen implements UserLoggable, CardEligible {
 		configButton.setBounds((int)Math.ceil(1068*aspectRelX), (int)Math.floor(967*aspectRelY), configButton.getIcon().getIconWidth(), configButton.getIcon().getIconHeight());
 		configButton.setBorder(null);
 		configButton.setToolTipText("Configuration");
+		configButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				showConfigFrame();
+			}
+		});
 		panel.add(configButton);
+	} 
+	
+	private void addExitBuuton() {
+		ImageIcon exit = new ImageIcon(GameScreen.class.getResource("/images/login_main/exitButton.png"));
+		Image scaledExit = exit.getImage().getScaledInstance((int)Math.ceil(aspectRelX*exit.getIconWidth()), (int)Math.ceil(aspectRelY*exit.getIconHeight()), Image.SCALE_SMOOTH);
 
 		JButton exitButton = new JButton("");
 		exitButton.setContentAreaFilled(false);
@@ -133,32 +163,36 @@ public class GameScreen implements UserLoggable, CardEligible {
 			}
 		});
 		panel.add(exitButton);
-		
-		JButton dadosButton = new JButton("");	
-		dadosButton.setContentAreaFilled(false);
-		dadosButton.setBorderPainted(false);
-		dadosButton.setIgnoreRepaint(true);
-		dadosButton.setOpaque(false);
-		dadosButton.setIcon(new ImageIcon(scaledDados));
-		dadosButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		dadosButton.setBounds((int)Math.ceil(763*aspectRelX), (int)Math.ceil(967*aspectRelY), dadosButton.getIcon().getIconWidth(), dadosButton.getIcon().getIconHeight());
-		dadosButton.setBorder(null);
-		dadosButton.setToolTipText("Cards");
-		dadosButton.addMouseListener(new MouseAdapter() {
+	}
+	
+	
+	private void addShowCardsButton() {
+		ImageIcon dados = new ImageIcon(GameScreen.class.getResource("/images/login_main/dadosButton.png"));
+		Image scaledDados = dados.getImage().getScaledInstance((int)Math.ceil(aspectRelX*dados.getIconWidth()), (int)Math.ceil(aspectRelY*dados.getIconHeight()), Image.SCALE_SMOOTH);
+
+		JButton showCardsButton = new JButton("");	
+		showCardsButton.setContentAreaFilled(false);
+		showCardsButton.setBorderPainted(false);
+		showCardsButton.setIgnoreRepaint(true);
+		showCardsButton.setOpaque(false);
+		showCardsButton.setIcon(new ImageIcon(scaledDados));
+		showCardsButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		showCardsButton.setBounds((int)Math.ceil(763*aspectRelX), (int)Math.ceil(967*aspectRelY), showCardsButton.getIcon().getIconWidth(), showCardsButton.getIcon().getIconHeight());
+		showCardsButton.setBorder(null);
+		showCardsButton.setToolTipText("Cards");
+		showCardsButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				showCardPickerFrame();
 			}
 		});
-		panel.add(dadosButton);
-		
-		JLabel backgroundImage = new JLabel("");
-		backgroundImage.setIcon(back);
-		backgroundImage.setBounds(0, 0, panel.getWidth(), panel.getHeight());
-		panel.add(backgroundImage);
-		
+		panel.add(showCardsButton);
 	}
 
+	
+	//---------------------------------------------------------------
+	//Events methods
+	
 	public void showLoginFrame() {
 		LoginFrame loginFrame = new LoginFrame();
 		loginFrame.setUserLoggable(this);
@@ -167,11 +201,18 @@ public class GameScreen implements UserLoggable, CardEligible {
 	public void showCardPickerFrame() {
 		Deck deck = new Deck();
 		CardPickerFrame cardPicker = new CardPickerFrame(deck.getCards());
-//		cardPicker.setVisible(true);
-//		cardPicker.setFocusable(true);
-//		cardPicker.requestFocusInWindow();
 		cardPicker.setCardEligile(this);
 	}
+	
+	public void showConfigFrame() {
+		ConfigFrame cf = new ConfigFrame();
+		cf.setVisible(true);
+	}
+	
+	
+	//---------------------------------------------------------------
+	//Game actions
+
 
 	public void startGame() {
 		if (!isLogged) {
@@ -179,6 +220,25 @@ public class GameScreen implements UserLoggable, CardEligible {
 		}
 	}
 
+	@Override
+	public void userLogged(String name) {
+		isLogged = true;
+	}
+
+	@Override
+	public void cardElected(Card card) {
+		CardPreviewFrame cardPreview = new CardPreviewFrame(card);
+		cardPreview.init();
+		cardPreview.setFocusable(true);
+		cardPreview.requestFocusInWindow();
+		cardPreview.setVisible(true);
+	}
+	
+	
+	//---------------------------------------------------------------
+	//Main
+
+	
 	/**
 	 * Launch the application.
 	 */
@@ -196,20 +256,4 @@ public class GameScreen implements UserLoggable, CardEligible {
 		});
 	}
 
-	@Override
-	public void userLogged(String name) {
-		isLogged = true;
-//		welcomeLabel.setText("Bienvenido " + name);
-//		welcomeLabel.setVisible(true);
-//		loginButton.setVisible(false);
-	}
-
-	@Override
-	public void cardElected(Card card) {
-		CardPreviewFrame cardPreview = new CardPreviewFrame(card);
-		cardPreview.setVisible(true);
-		cardPreview.setFocusable(true);
-		cardPreview.requestFocusInWindow();
-		cardPreview.init();
-	}
 }
