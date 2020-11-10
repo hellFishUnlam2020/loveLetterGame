@@ -10,6 +10,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -32,10 +34,17 @@ public class LoginFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = -2468719791156400022L;
 	private JPanel panel;
-	private UserLoggable userLoggable;
+	private JTextField userField;
+	private JPasswordField passField;
+	private JButton enterButton;
 	private JLabel loginErrorLabel;
-	JTextField userField;
+	private Dimension size;
+	private Dimension screen;
+	private JLabel backgroundLabel;
+	private ImageIcon back;
 	
+	private UserLoggable userLoggable;
+
 	public void setUserLoggable(UserLoggable userLoggable) {
 		this.userLoggable = userLoggable;
 	}
@@ -44,12 +53,14 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		ImageIcon back = new ImageIcon(LoginFrame.class.getResource("/Images/login_main/login.jpg"));
+		back = new ImageIcon(LoginFrame.class.getResource("/Images/login_main/login.jpg"));
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		
-		Dimension dim = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
+		screen = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
+		size = new Dimension(200,50);
 		
-		setSize(dim);
+		setAlwaysOnTop(true);
+		setSize(screen);
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -58,31 +69,46 @@ public class LoginFrame extends JFrame {
 		setBackground(new Color(0,0,0,90));
 		getContentPane().setLayout(null);
 		
-		
 		panel = new JPanel();
 		
 		panel.setLayout(null);
 		panel.setBorder(null);
 		panel.setBackground(getBackground());
-		panel.setSize(dim);
+		panel.setSize(screen);
 		
 		getContentPane().add(panel);
-
-		JLabel backgroundLabel = new JLabel();
-		backgroundLabel.setIcon(back);
-		backgroundLabel.setBounds(panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
-		backgroundLabel.setBackground(getBackground());
-		backgroundLabel.setSize(back.getIconWidth(), back.getIconHeight());
-		backgroundLabel.setLocation(new Point((dim.width-back.getIconWidth())/2, (dim.height-back.getIconHeight())/2));
-
-		Dimension size = new Dimension(200, 50);
 		
+		addBackground();
+		
+		addUserField();
+		addPassField();
+		addEnterButton();
+		addLoginError();
+		
+		panel.add(backgroundLabel);
+		setVisible(true);
+		enterButton.requestFocus();
+	}
+	
+	//---------------------------------------------------------------
+	//Screen config
+	
+	// UserField
+	
+	public void addUserField() {
 		userField = new JTextField();
 		userField.setForeground(Color.white);
 		userField.setText("Username");
 		userField.setOpaque(false);
 		userField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255,255,255)));
-		userField.setBounds(dim.width/2-size.width/2, backgroundLabel.getY()+15, size.width, size.height);
+		userField.setBounds(screen.width/2-size.width/2, backgroundLabel.getY()+15, size.width, size.height);
+		userField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					isValidUserName();
+			}
+		});
 		userField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -92,23 +118,51 @@ public class LoginFrame extends JFrame {
 			}
 			@Override
 			public void focusGained(FocusEvent e) {
-				loginErrorLabel.setVisible(false);
 				if (userField.getText().equals("Username"))
 					userField.setText("");
 			}
 		});
 		panel.add(userField);
 		
-		JPasswordField passField = new JPasswordField();
+	}
+	
+	// PassField
+	
+	public void addPassField() {
+		passField = new JPasswordField();
 		passField.setForeground(Color.white);
 		passField.setText("contraseña");
 		passField.setOpaque(false);
 		passField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255,255,255)));
 		passField.setBounds(userField.getX(), userField.getY()+size.height+10, size.width, size.height);
+		passField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER)
+					isValidUserName();
+			}
+		});
+		passField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (String.valueOf(passField.getPassword()).isEmpty()) {
+					passField.setText("contraseña");
+				}
+			}
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (String.valueOf(passField.getPassword()).equals("contraseña"))
+					passField.setText("");
+			}
+		});
+		
 		panel.add(passField);
-		
-		
-		JButton enterButton = new JButton("Ingresar");
+	}
+	
+	// EnterButton
+	
+	public void addEnterButton() {
+		enterButton = new JButton("Ingresar");
 		enterButton.setOpaque(false);
 		enterButton.setContentAreaFilled(false);
 		enterButton.setBorder(null);
@@ -120,15 +174,15 @@ public class LoginFrame extends JFrame {
 		enterButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(isValidUserName()) {
-					userLoggable.userLogged(userField.getText());
-//					JOptionPane.showConfirmDialog(null, "Bienvendo "+ userField.getText());
-					dispose();					
-				}
+				isValidUserName();
 			}
 		});
 		panel.add(enterButton);
-		
+	}
+	
+	// LoginErrorLabel
+	
+	public void addLoginError() {
 		loginErrorLabel = new JLabel();
 		loginErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		loginErrorLabel.setVisible(false);
@@ -142,13 +196,21 @@ public class LoginFrame extends JFrame {
 			}
 		});
 		panel.add(loginErrorLabel);
-		
-		getRootPane().setDefaultButton(enterButton);
-		panel.add(backgroundLabel);
-		
-		setVisible(true);
-		enterButton.requestFocus();
 	}
+	
+	// BackgroundLabel
+	
+	public void addBackground() {
+		backgroundLabel = new JLabel();
+		backgroundLabel.setIcon(back);
+		backgroundLabel.setBounds(panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
+		backgroundLabel.setBackground(getBackground());
+		backgroundLabel.setSize(back.getIconWidth(), back.getIconHeight());
+		backgroundLabel.setLocation(new Point((screen.width-back.getIconWidth())/2, (screen.height-back.getIconHeight())/2));
+	}
+	
+	//---------------------------------------------------------------
+	// Event methods
 	
 	private boolean isValidUserName() {
 		boolean validName = true;
@@ -158,6 +220,8 @@ public class LoginFrame extends JFrame {
 			loginErrorLabel.setVisible(true);
 			validName = false;
 		}
+		else
+			dispose();
 		
 		return validName;
 	}

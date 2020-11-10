@@ -3,7 +3,6 @@ package view;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
@@ -50,8 +49,9 @@ public class GameScreen implements UserLoggable, CardEligible {
 		
 		aspectRelX = (double)screenDim.width/back.getIconWidth();
 		aspectRelY = (double)screenDim.height/back.getIconHeight();
-				
+			
 		gameFrame = new JFrame();
+		gameFrame.setTitle("Love Letter");
 		gameFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(GameScreen.class.getResource("/images/login_main/logo.png")));
 		gameFrame.setResizable(false);
 		gameFrame.setUndecorated(true);
@@ -59,6 +59,8 @@ public class GameScreen implements UserLoggable, CardEligible {
 		gameFrame.setSize(screenDim.width, screenDim.height);
 		gameFrame.setLocationRelativeTo(null);
 	
+		
+//		panel = new DrawPanel(new BufferedImage(scaledBack.getWidth(null), scaledBack.getHeight(null), BufferedImage.TYPE_INT_ARGB));
 		panel = new JPanel();
 		panel.setBounds(0, 0, gameFrame.getWidth(), gameFrame.getHeight());
 		panel.setLayout(null);
@@ -72,7 +74,6 @@ public class GameScreen implements UserLoggable, CardEligible {
 		addShowCardsButton();
 		
 		JLabel backgroundImage = new JLabel("");
-		backgroundImage.setFont(new Font("Vivaldi", Font.BOLD, 30));
 		backgroundImage.setIcon(new ImageIcon(scaledBack));
 		backgroundImage.setBounds(0, 0, panel.getWidth(), panel.getHeight());
 		panel.add(backgroundImage);
@@ -96,6 +97,12 @@ public class GameScreen implements UserLoggable, CardEligible {
 		playButton.setBounds((int)Math.ceil(840*aspectRelX), (int)Math.floor(745*aspectRelY), playButton.getIcon().getIconWidth(),playButton.getIcon().getIconHeight());
 		playButton.setBorder(null);
 		playButton.setToolTipText("Play");
+		playButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				playFrame();
+			}
+		});
 		panel.add(playButton);
 
 	}
@@ -209,6 +216,10 @@ public class GameScreen implements UserLoggable, CardEligible {
 		cf.setVisible(true);
 	}
 	
+	public void playFrame() {
+		PlayFrame pf = new PlayFrame();
+		pf.setVisible(true);
+	}
 	
 	//---------------------------------------------------------------
 	//Game actions

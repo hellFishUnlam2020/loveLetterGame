@@ -27,13 +27,11 @@ public class CardPreviewFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public CardPreviewFrame(Card card) {
+		this.card = card;
 		setIconImage(Toolkit.getDefaultToolkit()
 				.getImage(CardPreviewFrame.class.getResource("/images/login_main/logo.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setSize(new Dimension(500,500));
-	
-		this.card = card;
 		setTitle(card.getName());
 	}
 
@@ -46,31 +44,28 @@ public class CardPreviewFrame extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		drawPanel = new DrawPanel();
+		drawPanel = new DrawPanel(cardImage);
 		getContentPane().add(drawPanel);
 	}
 
 	public void display() {
 		drawPanel.repaint();
 	}
-
+	
 	private class DrawPanel extends JPanel {
 
+		private BufferedImage image;
 		private static final long serialVersionUID = 402497620181405758L;
 
-		public DrawPanel() {
+		public DrawPanel(BufferedImage image) {
+			this.image = image;
 		}
 
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g;
-
-//			Dimension currentDimension = getRootPane().getSize();
-//			g2.scale(currentDimension.getWidth() / WIDTH, currentDimension.getHeight() / HEIGHT);
-
-			g2.drawImage(cardImage, null, 0, 0);
-
+			g2.drawImage(image, null, 0, 0);
 		}
 
 		@Override
@@ -78,5 +73,4 @@ public class CardPreviewFrame extends JFrame {
 			return new Dimension(WIDTH, HEIGHT);
 		}
 	}
-
 }
