@@ -38,6 +38,6 @@ public class Prince extends Card {
 
 	@Override
 	public String getCardImageName() {
-		return "/images/Principe.png";
+		return "/images/cards/Principe.png";
 	}
 }

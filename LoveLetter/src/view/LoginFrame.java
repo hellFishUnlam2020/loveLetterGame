@@ -53,19 +53,18 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		back = new ImageIcon(LoginFrame.class.getResource("/Images/login_main/login.jpg"));
+		back = new ImageIcon(LoginFrame.class.getResource("/Images/login.jpg"));
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		
 		screen = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
 		size = new Dimension(200,50);
 		
-		setAlwaysOnTop(true);
 		setSize(screen);
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Login");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/images/login_main/logo.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/images/logo.png")));
 		setBackground(new Color(0,0,0,90));
 		getContentPane().setLayout(null);
 		
@@ -79,7 +78,6 @@ public class LoginFrame extends JFrame {
 		getContentPane().add(panel);
 		
 		addBackground();
-		
 		addUserField();
 		addPassField();
 		addEnterButton();
@@ -202,8 +200,8 @@ public class LoginFrame extends JFrame {
 	
 	public void addBackground() {
 		backgroundLabel = new JLabel();
+		
 		backgroundLabel.setIcon(back);
-		backgroundLabel.setBounds(panel.getX(), panel.getY(), panel.getWidth(), panel.getHeight());
 		backgroundLabel.setBackground(getBackground());
 		backgroundLabel.setSize(back.getIconWidth(), back.getIconHeight());
 		backgroundLabel.setLocation(new Point((screen.width-back.getIconWidth())/2, (screen.height-back.getIconHeight())/2));

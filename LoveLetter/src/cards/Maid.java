@@ -35,6 +35,6 @@ public class Maid extends Card {
 
 	@Override
 	public String getCardImageName() {
-		return "/images/Sirvienta.png";
+		return "/images/cards/Sirvienta.png";
 	}
 }

@@ -29,7 +29,7 @@ public class CardPreviewFrame extends JFrame {
 	public CardPreviewFrame(Card card) {
 		this.card = card;
 		setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(CardPreviewFrame.class.getResource("/images/login_main/logo.png")));
+				.getImage(CardPreviewFrame.class.getResource("/images/logo.png")));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setTitle(card.getName());

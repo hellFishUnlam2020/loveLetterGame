@@ -35,6 +35,6 @@ public class Countless extends Card {
 
 	@Override
 	public String getCardImageName() {
-		return "/images/Condesa.png";
+		return "/images/cards/Condesa.png";
 	}
 }

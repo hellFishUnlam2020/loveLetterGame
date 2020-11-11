@@ -35,6 +35,6 @@ public class Baron extends Card {
 
 	@Override
 	public String getCardImageName() {
-		return "/images/Baron.png";
+		return "/images/cards/Baron.png";
 	}
 }

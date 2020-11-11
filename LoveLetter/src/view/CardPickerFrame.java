@@ -47,7 +47,7 @@ public class CardPickerFrame extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Cartas");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(CardPickerFrame.class.getResource("/images/login_main/logo.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(CardPickerFrame.class.getResource("/images/logo.png")));
 	    setBackground(new Color(0,0,0,90));
 	    getContentPane().setLayout(null);
 	    

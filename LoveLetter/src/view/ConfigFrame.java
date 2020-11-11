@@ -33,7 +33,7 @@ public class ConfigFrame extends JFrame{
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setUndecorated(true);
-		setIconImage(Toolkit.getDefaultToolkit().getImage(ConfigFrame.class.getResource("/images/login_main/logo.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(ConfigFrame.class.getResource("/images/logo.png")));
 		
 //		setOpacity(0.7f);
 		setBackground(new Color(0,0,0,70));
