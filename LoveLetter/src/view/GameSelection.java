@@ -37,9 +37,7 @@ public class GameSelection extends JPanel{
 	public GameSelection(JFrame gameFrame) {		
 		
 		this.gameFrame = gameFrame;
-		
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		screenDim = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
+		screenDim = new Dimension(gameFrame.getWidth(), gameFrame.getHeight());
 		
 		back = new ImageIcon(GameSelection.class.getResource("/images/gameMode/gameMode.png"));
 		

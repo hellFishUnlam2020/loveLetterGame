@@ -37,8 +37,7 @@ public class MainMenu extends JPanel implements CardEligible{
 		
 		this.gameFrame = gameFrame;
 		
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		screenDim = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
+		screenDim = new Dimension(gameFrame.getWidth(), gameFrame.getHeight());
 		
 		backMain = new ImageIcon(MainMenu.class.getResource("/images/mainMenu/main.png"));
 		Image scaledBack = backMain.getImage().getScaledInstance(screenDim.width, screenDim.height, Image.SCALE_SMOOTH);
