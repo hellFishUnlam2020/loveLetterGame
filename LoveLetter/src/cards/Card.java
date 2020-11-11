@@ -16,5 +16,8 @@ public abstract class Card {
 	
 	public abstract boolean isPlayable();
 	
-	public abstract void play(Player player, Card card);
+	public abstract void play(Player currentPlayer); //currentPlayer es quien jugo la carta
+
+	public abstract void applyEffect(Player currentPlayer, Player targetPlayer);
+
 }

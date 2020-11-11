@@ -1,6 +1,7 @@
 package cards;
 
 import loveLetter.Player;
+import loveLetter.RuleAdmin;
 
 public class Baron extends Card {
 	@Override
@@ -29,8 +30,25 @@ public class Baron extends Card {
 	}
 
 	@Override
-	public void play(Player player, Card card) {
-		// TODO Add actions
+	public void play(Player currentPlayer) {
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		Player targetPlayer = admin.choosePlayer();
+	
+		applyEffect(currentPlayer,targetPlayer);
+	}
+	
+	@Override
+	public void applyEffect(Player currentPlayer, Player targetPlayer){
+	
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		admin.showPlayerCards(currentPlayer);
+		admin.showPlayerCards(targetPlayer);
+		
+		if(currentPlayer.getCards().get(0).getLevel() > targetPlayer.getCards().get(0).getLevel())
+			admin.disablePlayerFromRound(targetPlayer);
+		else
+			admin.disablePlayerFromRound(currentPlayer);
+		
 	}
 
 	@Override
