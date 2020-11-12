@@ -1,4 +1,4 @@
-package panels;
+package jpanels;
 
 import java.awt.Component;
 import java.awt.Cursor;
@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import loveLetter.Player;
-import view.Lobby;
 
 public class CreateJoin extends JPanel{
 
@@ -28,11 +27,13 @@ public class CreateJoin extends JPanel{
 	private JFrame gameFrame;
 	private JLabel backgroundLabel;
 	private Player player;
+	private LobbyPanel lobby;
 	
 	public CreateJoin(JFrame gameFrame, Player player){
 		
 		this.gameFrame = gameFrame;
 		this.player = player;
+		
 		screenDim = gameFrame.getSize();
 		
 		aspectRelX = (double)screenDim.width/1920;
@@ -100,7 +101,8 @@ public class CreateJoin extends JPanel{
 		createButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				lobby = new LobbyPanel(gameFrame);
+				joinLobby();
 			}
 		});
 		add(createButton);
@@ -120,7 +122,7 @@ public class CreateJoin extends JPanel{
 		joinButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				joinLobby();
 			}
 		});
 		add(joinButton);
@@ -136,13 +138,13 @@ public class CreateJoin extends JPanel{
 		button.setBorder(null);
 	}
 	
-	public void setUpLobby(Lobby lobby) {
-		
-		for(Component comp : gameFrame.getContentPane().getComponents()) {
+	public void joinLobby() {
+		for (Component comp : gameFrame.getContentPane().getComponents()) {
 			gameFrame.remove(comp);
 		}
 		
+		lobby.addPlayer(player);
 		gameFrame.getContentPane().add(lobby);
-		gameFrame.repaint();
 	}
+	
 }

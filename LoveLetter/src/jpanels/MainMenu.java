@@ -1,4 +1,4 @@
-package panels;
+package jpanels;
 
 import java.awt.Component;
 import java.awt.Cursor;
@@ -42,8 +42,8 @@ public class MainMenu extends JPanel implements CardEligible{
 		screenDim = gameFrame.getSize();
 		
 		
-		aspectRelX = screenDim.width/1920;
-		aspectRelY = screenDim.height/1080;
+		aspectRelX = (double)screenDim.width/1920;
+		aspectRelY = (double)screenDim.height/1080;
 		
 		setBounds(0, 0, screenDim.width, screenDim.height);
 		setLayout(null);
@@ -72,22 +72,10 @@ public class MainMenu extends JPanel implements CardEligible{
 		add(backgroundImage);
 	}
 	
-	private void addStatsButton() {
-		ImageIcon stats = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/stats.png"));
-		Image scaledStats = stats.getImage().getScaledInstance((int)Math.ceil(aspectRelX*stats.getIconWidth()), (int)Math.ceil(aspectRelY*stats.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		JButton statsButton = new JButton();
-		createButton(statsButton);
-		statsButton.setIcon(new ImageIcon(scaledStats));
-		statsButton.setBounds((int)Math.ceil(969*aspectRelX), (int)Math.floor(964*aspectRelY), statsButton.getIcon().getIconWidth(), statsButton.getIcon().getIconHeight());
-		statsButton.setToolTipText("Stats");
-		add(statsButton);
-	}
-	
 	private void addPlayButton() {
 		
 		ImageIcon play = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/play.png"));
-		Image scaledPlay = play.getImage().getScaledInstance((int)Math.ceil(aspectRelX*play.getIconWidth()), (int)Math.ceil(aspectRelY*play.getIconHeight()), Image.SCALE_SMOOTH);				
+		Image scaledPlay = play.getImage().getScaledInstance((int)Math.ceil(aspectRelY*play.getIconWidth()), (int)Math.ceil(aspectRelX*play.getIconHeight()), Image.SCALE_SMOOTH);				
 
 		JButton playButton = new JButton("");
 		createButton(playButton);
@@ -107,6 +95,18 @@ public class MainMenu extends JPanel implements CardEligible{
 		});
 		add(playButton);
 
+	}
+	
+	private void addStatsButton() {
+		ImageIcon stats = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/stats.png"));
+		Image scaledStats = stats.getImage().getScaledInstance((int)Math.ceil(aspectRelX*stats.getIconWidth()), (int)Math.ceil(aspectRelY*stats.getIconHeight()), Image.SCALE_SMOOTH);
+		
+		JButton statsButton = new JButton();
+		createButton(statsButton);
+		statsButton.setIcon(new ImageIcon(scaledStats));
+		statsButton.setBounds((int)Math.ceil(969*aspectRelX), (int)Math.floor(964*aspectRelY), statsButton.getIcon().getIconWidth(), statsButton.getIcon().getIconHeight());
+		statsButton.setToolTipText("Stats");
+		add(statsButton);
 	}
 	
 	private void addProfileButton() {

@@ -3,6 +3,7 @@ package view;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -25,9 +26,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import loveLetter.Player;
 import viewCommunication.UserLoggable;
 
-public class LoginFrame extends JFrame {
+public class LoginFrame extends JFrame implements UserLoggable{
 
 	/**
 	 * 
@@ -43,20 +45,15 @@ public class LoginFrame extends JFrame {
 	private JLabel backgroundLabel;
 	private ImageIcon back;
 	
-	private UserLoggable userLoggable;
-
-	public void setUserLoggable(UserLoggable userLoggable) {
-		this.userLoggable = userLoggable;
-	}
-
+	private Player player;
 	/**
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		back = new ImageIcon(LoginFrame.class.getResource("/Images/login.jpg"));
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		
 		screen = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
+
+		back = new ImageIcon(LoginFrame.class.getResource("/Images/login.jpg"));
 		size = new Dimension(200,50);
 		
 		setSize(screen);
@@ -218,11 +215,36 @@ public class LoginFrame extends JFrame {
 			loginErrorLabel.setVisible(true);
 			validName = false;
 		}
-		else
-			userLoggable.userLogged(userField.getText());
+		else {
+			userLogged(userField.getText());
 			dispose();
-		
+		}
 		return validName;
+	}
+	
+	//---------------------------------------------------------------
+	//Main
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LoginFrame window = new LoginFrame();
+					window.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	@Override
+	public void userLogged(String name) {
+		player = new Player(name);
+		new GameScreen(player).setVisible(true);;
 	}
 }
 

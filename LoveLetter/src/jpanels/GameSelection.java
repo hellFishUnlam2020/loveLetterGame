@@ -1,4 +1,4 @@
-package panels;
+package jpanels;
 
 import java.awt.Component;
 import java.awt.Cursor;
