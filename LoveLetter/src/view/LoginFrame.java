@@ -219,6 +219,7 @@ public class LoginFrame extends JFrame {
 			validName = false;
 		}
 		else
+			userLoggable.userLogged(userField.getText());
 			dispose();
 		
 		return validName;

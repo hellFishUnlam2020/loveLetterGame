@@ -1,10 +1,8 @@
-package view;
+package panels;
 
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -18,6 +16,11 @@ import javax.swing.JPanel;
 
 import cards.Card;
 import loveLetter.Deck;
+import loveLetter.Player;
+import view.CardPickerFrame;
+import view.CardPreviewFrame;
+import view.ConfigFrame;
+import view.GameScreen;
 import viewCommunication.CardEligible;
 
 public class MainMenu extends JPanel implements CardEligible{
@@ -29,18 +32,15 @@ public class MainMenu extends JPanel implements CardEligible{
 	private double aspectRelX;
 	private double aspectRelY;
 	private Dimension screenDim;
-	private ImageIcon backMain;
 	private JFrame gameFrame;
-	private JPanel gameSelect;
+	private Player player;
 	
-	public MainMenu(JFrame gameFrame) {
+	public MainMenu(JFrame gameFrame, Player player) {
 		
 		this.gameFrame = gameFrame;
+		this.player = player;
+		screenDim = gameFrame.getSize();
 		
-		screenDim = new Dimension(gameFrame.getWidth(), gameFrame.getHeight());
-		
-		backMain = new ImageIcon(MainMenu.class.getResource("/images/mainMenu/main.png"));
-		Image scaledBack = backMain.getImage().getScaledInstance(screenDim.width, screenDim.height, Image.SCALE_SMOOTH);
 		
 		aspectRelX = screenDim.width/1920;
 		aspectRelY = screenDim.height/1080;
@@ -54,12 +54,22 @@ public class MainMenu extends JPanel implements CardEligible{
 		addExitBuuton();
 		addShowCardsButton();
 		addStatsButton();
+		addBackLabel();
+		
+		setVisible(true);
+		gameFrame.repaint();
+		
+	}
+	
+	private void addBackLabel() {
+		
+		ImageIcon backMain = new ImageIcon(MainMenu.class.getResource("/images/mainMenu/main.png"));
+		Image scaledBack = backMain.getImage().getScaledInstance(screenDim.width, screenDim.height, Image.SCALE_SMOOTH);
 		
 		JLabel backgroundImage = new JLabel("");
 		backgroundImage.setIcon(new ImageIcon(scaledBack));
 		backgroundImage.setSize(screenDim);
 		add(backgroundImage);
-		
 	}
 	
 	private void addStatsButton() {
@@ -73,6 +83,7 @@ public class MainMenu extends JPanel implements CardEligible{
 		statsButton.setToolTipText("Stats");
 		add(statsButton);
 	}
+	
 	private void addPlayButton() {
 		
 		ImageIcon play = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/play.png"));
@@ -86,9 +97,12 @@ public class MainMenu extends JPanel implements CardEligible{
 		playButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				setVisible(false);
-				gameSelect.setVisible(true);
-				gameFrame.repaint();
+				
+				for (Component comp : gameFrame.getContentPane().getComponents()) {
+					gameFrame.remove(comp);
+				}
+				
+				gameFrame.getContentPane().add(new GameSelection(gameFrame, player));
 			}
 		});
 		add(playButton);
@@ -189,9 +203,5 @@ public class MainMenu extends JPanel implements CardEligible{
 		cardPreview.setFocusable(true);
 		cardPreview.requestFocusInWindow();
 		cardPreview.setVisible(true);
-	}
-	
-	public void setSwitchPanel(JPanel panel) {
-		this.gameSelect = panel;
 	}
 }

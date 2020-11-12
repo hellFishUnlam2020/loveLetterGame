@@ -8,6 +8,8 @@ import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
+import loveLetter.Player;
+import panels.MainMenu;
 import viewCommunication.UserLoggable;
 
 public class GameScreen implements UserLoggable {
@@ -15,9 +17,7 @@ public class GameScreen implements UserLoggable {
 	private JFrame gameFrame;
 	private boolean isLogged = false;
 	private Dimension screenDim;
-	private MainMenu mainMenu;
-	private GameSelection gameSelect;
-	
+	private Player player;
 	/**
 	 * Create the application.
 	 */
@@ -41,15 +41,8 @@ public class GameScreen implements UserLoggable {
 		gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gameFrame.setSize(screenDim.width, screenDim.height);
 		gameFrame.setLocationRelativeTo(null);
-
-		mainMenu = new MainMenu(gameFrame);
-		gameSelect = new GameSelection(gameFrame);
-
-		mainMenu.setSwitchPanel(gameSelect);
-		gameSelect.setSwitchPanel(mainMenu);
 		
-		gameFrame.add(mainMenu);
-		gameFrame.add(gameSelect);
+		gameFrame.getContentPane().add(new MainMenu(gameFrame, player));
 	}
 	
 
@@ -73,6 +66,7 @@ public class GameScreen implements UserLoggable {
 	@Override
 	public void userLogged(String name) {
 		isLogged = true;
+		player = new Player(name);
 	}
 
 	//---------------------------------------------------------------
@@ -96,7 +90,9 @@ public class GameScreen implements UserLoggable {
 	}
 
 	//---------------------------------------------------------------
-	// createElements
+	//Getter&Setter
 	
-
+	public Player getPlayer() {
+		return player;
+	}
 }
