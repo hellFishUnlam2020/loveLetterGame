@@ -1,10 +1,6 @@
 package loveLetter;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import cards.Card;
-import jpanels.PlayerPanel;
 
 public class RoundGame {
 
@@ -12,11 +8,9 @@ public class RoundGame {
 	private Deckable deck;
 	private int playersInRound;
 	private int playerPlaying = 0;
-	private ArrayList<PlayerPanel>panels;
 	
-	public RoundGame(List<Player> players, Deckable deck, ArrayList<PlayerPanel>panels) {
+	public RoundGame(List<Player> players, Deckable deck) {
 		
-		this.panels = panels;
 		this.players = players;
 		this.deck = deck;
 		
@@ -35,9 +29,9 @@ public class RoundGame {
 		deck.discardRandomCard();
 
 		// Repartimos una carta a cada uno de los jugadores
-		for (PlayerPanel panel : panels) {
-			panel.setCard1(deck.popCard());
-			panel.getPlayer().setCantRoundPlayedCards(0);
+		for (Player player : players) {
+			player.addCard(deck.popCard());
+			player.setCantRoundPlayedCards(0);
 		}
 
 		nextTurn();
@@ -80,11 +74,10 @@ public class RoundGame {
 
 		turnPlayer.addCard(deck.popCard());
 
-		// TODO: El jugador debe elegir la carta. Fake
-		Card cardChoosed = deck.popCard();
+		turnPlayer.playCard();
 
 		//cardChoosed.play();
-		eliminatePlayerFromRound(turnPlayer); // Despues de jugar se elimina(Solo para Tests)
+//		eliminatePlayerFromRound(turnPlayer); // Despues de jugar se elimina(Solo para Tests)
 	}
 
 	private void finishRound() {

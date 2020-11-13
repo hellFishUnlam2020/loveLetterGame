@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cards.Card;
+import jpanels.PlayerLabel;
 
 public class Player implements Comparable<Player> {
 	
@@ -13,6 +14,9 @@ public class Player implements Comparable<Player> {
 	private List<Card> cards = new LinkedList<Card>();
 	private int cantRoundPlayedCards;
 	private Match match;
+	private static int nro = 0;
+	private int id;
+	private PlayerLabel label;
 	
 	public Match getMatch() {
 		return match;
@@ -23,6 +27,10 @@ public class Player implements Comparable<Player> {
 	}
 
 	public Player(String name) {
+		
+		this.id = nro;
+		nro++;
+		
 		this.name = name;
 		this.matchPoints = 0;
 		this.status = Status.AVAILABLE;
@@ -59,6 +67,7 @@ public class Player implements Comparable<Player> {
 
 	public void addCard(Card card) {
 		this.cards.add(card);
+		label.addCard(card, getCards().size(), id);
 	}
 
 	public void increaseMatchPoint() {
@@ -79,11 +88,11 @@ public class Player implements Comparable<Player> {
 
 	public void playCard() {
 
-		/*
-		 * aca deberiamos seleccionar una carta de las 2 que tenemos en mano, por el
-		 * momento elegimos siempre la primera
-		 */
-		cards.get(1).play(null, null);
+		while(label.getCardSelected() == null) {
+			
+		}
+		Card card = label.getCardSelected();
+//		card.play();
 		this.cantRoundPlayedCards++;
 	}
 
@@ -129,4 +138,11 @@ public class Player implements Comparable<Player> {
 		}
 	}
 
+	public PlayerLabel getLabel() {
+		return label;
+	}
+
+	public void setLabel(PlayerLabel label) {
+		this.label = label;
+	}
 }

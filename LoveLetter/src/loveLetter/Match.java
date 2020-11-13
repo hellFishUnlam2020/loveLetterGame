@@ -1,11 +1,8 @@
  package loveLetter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import jpanels.PlayerPanel;
-
-public class Match {
+public class Match extends Thread{
 
 	private List<Player> players;
 	private int affectionTokens; // la cantidad configurada que se debe tener para ganar la partida
@@ -21,14 +18,6 @@ public class Match {
 		
 		this.affectionTokens = affecTok;
 		this.players = players;
-		
-//		try {
-//			validateAffectionTokens(affecTok);
-//			setAffectionTokens(affecTok);
-//
-//		} catch (Exception exception) {
-//			exception.getMessage();
-//		}
 	}
 
 	public List<Player> getPlayers() {
@@ -83,25 +72,18 @@ public class Match {
 
 	}
 	
-	public void startRound(ArrayList<PlayerPanel>panels) {
+	public void startRound() {
 		
-		roundGame = new RoundGame(players, this.deck, panels);	
+		roundGame = new RoundGame(players, this.deck);	
 		roundGame.startRound();
 		
 	}
 	
-	public void startMatch() {
-		
-//	/*	try {*/
-//			
-//			validateStartMatch(); 
-//			for (Player player : players)
-//				player.setMatch(this);
-//			startRound();
-//			
-//	/*	}catch(Exception exception) {
-//			exception.getMessage();
-//		}*/
+	public void run() {
+
+		for (Player player : players)
+			player.setMatch(this);
+		startRound();
 	}
 	
 }

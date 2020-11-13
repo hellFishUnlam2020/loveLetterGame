@@ -41,6 +41,7 @@ public class GameScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(screenDim.width, screenDim.height);
 		setLocationRelativeTo(null);
+		getContentPane().setLayout(null);
 		
 		getContentPane().add(new MainMenu(this, player));
 	}
