@@ -38,6 +38,6 @@ public class King extends Card {
 	
 	@Override
 	public String getCardImageName() {
-		return "/images/cards/Rey.png";
+		return "/images/card6Rey.png";
 	}
 }

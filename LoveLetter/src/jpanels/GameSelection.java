@@ -59,7 +59,7 @@ public class GameSelection extends JPanel{
 	
 	private void addBackground() {
 		
-		ImageIcon back = new ImageIcon(GameSelection.class.getResource("/images/gameMode/gameMode.png"));
+		ImageIcon back = new ImageIcon(GameSelection.class.getResource("/images/selectMode.png"));
 		Image scaledBack = back.getImage().getScaledInstance((int)Math.ceil(aspectRelX*back.getIconWidth()), (int)Math.ceil(aspectRelY*back.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		backgroundLabel = new JLabel();
@@ -69,9 +69,28 @@ public class GameSelection extends JPanel{
 		
 	}
 	
+	private void addSingClass() {
+		ImageIcon singIcon = new ImageIcon(GameSelection.class.getResource("/images/selectClass.png"));
+		
+		Image scaledSingIcon = singIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*singIcon.getIconWidth()), (int)Math.ceil(aspectRelY*singIcon.getIconHeight()), Image.SCALE_SMOOTH);
+		
+		JButton singClass = new JButton();
+		createButton(singClass);
+		singClass.setIcon(new ImageIcon(scaledSingIcon));
+		singClass.setBounds((int)Math.ceil(795*aspectRelX), (int)Math.ceil(381*aspectRelY), singClass.getIcon().getIconWidth(), singClass.getIcon().getIconHeight());
+		singClass.setToolTipText("Back");
+		singClass.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				createJoin();
+			}
+		});
+		add(singClass);
+	}
+	
 	public void addBackButton() {
 		
-		ImageIcon backIcon = new ImageIcon(GameSelection.class.getResource("/images/gameMode/back.png"));
+		ImageIcon backIcon = new ImageIcon(GameSelection.class.getResource("/images/createBack.png"));
 		Image scaledBackIcon = backIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*backIcon.getIconWidth()), (int)Math.ceil(aspectRelY*backIcon.getIconHeight()), Image.SCALE_SMOOTH);
 				
 		JButton backButton = new JButton();
@@ -92,27 +111,9 @@ public class GameSelection extends JPanel{
 		add(backButton);
 	}
 	
-	private void addSingClass() {
-		ImageIcon singIcon = new ImageIcon(GameSelection.class.getResource("/images/gameMode/singleClass.png"));
-		
-		Image scaledSingIcon = singIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*singIcon.getIconWidth()), (int)Math.ceil(aspectRelY*singIcon.getIconHeight()), Image.SCALE_SMOOTH);
-				
-		JButton singClass = new JButton();
-		createButton(singClass);
-		singClass.setIcon(new ImageIcon(scaledSingIcon));
-		singClass.setBounds((int)Math.ceil(795*aspectRelX), (int)Math.ceil(381*aspectRelY), singClass.getIcon().getIconWidth(), singClass.getIcon().getIconHeight());
-		singClass.setToolTipText("Back");
-		singClass.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				createJoin();
-			}
-		});
-		add(singClass);
-	}
 	
 	private void addL2pButton() {
-		ImageIcon l2pIcon = new ImageIcon(GameSelection.class.getResource("/images/gameMode/l2p.png"));
+		ImageIcon l2pIcon = new ImageIcon(GameSelection.class.getResource("/images/selectLearn.png"));
 		
 		Image scaledL2pIcon = l2pIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*l2pIcon.getIconWidth()), (int)Math.ceil(aspectRelY*l2pIcon.getIconHeight()), Image.SCALE_SMOOTH);
 				
@@ -124,14 +125,14 @@ public class GameSelection extends JPanel{
 		l2pButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				createJoin();
+//				createJoin();
 			}
 		});
 		add(l2pButton);
 	}
 	
 	private void addPrivMulti() {
-		ImageIcon privIcon = new ImageIcon(GameSelection.class.getResource("/images/gameMode/privateMulti.png"));
+		ImageIcon privIcon = new ImageIcon(GameSelection.class.getResource("/images/selectPrivMulti.png"));
 		
 		Image scaledPrivIcon = privIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*privIcon.getIconWidth()), (int)Math.ceil(aspectRelY*privIcon.getIconHeight()), Image.SCALE_SMOOTH);
 				
@@ -143,13 +144,13 @@ public class GameSelection extends JPanel{
 		privMulti.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				createJoin();
+//				createJoin();
 			}
 		});
 		add(privMulti);
 	}
 	private void addPubMulti() {
-		ImageIcon pubIcon = new ImageIcon(GameSelection.class.getResource("/images/gameMode/publicMulti.png"));
+		ImageIcon pubIcon = new ImageIcon(GameSelection.class.getResource("/images/selectPubMulti.png"));
 		
 		Image scaledPubIcon = pubIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*pubIcon.getIconWidth()), (int)Math.ceil(aspectRelY*pubIcon.getIconHeight()), Image.SCALE_SMOOTH);
 				
@@ -161,8 +162,7 @@ public class GameSelection extends JPanel{
 		pubMulti.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
-				createJoin();
+//				createJoin();
 			}
 		});
 		add(pubMulti);
@@ -174,7 +174,7 @@ public class GameSelection extends JPanel{
 			gameFrame.remove(comp);
 		}
 		
-		gameFrame.getContentPane().add(new CreateJoin(gameFrame, player));
+		gameFrame.getContentPane().add(new CreateGame(gameFrame, player));
 	}
 	
 	private void createButton(JButton button) {

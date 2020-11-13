@@ -63,7 +63,7 @@ public class MainMenu extends JPanel implements CardEligible{
 	
 	private void addBackLabel() {
 		
-		ImageIcon backMain = new ImageIcon(MainMenu.class.getResource("/images/mainMenu/main.png"));
+		ImageIcon backMain = new ImageIcon(MainMenu.class.getResource("/images/main.png"));
 		Image scaledBack = backMain.getImage().getScaledInstance(screenDim.width, screenDim.height, Image.SCALE_SMOOTH);
 		
 		JLabel backgroundImage = new JLabel("");
@@ -74,7 +74,7 @@ public class MainMenu extends JPanel implements CardEligible{
 	
 	private void addPlayButton() {
 		
-		ImageIcon play = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/play.png"));
+		ImageIcon play = new ImageIcon(GameScreen.class.getResource("/images/mainPlay.png"));
 		Image scaledPlay = play.getImage().getScaledInstance((int)Math.ceil(aspectRelY*play.getIconWidth()), (int)Math.ceil(aspectRelX*play.getIconHeight()), Image.SCALE_SMOOTH);				
 
 		JButton playButton = new JButton("");
@@ -98,7 +98,7 @@ public class MainMenu extends JPanel implements CardEligible{
 	}
 	
 	private void addStatsButton() {
-		ImageIcon stats = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/stats.png"));
+		ImageIcon stats = new ImageIcon(GameScreen.class.getResource("/images/mainStats.png"));
 		Image scaledStats = stats.getImage().getScaledInstance((int)Math.ceil(aspectRelX*stats.getIconWidth()), (int)Math.ceil(aspectRelY*stats.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		JButton statsButton = new JButton();
@@ -110,7 +110,7 @@ public class MainMenu extends JPanel implements CardEligible{
 	}
 	
 	private void addProfileButton() {
-		ImageIcon profile = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/profile.png"));
+		ImageIcon profile = new ImageIcon(GameScreen.class.getResource("/images/mainProfile.png"));
 		Image scaledProfile = profile.getImage().getScaledInstance((int)Math.ceil(aspectRelX*profile.getIconWidth()), (int)Math.ceil(aspectRelY*profile.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		JButton profileButton = new JButton("");
@@ -123,7 +123,7 @@ public class MainMenu extends JPanel implements CardEligible{
 	}	
 
 	private void addConfigButton() {
-		ImageIcon config = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/config.png"));
+		ImageIcon config = new ImageIcon(GameScreen.class.getResource("/images/mainConfig.png"));
 		Image scaledConfig = config.getImage().getScaledInstance((int)Math.ceil(aspectRelX*config.getIconWidth()), (int)Math.ceil(aspectRelY*config.getIconHeight()), Image.SCALE_SMOOTH);
 
 		JButton configButton = new JButton("");
@@ -141,7 +141,7 @@ public class MainMenu extends JPanel implements CardEligible{
 	} 
 	
 	private void addExitBuuton() {
-		ImageIcon exit = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/exit.png"));
+		ImageIcon exit = new ImageIcon(GameScreen.class.getResource("/images/mainExit.png"));
 		Image scaledExit = exit.getImage().getScaledInstance((int)Math.ceil(aspectRelX*exit.getIconWidth()), (int)Math.ceil(aspectRelY*exit.getIconHeight()), Image.SCALE_SMOOTH);
 
 		JButton exitButton = new JButton("");
@@ -159,7 +159,7 @@ public class MainMenu extends JPanel implements CardEligible{
 	}
 	
 	private void addShowCardsButton() {
-		ImageIcon dados = new ImageIcon(GameScreen.class.getResource("/images/mainMenu/cards.png"));
+		ImageIcon dados = new ImageIcon(GameScreen.class.getResource("/images/mainCards.png"));
 		Image scaledDados = dados.getImage().getScaledInstance((int)Math.ceil(aspectRelX*dados.getIconWidth()), (int)Math.ceil(aspectRelY*dados.getIconHeight()), Image.SCALE_SMOOTH);
 
 		JButton showCardsButton = new JButton("");	

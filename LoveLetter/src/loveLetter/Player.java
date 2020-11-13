@@ -6,13 +6,14 @@ import java.util.List;
 import cards.Card;
 
 public class Player implements Comparable<Player> {
+	
 	private String name;
 	private int matchPoints;
 	private Status status;
 	private List<Card> cards = new LinkedList<Card>();
 	private int cantRoundPlayedCards;
 	private Match match;
-
+	
 	public Match getMatch() {
 		return match;
 	}

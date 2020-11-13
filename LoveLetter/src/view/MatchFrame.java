@@ -4,12 +4,13 @@ import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 
 import jpanels.BoardPanel;
-import loveLetter.Match;
+import jpanels.PlayerPanel;
 import loveLetter.Player;
 
 public class MatchFrame extends JFrame {
@@ -18,13 +19,11 @@ public class MatchFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -8952160177980476586L;
-	private Match match;
 	private Dimension screenDim;
+	private ArrayList<PlayerPanel> panels = new ArrayList<PlayerPanel>(3);
 	
-	public MatchFrame(List<Player>players) {
-		
-		match = new Match(players, 5);
-		
+	public MatchFrame(List<Player>players, int aff) {
+			
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		screenDim = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
 	
@@ -35,7 +34,14 @@ public class MatchFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(screenDim.width, screenDim.height);
 		setLocationRelativeTo(null);
+		getContentPane().setLayout(null);
 		
-		getContentPane().add(new BoardPanel(this, match));
+		for (int i = 0; i < players.size(); i++) {
+			panels.add(new PlayerPanel(players.get(i), i, aff, this));
+			getContentPane().add(panels.get(i));
+		}
+		
+		getContentPane().add(new BoardPanel(this));
 	}
+	
 }

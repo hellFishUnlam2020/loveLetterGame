@@ -17,9 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import loveLetter.Match;
 import loveLetter.Player;
 import view.GameScreen;
+import view.MatchFrame;
 
 public class LobbyPanel extends JPanel{
 	
@@ -55,8 +55,7 @@ public class LobbyPanel extends JPanel{
 		addBackButton();
 		addConfigButton();
 		addPlayer(1254, 530);
-		addPlayer(1254, 624);
-		addPlayer(1254, 718);
+		
 		setComponentZOrder(backgroundLabel, getComponentCount()-1);
 		
 		frame.repaint();
@@ -64,7 +63,7 @@ public class LobbyPanel extends JPanel{
 	
 	private void addBackgroundLabel() {
 		
-		ImageIcon back = new ImageIcon(GameSelection.class.getResource("/images/lobby/emptyLobby.png"));
+		ImageIcon back = new ImageIcon(GameSelection.class.getResource("/images/lobby.png"));
 		Image scaledBack = back.getImage().getScaledInstance((int)Math.ceil(aspectRelX*back.getIconWidth()), (int)Math.ceil(aspectRelY*back.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		backgroundLabel = new JLabel();
@@ -74,7 +73,7 @@ public class LobbyPanel extends JPanel{
 	}
 	
 	private void addInvalidStart() {
-		ImageIcon invalidStar = new ImageIcon(GameSelection.class.getResource("/images/lobby/invalidStart.png"));
+		ImageIcon invalidStar = new ImageIcon(GameSelection.class.getResource("/images/lobbyinvalid.png"));
 		Image scaledInvalid = invalidStar.getImage().getScaledInstance((int)Math.ceil(aspectRelX*invalidStar.getIconWidth()), (int)Math.ceil(aspectRelY*invalidStar.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		invalidButton = new JButton();
@@ -86,7 +85,7 @@ public class LobbyPanel extends JPanel{
 	}
 	
 	private void addValidStart() {
-		ImageIcon validStar = new ImageIcon(GameSelection.class.getResource("/images/lobby/validStart.png"));
+		ImageIcon validStar = new ImageIcon(GameSelection.class.getResource("/images/lobbyValid.png"));
 		Image scaledValid = validStar.getImage().getScaledInstance((int)Math.ceil(aspectRelX*validStar.getIconWidth()), (int)Math.ceil(aspectRelY*validStar.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		validButton = new JButton();
@@ -97,7 +96,8 @@ public class LobbyPanel extends JPanel{
 		validButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new Match(players, 5);
+				new MatchFrame(players, 5);
+				frame.dispose();
 			}
 		});
 		add(validButton);
@@ -105,7 +105,7 @@ public class LobbyPanel extends JPanel{
 	
 	private void addBackButton() {
 		
-		ImageIcon backIcon = new ImageIcon(GameSelection.class.getResource("/images/gameMode/back.png"));
+		ImageIcon backIcon = new ImageIcon(GameSelection.class.getResource("/images/back.png"));
 		Image scaledBackIcon = backIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*backIcon.getIconWidth()), (int)Math.ceil(aspectRelY*backIcon.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		JButton backButton = new JButton();
@@ -125,7 +125,7 @@ public class LobbyPanel extends JPanel{
 	
 	private void addConfigButton() {
 		
-		ImageIcon configIcon = new ImageIcon(GameSelection.class.getResource("/images/gameMode/config.png"));
+		ImageIcon configIcon = new ImageIcon(GameSelection.class.getResource("/images/config2.png"));
 		Image scaledConfigIcon = configIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*configIcon.getIconWidth()), (int)Math.ceil(aspectRelY*configIcon.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		JButton configButton = new JButton();
@@ -144,8 +144,9 @@ public class LobbyPanel extends JPanel{
 	
 	private void addPlayer(int x, int y) {
 		
-		String[]nombres = {"Matias", "Nicolas", "Esteban"};
-		ImageIcon backIcon = new ImageIcon(getClass().getResource("/images/gameMode/back.png"));
+		String nombre = "Matias";
+		
+		ImageIcon backIcon = new ImageIcon(getClass().getResource("/images/back.png"));
 		Image scaledBackIcon = backIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*backIcon.getIconWidth()), (int)Math.ceil(aspectRelY*backIcon.getIconHeight()), Image.SCALE_SMOOTH);
 	
 		JButton addButton = new JButton();
@@ -155,7 +156,7 @@ public class LobbyPanel extends JPanel{
 		addButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				addPlayer(new Player(nombres[players.size()-1]));
+				addPlayer(new Player(nombre));
 			}
 		});
 		add(addButton);
@@ -172,7 +173,7 @@ public class LobbyPanel extends JPanel{
 	
 	private void add1stPlayer() {
 										
-		ImageIcon im1 = new ImageIcon(LobbyPanel.class.getResource("/images/lobby/player1.png"));
+		ImageIcon im1 = new ImageIcon(LobbyPanel.class.getResource("/images/lobbyP1.png"));
 		Image scaled1 = im1.getImage().getScaledInstance((int)Math.ceil(aspectRelX*im1.getIconWidth()), (int)Math.ceil(aspectRelY*im1.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		JLabel backLabel = new JLabel();
@@ -191,8 +192,8 @@ public class LobbyPanel extends JPanel{
 	}
 	
 	private void add2ndPlayer() {
-	
-		ImageIcon im2 = new ImageIcon(LobbyPanel.class.getResource("/images/lobby/player2.png"));
+		
+		ImageIcon im2 = new ImageIcon(LobbyPanel.class.getResource("/images/lobbyP2.png"));
 		Image scaled2 = im2.getImage().getScaledInstance((int)Math.ceil(aspectRelX*im2.getIconWidth()), (int)Math.ceil(aspectRelY*im2.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		JLabel backLabel = new JLabel();
@@ -212,59 +213,12 @@ public class LobbyPanel extends JPanel{
 		invalidButton.setVisible(false);
 	}
 	
-	private void add3rdPlayer() {
-		
-		ImageIcon im3 = new ImageIcon(LobbyPanel.class.getResource("/images/lobby/player3.png"));
-		Image scaled3 = im3.getImage().getScaledInstance((int)Math.ceil(aspectRelX*im3.getIconWidth()), (int)Math.ceil(aspectRelY*im3.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		JLabel backLabel = new JLabel();
-		backLabel.setIcon(new ImageIcon(scaled3));
-		backLabel.setBounds((int)Math.ceil(759*aspectRelX), (int)Math.ceil(600*aspectRelY), backLabel.getIcon().getIconWidth(), backLabel.getIcon().getIconHeight());
-			
-		JLabel nombreLabel = new JLabel(players.get(2).getName());
-		nombreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		nombreLabel.setFont(new Font("Vivaldi", Font.BOLD | Font.ITALIC, 25));
-		nombreLabel.setForeground(Color.black);
-		nombreLabel.setBounds((int)Math.ceil(858*aspectRelX), (int)Math.ceil(624*aspectRelY), (int)Math.ceil(288*aspectRelY), (int)Math.ceil(37*aspectRelY));
-	
-		add(nombreLabel);
-		add(backLabel);
-	}
-	
-	private void add4thPlayer() {
-
-		ImageIcon im2 = new ImageIcon(LobbyPanel.class.getResource("/images/lobby/player4.png"));
-		Image scaled2 = im2.getImage().getScaledInstance((int)Math.ceil(aspectRelX*im2.getIconWidth()), (int)Math.ceil(aspectRelY*im2.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		JLabel backLabel = new JLabel();
-		backLabel.setIcon(new ImageIcon(scaled2));
-		backLabel.setBounds((int)Math.ceil(759*aspectRelX), (int)Math.ceil(694*aspectRelY), backLabel.getIcon().getIconWidth(), backLabel.getIcon().getIconHeight());
-		
-		
-		JLabel nombreLabel = new JLabel(players.get(3).getName());
-		nombreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		nombreLabel.setFont(new Font("Vivaldi", Font.BOLD | Font.ITALIC, 20));
-		nombreLabel.setForeground(Color.black);
-		nombreLabel.setBounds((int)Math.ceil(858*aspectRelX), (int)Math.ceil(718*aspectRelY), (int)Math.ceil(288*aspectRelY), (int)Math.ceil(37*aspectRelY));
-		
-		add(nombreLabel);
-		add(backLabel);
-	}
-	
 	public void refresh() {
-		switch (players.size()) {
-		case 1:
+		
+		if(players.size() == 1)
 			add1stPlayer();
-			break;
-		case 2:
-			add2ndPlayer();
-			break;
-		case 3:
-			add3rdPlayer();
-			break;
-		case 4:
-			add4thPlayer();
-			break;
+		else {
+			add2ndPlayer();			
 		}
 		setComponentZOrder(backgroundLabel, getComponentCount()-1);
 		repaint();

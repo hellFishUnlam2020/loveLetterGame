@@ -3,9 +3,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import jpanels.PlayerPanel;
+
 public class Match {
 
-	private List<Player> players = new ArrayList<Player>();
+	private List<Player> players;
 	private int affectionTokens; // la cantidad configurada que se debe tener para ganar la partida
 	private static final int MIN_TOKENS = 2;
 	private static final int MAX_TOKENS = 10; // que limite ponemos?
@@ -14,18 +16,19 @@ public class Match {
 	private static final int MAX_PLAYERS = 4;
 	private Deck deck = new Deck();
 	private RoundGame roundGame;
-
-	public Match(List<Player> playersList, int affecTok) { //obligatorios para comenzar la partida
-																
-		try {
-
-			validateAffectionTokens(affecTok);
-			setAffectionTokens(affecTok);
-			setPlayers(playersList);
-
-		} catch (Exception exception) {
-			exception.getMessage();
-		}
+	
+	public Match(List<Player> players, int affecTok) { //obligatorios para comenzar la partida	
+		
+		this.affectionTokens = affecTok;
+		this.players = players;
+		
+//		try {
+//			validateAffectionTokens(affecTok);
+//			setAffectionTokens(affecTok);
+//
+//		} catch (Exception exception) {
+//			exception.getMessage();
+//		}
 	}
 
 	public List<Player> getPlayers() {
@@ -80,24 +83,25 @@ public class Match {
 
 	}
 	
-	public void startRound() {
+	public void startRound(ArrayList<PlayerPanel>panels) {
 		
-		roundGame = new RoundGame(players, this.deck);	
+		roundGame = new RoundGame(players, this.deck, panels);	
 		roundGame.startRound();
-		System.out.println(roundGame.getRoundWinner());
+		
 	}
 	
 	public void startMatch() {
 		
-	/*	try {
-			
-			validateStartMatch(); */
-			for (Player player : players)
-				player.setMatch(this);
-			
-	/*	}catch(Exception exception) {
-			exception.getMessage();
-		}*/
+//	/*	try {*/
+//			
+//			validateStartMatch(); 
+//			for (Player player : players)
+//				player.setMatch(this);
+//			startRound();
+//			
+//	/*	}catch(Exception exception) {
+//			exception.getMessage();
+//		}*/
 	}
 	
 }
