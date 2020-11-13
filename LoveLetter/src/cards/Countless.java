@@ -31,9 +31,9 @@ public class Countless extends Card {
 
 	@Override
 	public String getCardImageName() {
-		return "/images/Condesa.png";
+		return "/images/card7Condesa.png";
 	}
-
+	
 	@Override
 	public void play(Player currentPlayer) {
 
@@ -43,7 +43,6 @@ public class Countless extends Card {
 
 	@Override
 	public void applyEffect(Player currentPlayer, Player targetPlayer) {
-
 		
 	}
 }

@@ -50,7 +50,7 @@ public class Princess extends Card {
 	
 	@Override
 	public String getCardImageName() {
-		return "/images/Princesa.png";
+		return "/images/card8Princesa.png";
 	}
 
 

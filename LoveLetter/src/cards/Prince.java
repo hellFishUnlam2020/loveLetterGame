@@ -33,9 +33,9 @@ public class Prince extends Card {
 
 	@Override
 	public String getCardImageName() {
-		return "/images/Principe.png";
+		return "/images/card5Principe.png";
 	}
-
+	
 	@Override
 	public void play(Player currentPlayer) {
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
@@ -51,6 +51,5 @@ public class Prince extends Card {
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
 		admin.discardCardsFromPlayer(targetPlayer);
 		admin.dealCardForPlayer(targetPlayer);
-		
 	}
 }

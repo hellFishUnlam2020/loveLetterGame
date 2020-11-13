@@ -1,11 +1,10 @@
-package loveLetter;
+ package loveLetter;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Match {
+public class Match extends Thread{
 
-	private List<Player> players = new ArrayList<Player>();
+	private List<Player> players;
 	private int affectionTokens; // la cantidad configurada que se debe tener para ganar la partida
 	private static final int MIN_TOKENS = 2;
 	private static final int MAX_TOKENS = 10; // que limite ponemos?
@@ -17,18 +16,11 @@ public class Match {
 	
 
 	private RoundGame roundGame;
-
-	public Match(List<Player> playersList, int affecTok) { //obligatorios para comenzar la partida
-																
-		try {
-
-			validateAffectionTokens(affecTok);
-			setAffectionTokens(affecTok);
-			setPlayers(playersList);
-
-		} catch (Exception exception) {
-			exception.getMessage();
-		}
+	
+	public Match(List<Player> players, int affecTok) { //obligatorios para comenzar la partida	
+		
+		this.affectionTokens = affecTok;
+		this.players = players;
 	}
 
 	public List<Player> getPlayers() {
@@ -91,20 +83,14 @@ public class Match {
 		
 		roundGame = new RoundGame(players, this.deck);	
 		roundGame.startRound();
-		System.out.println(roundGame.getRoundWinner());
+		
 	}
 	
-	public void startMatch() {
-		
-	/*	try {
-			
-			validateStartMatch(); */
-			for (Player player : players)
-				player.setMatch(this);
-			
-	/*	}catch(Exception exception) {
-			exception.getMessage();
-		}*/
+	public void run() {
+
+		for (Player player : players)
+			player.setMatch(this);
+		startRound();
 	}
 	
 }

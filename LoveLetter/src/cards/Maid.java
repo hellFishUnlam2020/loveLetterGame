@@ -6,7 +6,7 @@ import loveLetter.RuleAdmin;
 public class Maid extends Card {
 	@Override
 	public String getName() {
-		return "Mucama";
+		return "Sirvienta";
 	}
 
 	@Override
@@ -46,6 +46,6 @@ public class Maid extends Card {
 
 	@Override
 	public String getCardImageName() {
-		return "/images/Sirvienta.png";
+		return "/images/card4Sirvienta.png";
 	}
 }

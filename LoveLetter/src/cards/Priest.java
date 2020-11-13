@@ -6,7 +6,7 @@ import loveLetter.RuleAdmin;
 public class Priest extends Card {
 	@Override
 	public String getName() {
-		return "Sacerdote";
+		return "Espia";
 	}
 
 	@Override
@@ -31,9 +31,9 @@ public class Priest extends Card {
 
 	@Override
 	public String getCardImageName() {
-		return "/images/Espia.png";
+		return "/images/card2Espia.png";
 	}
-
+	
 	@Override
 	public void play(Player currentPlayer) {
 		
@@ -48,6 +48,5 @@ public class Priest extends Card {
 	
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
 		admin.showPlayerCards(targetPlayer);
-		
 	}
 }
