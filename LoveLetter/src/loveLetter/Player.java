@@ -86,13 +86,37 @@ public class Player implements Comparable<Player> {
 		addCard(card);
 	}
 
+	public void discardCard(Card card) {
+		
+		this.getCards().remove(card);
+	}
+	
 	public void playCard() {
+
+		// Un approach
 
 		while(label.getCardSelected() == null) {
 			
 		}
 		Card card = label.getCardSelected();
-//		card.play();
+		card.play(this);  //Agrego el jugador que debe la juega
+
+		//---------------------------------------------
+		
+	
+		// otro approach
+		
+		/*
+		 * aca deberiamos seleccionar una carta de las 2 que tenemos en mano, por el
+		 * momento elegimos siempre la primera
+		 */
+		
+//		RuleAdmin admin = RuleAdmin.getRuleadmin();
+//		Card cardChoosed = admin.chooseCard(this);
+//		cardChoosed.play(this); //el metodo play recibe el currentPlayer 
+
+		//---------------------------------------------
+		
 		this.cantRoundPlayedCards++;
 	}
 

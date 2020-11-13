@@ -45,4 +45,5 @@ public class GameScreen extends JFrame {
 		
 		getContentPane().add(new MainMenu(this, player));
 	}
+
 }

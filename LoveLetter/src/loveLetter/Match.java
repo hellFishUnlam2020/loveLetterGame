@@ -12,6 +12,9 @@ public class Match extends Thread{
 	private static final int MIN_PLAYERS = 2;
 	private static final int MAX_PLAYERS = 4;
 	private Deck deck = new Deck();
+	
+	
+
 	private RoundGame roundGame;
 	
 	public Match(List<Player> players, int affecTok) { //obligatorios para comenzar la partida	
@@ -42,6 +45,10 @@ public class Match extends Thread{
 
 	public static int getMaxTokens() {
 		return MAX_TOKENS;
+	}
+	
+	public Deck getDeck() {
+		return deck;
 	}
 
 	private void addPlayerToMatch(Player player) {

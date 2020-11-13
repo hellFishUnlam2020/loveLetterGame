@@ -1,6 +1,7 @@
 package cards;
 
 import loveLetter.Player;
+import loveLetter.RuleAdmin;
 
 public class Priest extends Card {
 	@Override
@@ -29,12 +30,23 @@ public class Priest extends Card {
 	}
 
 	@Override
-	public void play(Player player, Card card) {
-		// TODO Add actions		
+	public String getCardImageName() {
+		return "/images/card2Espia.png";
+	}
+	
+	@Override
+	public void play(Player currentPlayer) {
+		
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		Player targetPlayer = admin.choosePlayer();
+	
+		applyEffect(currentPlayer,targetPlayer);
 	}
 
 	@Override
-	public String getCardImageName() {
-		return "/images/card2Espia.png";
+	public void applyEffect(Player currentPlayer, Player targetPlayer) {
+	
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		admin.showPlayerCards(targetPlayer);
 	}
 }

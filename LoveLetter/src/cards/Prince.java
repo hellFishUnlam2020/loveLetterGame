@@ -1,6 +1,7 @@
 package cards;
 
 import loveLetter.Player;
+import loveLetter.RuleAdmin;
 
 public class Prince extends Card {
 	@Override
@@ -25,19 +26,30 @@ public class Prince extends Card {
 
 	@Override
 	public boolean isPlayable() {
-		//TODO check for a Countless
-		//Its not playable when the player has a Countless
+		// TODO check for a Countless
+		// Its not playable when the player has a Countless
 		return true;
-	}
-
-	@Override
-	public void play(Player player, Card card) {
-		// TODO Add actions
-		
 	}
 
 	@Override
 	public String getCardImageName() {
 		return "/images/card5Principe.png";
+	}
+	
+	@Override
+	public void play(Player currentPlayer) {
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		Player targetPlayer = admin.choosePlayer();
+
+		applyEffect(currentPlayer, targetPlayer);
+
+	}
+
+	@Override
+	public void applyEffect(Player currentPlayer, Player targetPlayer) {
+
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		admin.discardCardsFromPlayer(targetPlayer);
+		admin.dealCardForPlayer(targetPlayer);
 	}
 }

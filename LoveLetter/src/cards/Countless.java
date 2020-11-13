@@ -3,6 +3,7 @@ package cards;
 import loveLetter.Player;
 
 public class Countless extends Card {
+
 	@Override
 	public String getName() {
 		return "Condesa";
@@ -29,12 +30,19 @@ public class Countless extends Card {
 	}
 
 	@Override
-	public void play(Player player, Card card) {
-		// TODO Add actions
+	public String getCardImageName() {
+		return "/images/card7Condesa.png";
+	}
+	
+	@Override
+	public void play(Player currentPlayer) {
+
+		//habria que controlar que cada carta que se levanta
+		
 	}
 
 	@Override
-	public String getCardImageName() {
-		return "/images/card7Condesa.png";
+	public void applyEffect(Player currentPlayer, Player targetPlayer) {
+		
 	}
 }

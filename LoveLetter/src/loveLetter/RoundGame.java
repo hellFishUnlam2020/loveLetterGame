@@ -2,6 +2,8 @@ package loveLetter;
 
 import java.util.List;
 
+import cards.Card;
+
 public class RoundGame {
 
 	private List<Player> players;
@@ -71,10 +73,24 @@ public class RoundGame {
 
 	private void playTurn() {
 		Player turnPlayer = peekAPlayer();
-
-		turnPlayer.addCard(deck.popCard());
-
+		
+		// TODO: El jugador debe elegir la carta. Fake
+		Card cardChoosed = deck.popCard();
+		
+		turnPlayer.addCard(cardChoosed);
 		turnPlayer.playCard();
+
+		/*Por cada carta que se levanta del mazo deberia comprobarse si el jugador posee
+		 * la Condesa+Principe o Condesa+Rey. De ser asi, se juega la Condesa obligatoriamente.
+		 * 
+		 * RuleAdmin admin = RuleAdmin.getRuleadmin();
+		 * if( admin.playerHasCountessCard(turnPlayer) )
+		 * 		if(admin.playerHasToPlayCountessCard(turnPlayer)){
+		 * 						
+		 * 				card.play();
+		 * 			}	
+		 * 		}
+		 */
 
 		//cardChoosed.play();
 //		eliminatePlayerFromRound(turnPlayer); // Despues de jugar se elimina(Solo para Tests)
