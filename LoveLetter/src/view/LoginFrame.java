@@ -244,7 +244,7 @@ public class LoginFrame extends JFrame implements UserLoggable{
 	@Override
 	public void userLogged(String name) {
 		player = new Player(name);
-		new GameScreen(player).setVisible(true);;
+		new GameScreen(player).setVisible(true);
 	}
 }
 

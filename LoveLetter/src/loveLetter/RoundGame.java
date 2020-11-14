@@ -2,7 +2,7 @@ package loveLetter;
 
 import java.util.List;
 
-import cards.Card;
+import org.junit.rules.DisableOnDebug;
 
 public class RoundGame {
 
@@ -62,6 +62,10 @@ public class RoundGame {
 		return winnerPlayer;
 	}
 
+	public List<Player> getPlayers(){
+		return players;
+	}
+	
 	private void nextTurn() {
 		
 		while (playersInRound > 1 && deck.getRemainingCards() > 0) {
@@ -72,14 +76,29 @@ public class RoundGame {
 	}
 
 	private void playTurn() {
-		Player turnPlayer = peekAPlayer();
+		int index = peekAPlayer();
+		
+		players.get(index).setTurn(true);
+		
+		for(int i = 0; i < players.size(); i++) {
+			if(i != index) {
+				players.get(i).setTurn(false);
+			}
+		}
 		
 		// TODO: El jugador debe elegir la carta. Fake
-		Card cardChoosed = deck.popCard();
-		
-		turnPlayer.addCard(cardChoosed);
-		turnPlayer.playCard();
+		players.get(index).addCard(deck.popCard());
+		players.get(index).playCard();
 
+		for(int i = 0; i < players.size(); i++) {
+			if(i != index) {
+				players.get(i).setProteced(false);
+			}
+			if(players.get(i).getStatus() == Status.DISABLE) {
+				eliminatePlayerFromRound(players.get(i));
+			}
+		}
+		
 		/*Por cada carta que se levanta del mazo deberia comprobarse si el jugador posee
 		 * la Condesa+Principe o Condesa+Rey. De ser asi, se juega la Condesa obligatoriamente.
 		 * 
@@ -106,18 +125,24 @@ public class RoundGame {
 		winner = getRoundWinner();
 		// TODO: actualizarle los puntos.
 		winner.increaseMatchPoint();
+		winner.setAsWinner();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
-	private Player peekAPlayer() {
+	private int peekAPlayer() {
 		playerPlaying++;
 		if (playerPlaying >= this.players.size()) {
 			playerPlaying = 0;
 		}
-		return this.players.get(playerPlaying);
+		return playerPlaying;
 	}
 
 	public void eliminatePlayerFromRound(Player player) {
-		this.players.remove(player);
+		 players.remove(player);
 		playersInRound--;
 	}
 

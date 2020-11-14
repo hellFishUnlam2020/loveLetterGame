@@ -102,23 +102,23 @@ public class CardTest {
 		assertEquals(pOne.getStatus(),Status.PROTECTED);
 	}
 
-	@Test
-	public void playerDiscardCardsTest() { //Test Prince
-	 	
-		PlayerFake pOne = createPlayer("player one");
-		Card princeCard = new Prince();
-		Match match = new Match(new ArrayList<Player>(),4 );
-		match.getDeck().createCards();
-		
-		pOne.addCard(new Maid());
-		pOne.setMatch(match);
-		
-		assertEquals(pOne.getCards().get(0).getType(),CardType.maid);
-		
-		princeCard.applyEffect(null, pOne);
-			
-		assertNotEquals(pOne.getCards().get(0).getType(),CardType.maid);
-	}
+//	@Test
+//	public void playerDiscardCardsTest() { //Test Prince
+//	 	
+//		PlayerFake pOne = createPlayer("player one");
+//		Card princeCard = new Prince();
+//		Match match = new Match(new ArrayList<Player>(),4 );
+//		match.getDeck().createCards();
+//		
+//		pOne.addCard(new Maid());
+//		pOne.setMatch(match);
+//		
+//		assertEquals(pOne.getCards().get(0).getType(),CardType.maid);
+//		
+//		princeCard.applyEffect(null, pOne);
+//			
+//		assertNotEquals(pOne.getCards().get(0).getType(),CardType.maid);
+//	}
 	
 	
 }

@@ -1,6 +1,9 @@
  package loveLetter;
 
+import java.awt.event.WindowEvent;
 import java.util.List;
+
+import view.MatchFrame;
 
 public class Match extends Thread{
 
@@ -12,13 +15,14 @@ public class Match extends Thread{
 	private static final int MIN_PLAYERS = 2;
 	private static final int MAX_PLAYERS = 4;
 	private Deck deck = new Deck();
-	
-	
+
+	private MatchFrame frame;
 
 	private RoundGame roundGame;
 	
-	public Match(List<Player> players, int affecTok) { //obligatorios para comenzar la partida	
+	public Match(List<Player> players, int affecTok, MatchFrame frame) { //obligatorios para comenzar la partida	
 		
+		this.frame = frame;
 		this.affectionTokens = affecTok;
 		this.players = players;
 	}
@@ -91,6 +95,7 @@ public class Match extends Thread{
 		for (Player player : players)
 			player.setMatch(this);
 		startRound();
+		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 	}
 	
 }

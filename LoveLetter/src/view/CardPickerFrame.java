@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import cards.Card;
-import viewCommunication.CardEligible;
+import viewCommunication.CardElegible;
 
 public class CardPickerFrame extends JFrame {
 
@@ -27,9 +27,9 @@ public class CardPickerFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = -4486080160427752361L;
 	private Card [] cards;
-	private CardEligible cardEligile;
+	private CardElegible cardEligile;
 	
-	public void setCardEligile(CardEligible cardEligile) {
+	public void setCardEligile(CardElegible cardEligile) {
 		this.cardEligile = cardEligile;
 	}
 
@@ -112,5 +112,6 @@ public class CardPickerFrame extends JFrame {
 	
 	public void cardElected(Card card) {
 		cardEligile.cardElected(card);
+		dispose();
 	}
 }

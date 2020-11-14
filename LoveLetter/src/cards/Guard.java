@@ -31,24 +31,32 @@ public class Guard extends Card {
 
 	@Override
 	public void play(Player currentPlayer) {
-		
+
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		Player targetPlayer = admin.choosePlayer();
-	
-		applyEffect(currentPlayer,targetPlayer);
+		Player targetPlayer = admin.choosePlayer(currentPlayer, false);
+
+		admin.resetElected();
+
+		applyEffect(currentPlayer, targetPlayer);
 	}
-	
+
 	@Override
 	public void applyEffect(Player currentPlayer, Player targetPlayer) {
 
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		String cardName = admin.chooseCardName(currentPlayer);	//enves de elegir un nombre de carta, podria ser elegir un type de carta
-		
-		if( targetPlayer.getCards().get(0).getName().contentEquals(cardName)) //verificamos si adivino la carta 
-			admin.disablePlayerFromRound(targetPlayer); //se deshabilita el player en la ronda
+		Card cardChoosed = admin.chooseCardName(currentPlayer); // enves de elegir un nombre de carta, podria ser elegir
+																// un type de carta
 
+		admin.resetCardElected();
+
+		if (!targetPlayer.isProtected()) {
+			for (Card card : targetPlayer.getCards()) { // verificamos si adivino la carta
+				if (card.getType() == cardChoosed.getType())
+					admin.disablePlayerFromRound(targetPlayer); // se deshabilita el player en la ronda
+			}
+		}
 	}
-	
+
 	@Override
 	public String getCardImageName() {
 		return "/images/card1Guardia.png";

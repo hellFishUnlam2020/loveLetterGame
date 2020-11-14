@@ -32,23 +32,34 @@ public class Baron extends Card {
 	@Override
 	public void play(Player currentPlayer) {
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		Player targetPlayer = admin.choosePlayer();
-	
-		applyEffect(currentPlayer,targetPlayer);
+		Player targetPlayer = admin.choosePlayer(currentPlayer, false);
+
+		admin.resetElected();
+
+		applyEffect(currentPlayer, targetPlayer);
 	}
-	
+
 	@Override
-	public void applyEffect(Player currentPlayer, Player targetPlayer){
-	
+	public void applyEffect(Player currentPlayer, Player targetPlayer) {
+
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		admin.showPlayerCards(currentPlayer);
-		admin.showPlayerCards(targetPlayer);
-		
-		if(currentPlayer.getCards().get(0).getLevel() > targetPlayer.getCards().get(0).getLevel())
-			admin.disablePlayerFromRound(targetPlayer);
-		else
-			admin.disablePlayerFromRound(currentPlayer);
-		
+
+		if (!targetPlayer.isProtected()) {
+			admin.showPlayerCards(targetPlayer);
+
+			int n = currentPlayer.getLabel().getNCardSelected();
+			
+			if(n==1)
+				n = 0;
+			else
+				n = 1;
+			
+			if (currentPlayer.getCards().get(n).getLevel() > targetPlayer.getCards().get(n).getLevel())
+				admin.disablePlayerFromRound(targetPlayer);
+			else
+				admin.disablePlayerFromRound(currentPlayer);
+		}
+
 	}
 
 	@Override

@@ -2,14 +2,19 @@ package loveLetter;
 
 import cards.Card;
 import cards.CardType;
-import cards.Guard;
+import view.CardPickerFrame;
+import view.PlayerPickerFrame;
+import viewCommunication.CardElegible;
+import viewCommunication.PlayerElegible;
 
-public class RuleAdmin {
+public class RuleAdmin implements PlayerElegible, CardElegible{
 
 	public static final RuleAdmin ruleAdmin = new RuleAdmin();
 	private RoundGame round;
 	private Board board;
-
+	private Player playerElected;
+	private Card cardEleceted;
+	
 	public Board getBoard() {
 		return board;
 	}
@@ -29,12 +34,30 @@ public class RuleAdmin {
 	public static RuleAdmin getRuleadmin() {
 		return ruleAdmin;
 	}
+	
+	public void resetElected() {
+		playerElected = null;
+	}
+	
+	public void resetCardElected() {
+		cardEleceted = null;
+	}
 
 	// Methods ejecutables desde las cartas
 
-	public Player choosePlayer() {
-		// Interfaz visual que nos devuelva lo que el user elije
-		return new Player("fake");
+	public Player choosePlayer(Player player, boolean val) {
+		
+		PlayerPickerFrame cpf = new PlayerPickerFrame(player.getMatch().getPlayers(), player, val);
+		cpf.setPlayerElegible(this);
+		
+		while(playerElected == null) {
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		return playerElected;
 	}
 
 	public Card chooseCard(Player player) {
@@ -43,7 +66,7 @@ public class RuleAdmin {
 		return card;
 	}
 
-	public String chooseCardName(Player currentPlayer) {
+	public Card chooseCardName(Player currentPlayer) {
 
 		/*
 		 * String cardName = getCardsNamesWithoutGuard(); -> mostrarle a currentPlayer y
@@ -53,7 +76,18 @@ public class RuleAdmin {
 		 * return cardName;
 		 */
 
-		return "Rey";
+		CardPickerFrame cfp = new CardPickerFrame(new Deck().getCards());
+		cfp.setCardEligile(this);
+		
+		while(cardEleceted == null) {
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return cardEleceted;
 	}
 
 	public void swapCardsBetweenPlayers(Player currentPlayer, Player targetPlayer) {
@@ -81,7 +115,13 @@ public class RuleAdmin {
 
 	public void showPlayerCards(Player player) {
 
-		player.getCards(); // mostrar las cartas por UI
+		player.setCardsVisible(true);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		player.setCardsVisible(false);
 
 	}
 
@@ -133,6 +173,17 @@ public class RuleAdmin {
 		}
 
 		return result;
+	}
+
+	@Override
+	public void playerElected(Player player) {
+		this.playerElected = player;
+	}
+
+	@Override
+	public void cardElected(Card card) {
+		this.cardEleceted = card;
+		
 	}
 
 }

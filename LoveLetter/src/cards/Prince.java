@@ -35,11 +35,13 @@ public class Prince extends Card {
 	public String getCardImageName() {
 		return "/images/card5Principe.png";
 	}
-	
+
 	@Override
 	public void play(Player currentPlayer) {
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		Player targetPlayer = admin.choosePlayer();
+		Player targetPlayer = admin.choosePlayer(currentPlayer, true);
+
+		admin.resetElected();
 
 		applyEffect(currentPlayer, targetPlayer);
 
@@ -49,7 +51,10 @@ public class Prince extends Card {
 	public void applyEffect(Player currentPlayer, Player targetPlayer) {
 
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		admin.discardCardsFromPlayer(targetPlayer);
-		admin.dealCardForPlayer(targetPlayer);
+		
+		if (!targetPlayer.isProtected()) {
+			admin.discardCardsFromPlayer(targetPlayer);
+			admin.dealCardForPlayer(targetPlayer);
+		}
 	}
 }
