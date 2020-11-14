@@ -38,8 +38,10 @@ public class Priest extends Card {
 	public void play(Player currentPlayer) {
 		
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		Player targetPlayer = admin.choosePlayer();
+		Player targetPlayer = admin.choosePlayer(currentPlayer, false);
 	
+		admin.resetElected();
+		
 		applyEffect(currentPlayer,targetPlayer);
 	}
 
@@ -47,6 +49,8 @@ public class Priest extends Card {
 	public void applyEffect(Player currentPlayer, Player targetPlayer) {
 	
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		admin.showPlayerCards(targetPlayer);
+		
+		if(!targetPlayer.isProtected())
+			admin.showPlayerCards(targetPlayer);
 	}
 }

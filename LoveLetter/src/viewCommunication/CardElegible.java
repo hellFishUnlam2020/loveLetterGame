@@ -2,6 +2,6 @@ package viewCommunication;
 
 import cards.Card;
 
-public interface CardEligible {
+public interface CardElegible {
 	public void cardElected(Card card);
 }

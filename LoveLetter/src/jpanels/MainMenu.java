@@ -21,9 +21,9 @@ import view.CardPickerFrame;
 import view.CardPreviewFrame;
 import view.ConfigFrame;
 import view.GameScreen;
-import viewCommunication.CardEligible;
+import viewCommunication.CardElegible;
 
-public class MainMenu extends JPanel implements CardEligible{
+public class MainMenu extends JPanel implements CardElegible{
 
 	/**
 	 * 

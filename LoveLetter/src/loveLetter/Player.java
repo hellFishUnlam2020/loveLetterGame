@@ -14,9 +14,31 @@ public class Player implements Comparable<Player> {
 	private List<Card> cards = new LinkedList<Card>();
 	private int cantRoundPlayedCards;
 	private Match match;
-	private static int nro = 0;
-	private int id;
 	private PlayerLabel label;
+	
+	private boolean isTurn = false;
+	private boolean isProtected = false;
+	
+	public Player(String name) {
+		
+		this.name = name;
+		this.matchPoints = 0;
+		this.status = Status.AVAILABLE;
+		this.cantRoundPlayedCards = 0;
+	}
+	
+	public void setTurn(Boolean turn) {
+		isTurn = turn;
+		setCardsVisible(turn);
+	}
+	
+	public void setCardsVisible(boolean val) {
+		label.setCardsVisible(val);
+	}
+	
+	public boolean getTurn() {
+		return isTurn;
+	}
 	
 	public Match getMatch() {
 		return match;
@@ -26,16 +48,6 @@ public class Player implements Comparable<Player> {
 		this.match = match;
 	}
 
-	public Player(String name) {
-		
-		this.id = nro;
-		nro++;
-		
-		this.name = name;
-		this.matchPoints = 0;
-		this.status = Status.AVAILABLE;
-		this.cantRoundPlayedCards = 0;
-	}
 
 	public String getName() {
 		return name;
@@ -59,6 +71,7 @@ public class Player implements Comparable<Player> {
 
 	public void setStatus(Status status) {
 		this.status = status;
+		label.setProtected("Disabled", true);
 	}
 
 	public List<Card> getCards() {
@@ -67,7 +80,7 @@ public class Player implements Comparable<Player> {
 
 	public void addCard(Card card) {
 		this.cards.add(card);
-		label.addCard(card, getCards().size(), id);
+		label.setCard(card);
 	}
 
 	public void increaseMatchPoint() {
@@ -96,11 +109,16 @@ public class Player implements Comparable<Player> {
 		// Un approach
 
 		while(label.getCardSelected() == null) {
-			
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		Card card = label.getCardSelected();
-		card.play(this);  //Agrego el jugador que debe la juega
-
+		label.getCardSelected().play(this);  //Agrego el jugador que debe la juega
+		removeCard(label.getNCardSelected());
+		label.resetCardSelected();
+		
 		//---------------------------------------------
 		
 	
@@ -161,6 +179,10 @@ public class Player implements Comparable<Player> {
 			}
 		}
 	}
+	
+	public void removeCard(int n) {
+		cards.remove(n);
+	}
 
 	public PlayerLabel getLabel() {
 		return label;
@@ -168,5 +190,18 @@ public class Player implements Comparable<Player> {
 
 	public void setLabel(PlayerLabel label) {
 		this.label = label;
+	}
+	
+	public boolean isProtected() {
+		return isProtected;
+	}
+	
+	public void setProteced(boolean val) {
+		isProtected = val;
+		label.setProtected("Protected", val);
+	}
+	
+	public void setAsWinner() {
+		label.setProtected("Winner", true);
 	}
 }
