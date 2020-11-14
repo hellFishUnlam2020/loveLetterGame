@@ -35,7 +35,9 @@ public class King extends Card {
 	public void play(Player currentPlayer) {
 		
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		Player targetPlayer = admin.choosePlayer(); //seleccionamos el targetPlayer mediante la UI
+		Player targetPlayer = admin.choosePlayer(currentPlayer, false); //seleccionamos el targetPlayer mediante la UI
+		
+		admin.resetElected();
 		
 		applyEffect(currentPlayer, targetPlayer);
 		
@@ -45,7 +47,9 @@ public class King extends Card {
 	public void applyEffect(Player currentPlayer, Player targetPlayer) {
 		
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		admin.swapCardsBetweenPlayers(currentPlayer,targetPlayer);
+		
+		if(!targetPlayer.isProtected())
+			admin.swapCardsBetweenPlayers(currentPlayer,targetPlayer);
 	}
 	
 	
