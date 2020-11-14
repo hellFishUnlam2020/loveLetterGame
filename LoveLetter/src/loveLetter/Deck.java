@@ -2,7 +2,7 @@ package loveLetter;
 
 import cards.Baron;
 import cards.Card;
-import cards.Countless;
+import cards.Countess;
 import cards.Guard;
 import cards.King;
 import cards.Maid;
@@ -52,7 +52,7 @@ public class Deck implements Deckable {
 		cards[13] = new King();
 
 		// Creamos 1 carta Condesa
-		cards[14] = new Countless();
+		cards[14] = new Countess();
 
 		// Creamos 1 carta Princesa
 		cards[15] = new Princess();
@@ -95,7 +95,7 @@ public class Deck implements Deckable {
 		cards[3] = new Maid();
 		cards[4] = new Prince();
 		cards[5] = new King();
-		cards[6] = new Countless();
+		cards[6] = new Countess();
 		cards[7] = new Princess();
 		
 		return cards;

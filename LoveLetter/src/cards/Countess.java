@@ -2,7 +2,7 @@ package cards;
 
 import loveLetter.Player;
 
-public class Countless extends Card {
+public class Countess extends Card {
 
 	@Override
 	public String getName() {
@@ -11,7 +11,7 @@ public class Countless extends Card {
 
 	@Override
 	public CardType getType() {
-		return CardType.countless;
+		return CardType.countess;
 	}
 
 	@Override
@@ -37,12 +37,13 @@ public class Countless extends Card {
 	@Override
 	public void play(Player currentPlayer) {
 
-		//habria que controlar que cada carta que se levanta
+		applyEffect(currentPlayer, null);
 		
 	}
 
 	@Override
 	public void applyEffect(Player currentPlayer, Player targetPlayer) {
+		
 		
 	}
 }

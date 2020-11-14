@@ -110,7 +110,7 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 	}
 
 	public void applySafeBlock(Player player) {
-		player.setProteced(true);
+		player.setStatus(Status.PROTECTED);
 	}
 
 	public void showPlayerCards(Player player) {
@@ -154,7 +154,7 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 
 		for (Card card : player.getCards()) {
 
-			if( card.getType().equals(CardType.countless))
+			if( card.getType().equals(CardType.countess))
 				result = true;
 		}
 
