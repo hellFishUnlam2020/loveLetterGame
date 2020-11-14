@@ -7,6 +7,6 @@ public enum CardType {
 	maid,
 	prince,
 	king,
-	countless,
+	countess,
 	princess
 }

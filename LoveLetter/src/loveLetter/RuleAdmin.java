@@ -53,7 +53,7 @@ public class RuleAdmin {
 		 * return cardName;
 		 */
 
-		return "CardName";
+		return "Rey";
 	}
 
 	public void swapCardsBetweenPlayers(Player currentPlayer, Player targetPlayer) {
@@ -76,7 +76,7 @@ public class RuleAdmin {
 	}
 
 	public void applySafeBlock(Player player) {
-
+		player.setStatus(Status.PROTECTED);
 	}
 
 	public void showPlayerCards(Player player) {
@@ -114,7 +114,7 @@ public class RuleAdmin {
 
 		for (Card card : player.getCards()) {
 
-			if( card.getType().equals(CardType.countless))
+			if( card.getType().equals(CardType.countess))
 				result = true;
 		}
 
