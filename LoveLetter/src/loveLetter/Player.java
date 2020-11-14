@@ -70,7 +70,10 @@ public class Player implements Comparable<Player> {
 
 	public void setStatus(Status status) {
 		this.status = status;
-		label.setProtected("Disabled", true);
+		if(status == Status.DISABLE)
+			label.setProtected("Disable", true);
+		if(status == Status.PROTECTED)
+			label.setProtected("Protected", true);
 	}
 
 	public List<Card> getCards() {

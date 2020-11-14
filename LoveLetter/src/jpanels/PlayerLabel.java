@@ -54,7 +54,7 @@ public class PlayerLabel extends JPanel {
 		label = new JLabel();
 		label.setIcon(new ImageIcon(scaledP1));
 		
-		protegido = new JLabel("Protected");
+		protegido = new JLabel();
 		protegido.setFont(new Font("Vivaldi", Font.BOLD | Font.ITALIC, 20));
 		protegido.setForeground(Color.white);
 		protegido.setHorizontalAlignment(SwingConstants.CENTER);
