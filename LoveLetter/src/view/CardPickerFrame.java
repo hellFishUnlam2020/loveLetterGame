@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import cards.Card;
+import interfaces.ScreenConstants;
 import viewCommunication.CardElegible;
 
 public class CardPickerFrame extends JFrame {
@@ -37,6 +38,7 @@ public class CardPickerFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public CardPickerFrame(Card [] cards) {
+		
 		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 		Dimension dim = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
 		
@@ -47,7 +49,7 @@ public class CardPickerFrame extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Cartas");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(CardPickerFrame.class.getResource("/images/logo.png")));
+		setIconImage(ScreenConstants.logo);
 	    setBackground(new Color(0,0,0,90));
 	    getContentPane().setLayout(null);
 	    

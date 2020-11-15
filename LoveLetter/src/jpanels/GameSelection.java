@@ -9,11 +9,12 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import interfaces.ScreenConstants;
 import loveLetter.Player;
+import view.GameScreen;
 
 public class GameSelection extends JPanel{
 
@@ -22,63 +23,45 @@ public class GameSelection extends JPanel{
 	 */
 	private static final long serialVersionUID = -4329582399066939716L;
 	
-	private double aspectRelX;
-	private double aspectRelY;
-	private Dimension screenDim;
-	private JFrame gameFrame;
-	private JLabel backgroundLabel;
+	private GameScreen frame;
 	private Player player;
+	private ImageIcon icon;
+	private Image scaledIcon;
 	
-	public GameSelection(JFrame gameFrame, Player player) {		
+	public GameSelection(GameScreen frame, Player player) {		
 		
-		this.gameFrame = gameFrame;
+		this.frame = frame;
 		this.player = player;
-		screenDim = gameFrame.getSize();
 		
-		
-		aspectRelX = (double)screenDim.width/1920;
-		aspectRelY = (double)screenDim.height/1080;
-
-		setSize(screenDim);
+		setSize(ScreenConstants.width, ScreenConstants.height);
 		setLayout(null);
 		setBorder(null);
-		
-		addBackground();
 		
 		addBackButton();
 		addSingClass();
 		addL2pButton();
 		addPrivMulti();
 		addPubMulti();
-		
-		add(backgroundLabel);
-		
-		setVisible(true);
-		gameFrame.repaint();
+		addBackground();
 	}
 	
 	private void addBackground() {
 		
-		ImageIcon back = new ImageIcon(GameSelection.class.getResource("/images/selectMode.png"));
-		Image scaledBack = back.getImage().getScaledInstance((int)Math.ceil(aspectRelX*back.getIconWidth()), (int)Math.ceil(aspectRelY*back.getIconHeight()), Image.SCALE_SMOOTH);
+		icon = new ImageIcon(GameSelection.class.getResource("/images/selectMode.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 		
-		backgroundLabel = new JLabel();
+		JLabel backgroundLabel = new JLabel();
 		
-		backgroundLabel.setIcon(new ImageIcon(scaledBack));
-		backgroundLabel.setSize(backgroundLabel.getIcon().getIconWidth(), backgroundLabel.getIcon().getIconHeight());
-		
+		backgroundLabel.setIcon(new ImageIcon(scaledIcon));
+		backgroundLabel.setSize(getSize());
+		add(backgroundLabel);
 	}
 	
 	private void addSingClass() {
-		ImageIcon singIcon = new ImageIcon(GameSelection.class.getResource("/images/selectClass.png"));
+		icon = new ImageIcon(GameSelection.class.getResource("/images/selectClass.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 		
-		Image scaledSingIcon = singIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*singIcon.getIconWidth()), (int)Math.ceil(aspectRelY*singIcon.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		JButton singClass = new JButton();
-		createButton(singClass);
-		singClass.setIcon(new ImageIcon(scaledSingIcon));
-		singClass.setBounds((int)Math.ceil(795*aspectRelX), (int)Math.ceil(381*aspectRelY), singClass.getIcon().getIconWidth(), singClass.getIcon().getIconHeight());
-		singClass.setToolTipText("Back");
+		JButton singClass = new CreateButton(new ImageIcon(scaledIcon), 795, 381);
 		singClass.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -90,22 +73,15 @@ public class GameSelection extends JPanel{
 	
 	public void addBackButton() {
 		
-		ImageIcon backIcon = new ImageIcon(GameSelection.class.getResource("/images/createBack.png"));
-		Image scaledBackIcon = backIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*backIcon.getIconWidth()), (int)Math.ceil(aspectRelY*backIcon.getIconHeight()), Image.SCALE_SMOOTH);
+		icon = new ImageIcon(GameSelection.class.getResource("/images/createBack.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 				
-		JButton backButton = new JButton();
-		createButton(backButton);
-		backButton.setIcon(new ImageIcon(scaledBackIcon));
-		backButton.setBounds((int)Math.ceil(621*aspectRelX), (int)Math.ceil(262*aspectRelY), backButton.getIcon().getIconWidth(), backButton.getIcon().getIconHeight());
-		backButton.setToolTipText("Back");
+		JButton backButton = new CreateButton(new ImageIcon(scaledIcon), 621, 262);
 		backButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (Component comp : gameFrame.getContentPane().getComponents()) {
-					gameFrame.remove(comp);
-				}
-				
-				gameFrame.getContentPane().add(new MainMenu(gameFrame, player));
+				frame.removeAll();
+				frame.getContentPane().add(new MainMenu(frame, player));
 			}
 		});
 		add(backButton);
@@ -113,15 +89,10 @@ public class GameSelection extends JPanel{
 	
 	
 	private void addL2pButton() {
-		ImageIcon l2pIcon = new ImageIcon(GameSelection.class.getResource("/images/selectLearn.png"));
-		
-		Image scaledL2pIcon = l2pIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*l2pIcon.getIconWidth()), (int)Math.ceil(aspectRelY*l2pIcon.getIconHeight()), Image.SCALE_SMOOTH);
+		icon = new ImageIcon(GameSelection.class.getResource("/images/selectLearn.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 				
-		JButton l2pButton = new JButton();
-		createButton(l2pButton);
-		l2pButton.setIcon(new ImageIcon(scaledL2pIcon));
-		l2pButton.setBounds((int)Math.ceil(795*aspectRelX), (int)Math.ceil(462*aspectRelY), l2pButton.getIcon().getIconWidth(), l2pButton.getIcon().getIconHeight());
-		l2pButton.setToolTipText("Back");
+		JButton l2pButton = new CreateButton(new ImageIcon(scaledIcon), 795, 462);
 		l2pButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -132,15 +103,10 @@ public class GameSelection extends JPanel{
 	}
 	
 	private void addPrivMulti() {
-		ImageIcon privIcon = new ImageIcon(GameSelection.class.getResource("/images/selectPrivMulti.png"));
-		
-		Image scaledPrivIcon = privIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*privIcon.getIconWidth()), (int)Math.ceil(aspectRelY*privIcon.getIconHeight()), Image.SCALE_SMOOTH);
+		icon = new ImageIcon(GameSelection.class.getResource("/images/selectPrivMulti.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 				
-		JButton privMulti = new JButton();
-		createButton(privMulti);
-		privMulti.setIcon(new ImageIcon(scaledPrivIcon));
-		privMulti.setBounds((int)Math.ceil(795*aspectRelX), (int)Math.ceil(701*aspectRelY), privMulti.getIcon().getIconWidth(), privMulti.getIcon().getIconHeight());
-		privMulti.setToolTipText("Back");
+		JButton privMulti = new CreateButton(new ImageIcon(scaledIcon), 795, 701);
 		privMulti.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -150,15 +116,10 @@ public class GameSelection extends JPanel{
 		add(privMulti);
 	}
 	private void addPubMulti() {
-		ImageIcon pubIcon = new ImageIcon(GameSelection.class.getResource("/images/selectPubMulti.png"));
-		
-		Image scaledPubIcon = pubIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*pubIcon.getIconWidth()), (int)Math.ceil(aspectRelY*pubIcon.getIconHeight()), Image.SCALE_SMOOTH);
+		icon = new ImageIcon(GameSelection.class.getResource("/images/selectPubMulti.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 				
-		JButton pubMulti = new JButton();
-		createButton(pubMulti);
-		pubMulti.setIcon(new ImageIcon(scaledPubIcon));
-		pubMulti.setBounds((int)Math.ceil(795*aspectRelX), (int)Math.ceil(619*aspectRelY), pubMulti.getIcon().getIconWidth(), pubMulti.getIcon().getIconHeight());
-		pubMulti.setToolTipText("Back");
+		JButton pubMulti = new CreateButton(new ImageIcon(scaledIcon), 795, 619);
 		pubMulti.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -169,21 +130,8 @@ public class GameSelection extends JPanel{
 	}
 	
 	public void createJoin() {
-		
-		for(Component comp : gameFrame.getContentPane().getComponents()) {
-			gameFrame.remove(comp);
-		}
-		
-		gameFrame.getContentPane().add(new CreateGame(gameFrame, player));
-	}
-	
-	private void createButton(JButton button) {
-		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
-		button.setIgnoreRepaint(true);
-		button.setOpaque(false);
-		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button.setBorder(null);
+		frame.removeAll();
+		frame.getContentPane().add(new CreateGame(frame, player));
 	}
 	
 }

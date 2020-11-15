@@ -1,19 +1,17 @@
 package jpanels;
 
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import interfaces.ScreenConstants;
 import loveLetter.Player;
+import view.GameScreen;
 
 public class CreateGame extends JPanel{
 
@@ -21,26 +19,20 @@ public class CreateGame extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = -3492739264759917878L;
-	private double aspectRelX;
-	private double aspectRelY;
-	private Dimension screenDim;
-	private JFrame gameFrame;
+	
+	private GameScreen frame;
 	private JLabel backgroundLabel;
 	private Player player;
 	private LobbyPanel lobby;
+	private ImageIcon icon;
+	private Image scaledIcon;
 	
-	public CreateGame(JFrame gameFrame, Player player){
+	public CreateGame(GameScreen frame, Player player){
 		
-		this.gameFrame = gameFrame;
+		this.frame = frame;
 		this.player = player;
 		
-		screenDim = gameFrame.getSize();
-		
-		aspectRelX = (double)screenDim.width/1920;
-		aspectRelY = (double)screenDim.height/1080;
-	
-		
-		setSize(screenDim);
+		setSize(ScreenConstants.width, ScreenConstants.height);
 		setLayout(null);
 		setBorder(null);
 		
@@ -49,39 +41,31 @@ public class CreateGame extends JPanel{
 		addCreateButton();
 		addJoinButton();
 		
-		add(backgroundLabel);
-		
-		setVisible(true);
-		gameFrame.repaint();
+		setComponentZOrder(backgroundLabel, getComponentCount()-1);
 	}
 	
 	private void addBackgroundLabel() {
 		
-		ImageIcon back = new ImageIcon(GameSelection.class.getResource("/images/create.png"));
-		Image scaledBack = back.getImage().getScaledInstance((int)Math.ceil(aspectRelX*back.getIconWidth()), (int)Math.ceil(aspectRelY*back.getIconHeight()), Image.SCALE_SMOOTH);
+		icon = new ImageIcon(GameSelection.class.getResource("/images/create.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 		
 		backgroundLabel = new JLabel();
-		backgroundLabel.setIcon(new ImageIcon(scaledBack));
+		backgroundLabel.setIcon(new ImageIcon(scaledIcon));
 		backgroundLabel.setSize(backgroundLabel.getIcon().getIconWidth(), backgroundLabel.getIcon().getIconHeight());
+		add(backgroundLabel);
 	}
 	
 	private void addBackButton() {
-		ImageIcon backIcon = new ImageIcon(GameSelection.class.getResource("/images/createBack.png"));
-		Image scaledBackIcon = backIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*backIcon.getIconWidth()), (int)Math.ceil(aspectRelY*backIcon.getIconHeight()), Image.SCALE_SMOOTH);
+		icon = new ImageIcon(GameSelection.class.getResource("/images/createBack.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 				
-		JButton backButton = new JButton();
-		createButton(backButton);
-		backButton.setIcon(new ImageIcon(scaledBackIcon));
-		backButton.setBounds((int)Math.ceil(606*aspectRelX), (int)Math.ceil(262*aspectRelY), backButton.getIcon().getIconWidth(), backButton.getIcon().getIconHeight());
-		backButton.setToolTipText("Back");
+		JButton backButton = new CreateButton(new ImageIcon(scaledIcon), 606, 262);
 		backButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (Component comp : gameFrame.getContentPane().getComponents()) {
-					gameFrame.remove(comp);
-				}
 				
-				gameFrame.getContentPane().add(new GameSelection(gameFrame, player));
+				frame.removeAll();
+				frame.getContentPane().add(new GameSelection(frame, player));
 			}
 		});
 		add(backButton);
@@ -90,18 +74,13 @@ public class CreateGame extends JPanel{
 	
 	private void addCreateButton() {
 		
-		ImageIcon createIcon = new ImageIcon(GameSelection.class.getResource("/images/createGame.png"));
-		Image scaledBackIcon = createIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*createIcon.getIconWidth()), (int)Math.ceil(aspectRelY*createIcon.getIconHeight()), Image.SCALE_SMOOTH);
+		icon = new ImageIcon(GameSelection.class.getResource("/images/createGame.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 				
-		JButton createButton = new JButton();
-		createButton(createButton);
-		createButton.setIcon(new ImageIcon(scaledBackIcon));
-		createButton.setBounds((int)Math.ceil(798*aspectRelX), (int)Math.ceil(497*aspectRelY), createButton.getIcon().getIconWidth(), createButton.getIcon().getIconHeight());
-		createButton.setToolTipText("Create");
+		JButton createButton = new CreateButton(new ImageIcon(scaledIcon), 798, 497);
 		createButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				lobby = new LobbyPanel(gameFrame);
 				joinLobby();
 			}
 		});
@@ -111,14 +90,10 @@ public class CreateGame extends JPanel{
 	
 	private void addJoinButton() {
 		
-		ImageIcon joinIcon = new ImageIcon(GameSelection.class.getResource("/images/joinGame.png"));
-		Image scaledBackIcon = joinIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*joinIcon.getIconWidth()), (int)Math.ceil(aspectRelY*joinIcon.getIconHeight()), Image.SCALE_SMOOTH);
+		icon = new ImageIcon(GameSelection.class.getResource("/images/joinGame.png"));
+		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
 				
-		JButton joinButton = new JButton();
-		createButton(joinButton);
-		joinButton.setIcon(new ImageIcon(scaledBackIcon));
-		joinButton.setBounds((int)Math.ceil(798*aspectRelX), (int)Math.ceil(595*aspectRelY), joinButton.getIcon().getIconWidth(), joinButton.getIcon().getIconHeight());
-		joinButton.setToolTipText("Join");
+		JButton joinButton = new CreateButton(new ImageIcon(scaledIcon), 798, 595);
 		joinButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -129,22 +104,12 @@ public class CreateGame extends JPanel{
 		
 	}
 	
-	private void createButton(JButton button) {
-		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
-		button.setIgnoreRepaint(true);
-		button.setOpaque(false);
-		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button.setBorder(null);
-	}
-	
 	public void joinLobby() {
-		for (Component comp : gameFrame.getContentPane().getComponents()) {
-			gameFrame.remove(comp);
-		}
 		
+		lobby = new LobbyPanel(frame);
 		lobby.addPlayer(player);
-		gameFrame.getContentPane().add(lobby);
+		frame.removeAll();
+		frame.getContentPane().add(lobby);
 	}
 	
 }
