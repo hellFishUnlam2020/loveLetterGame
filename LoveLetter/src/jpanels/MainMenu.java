@@ -1,12 +1,11 @@
 package jpanels;
 
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -16,7 +15,6 @@ import loveLetter.Deck;
 import loveLetter.Player;
 import view.CardPickerFrame;
 import view.CardPreviewFrame;
-import view.GameScreen;
 import viewCommunication.CardElegible;
 
 public class MainMenu extends JPanel implements CardElegible{
@@ -25,17 +23,9 @@ public class MainMenu extends JPanel implements CardElegible{
 	 * 
 	 */
 	private static final long serialVersionUID = 8521929087087608231L;
-	
-	private Player player;
-	private GameScreen frame;
-	private ImageIcon icon;
-	private Image scaledIcon;
-	
-	public MainMenu(GameScreen frame, Player player) {
-		
-		this.player = player;
-		this.frame = frame;
-		
+
+	public MainMenu() {
+						
 		setSize(ScreenConstants.width, ScreenConstants.height);
 		setLayout(null);
 		
@@ -51,21 +41,15 @@ public class MainMenu extends JPanel implements CardElegible{
 	
 	private void addBackground() {
 		
-		icon = new ImageIcon(MainMenu.class.getResource("/images/main.png"));
-		scaledIcon = icon.getImage().getScaledInstance(getSize().width, getSize().height, Image.SCALE_SMOOTH);
-		
 		JLabel backgroundImage = new JLabel();
-		backgroundImage.setIcon(new ImageIcon(scaledIcon));
+		backgroundImage.setIcon(new ScaledIcon("/images/main.png").getScaledIcon());
 		backgroundImage.setSize(getSize());
 		
 		add(backgroundImage);
 	}
 	
 	private void addShowCardsButton() {
-		icon = new ImageIcon(GameScreen.class.getResource("/images/mainCards.png"));
-		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		JButton showCardsButton = new CreateButton(new ImageIcon(scaledIcon), 748, 966);
+		JButton showCardsButton = new CreateButton(new ScaledIcon("/images/mainCards.png").getScaledIcon(), 748, 966);
 		showCardsButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -76,17 +60,15 @@ public class MainMenu extends JPanel implements CardElegible{
 	}
 	
 	private void addPlayButton() {
-		
-		icon = new ImageIcon(GameScreen.class.getResource("/images/mainPlay.png"));
-		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconHeight()), Image.SCALE_SMOOTH);				
-
-		JButton playButton = new CreateButton(new ImageIcon(scaledIcon), 840, 746);
+		JButton playButton = new CreateButton(new ScaledIcon("/images/mainPlay.png").getScaledIcon(), 840, 746);
 		playButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				frame.removeAll();
-				frame.getContentPane().add(new GameSelection(frame, player));
+				JFrame frame = (JFrame)getTopLevelAncestor();
+				frame.getContentPane().removeAll();
+				frame.getContentPane().add(new GameSelection());
+				frame.repaint();
 			}
 		});
 		add(playButton);
@@ -94,28 +76,19 @@ public class MainMenu extends JPanel implements CardElegible{
 	}
 	
 	private void addProfileButton() {
-		icon = new ImageIcon(GameScreen.class.getResource("/images/mainProfile.png"));
-		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
-	
-		JButton profileButton = new CreateButton(new ImageIcon(scaledIcon), 860, 966);
+		JButton profileButton = new CreateButton(new ScaledIcon("/images/mainProfile.png").getScaledIcon(), 860, 966);
 
 		add(profileButton);
 
 	}	
 	
-	private void addStatsButton() {
-		icon = new ImageIcon(GameScreen.class.getResource("/images/mainStats.png"));
-		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		JButton statsButton = new CreateButton(new ImageIcon(scaledIcon), 969, 964);
+	private void addStatsButton() {		
+		JButton statsButton = new CreateButton(new ScaledIcon("/images/mainStats.png").getScaledIcon(), 969, 964);
 		add(statsButton);
 	}
 
 	private void addConfigButton() {
-		icon = new ImageIcon(GameScreen.class.getResource("/images/mainConfig.png"));
-		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
-
-		JButton configButton = new CreateButton(new ImageIcon(scaledIcon), 1083, 966);
+		JButton configButton = new CreateButton(new ScaledIcon("/images/mainConfig.png").getScaledIcon(), 1083, 966);
 		configButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -126,14 +99,11 @@ public class MainMenu extends JPanel implements CardElegible{
 	} 
 	
 	private void addExitButon() {
-		icon = new ImageIcon(GameScreen.class.getResource("/images/mainExit.png"));
-		scaledIcon = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
-
-		JButton exitButton = new CreateButton(new ImageIcon(scaledIcon), 1726, 84);
+		JButton exitButton = new CreateButton(new ScaledIcon("/images/mainExit.png").getScaledIcon(), 1726, 84);
 		exitButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+				getTopLevelAncestor().dispatchEvent(new WindowEvent((JFrame)getTopLevelAncestor(), WindowEvent.WINDOW_CLOSING));
 			}
 		});
 		add(exitButton);

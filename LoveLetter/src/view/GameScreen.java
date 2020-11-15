@@ -1,10 +1,5 @@
 package view;
 
-import java.awt.Dimension;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Toolkit;
-
 import javax.swing.JFrame;
 
 import interfaces.ScreenConstants;
@@ -39,6 +34,6 @@ public class GameScreen extends JFrame {
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		setLayout(null);
-		add(new MainMenu(this, player));
+		add(new MainMenu());
 	}
 }
