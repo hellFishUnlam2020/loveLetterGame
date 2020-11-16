@@ -33,7 +33,11 @@ public class GameScreen extends JFrame {
 		setResizable(false);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
-		setLayout(null);
-		add(new MainMenu());
+		getContentPane().setLayout(null);
+		getContentPane().add(new MainMenu());
+	}
+	
+	public Player getPlayer() {
+		return player;
 	}
 }
