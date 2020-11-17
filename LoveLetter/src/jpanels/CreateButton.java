@@ -26,4 +26,14 @@ public class CreateButton extends JButton {
 		setBorder(null);
 		
 	}
+	
+	public CreateButton(int x, int y, int width, int height) {
+		setBounds((int)Math.ceil(ScreenConstants.aspectRelX * x), (int)Math.floor(ScreenConstants.aspectRelY * y), width, height);
+		setContentAreaFilled(false);
+		setBorderPainted(false);
+		setIgnoreRepaint(true);
+		setOpaque(false);
+		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		setBorder(null);
+	}
 }

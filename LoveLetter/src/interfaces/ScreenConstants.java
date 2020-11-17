@@ -1,8 +1,10 @@
 package interfaces;
 
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.ObjectInputStream.GetField;
 
 import view.GameScreen;
 
@@ -17,4 +19,5 @@ public interface ScreenConstants {
 	public static final double aspectRelX = (double)width/1920;
 	
 	public static final double aspectRelY = (double)height/1080;
+	
 }
