@@ -76,7 +76,7 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 		 * return cardName;
 		 */
 
-		CardPickerFrame cfp = new CardPickerFrame(new Deck().getCards());
+		CardPickerFrame cfp = new CardPickerFrame();
 		cfp.setCardEligile(this);
 		
 		while(cardEleceted == null) {

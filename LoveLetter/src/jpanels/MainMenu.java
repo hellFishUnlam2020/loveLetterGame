@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import cards.Card;
 import interfaces.ScreenConstants;
 import loveLetter.Deck;
-import loveLetter.Player;
 import view.CardPickerFrame;
 import view.CardPreviewFrame;
 import viewCommunication.CardElegible;
@@ -111,8 +110,7 @@ public class MainMenu extends JPanel implements CardElegible{
 	
 	
 	public void showCardPickerFrame() {
-		Deck deck = new Deck();
-		CardPickerFrame cardPicker = new CardPickerFrame(deck.getCards());
+		CardPickerFrame cardPicker = new CardPickerFrame();
 		cardPicker.setCardEligile(this);
 	}
 
