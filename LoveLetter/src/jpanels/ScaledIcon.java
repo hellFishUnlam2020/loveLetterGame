@@ -4,7 +4,7 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
-import interfaces.ScreenConstants;
+import interfaces.GameConstants;
 
 public class ScaledIcon {
 
@@ -12,8 +12,8 @@ public class ScaledIcon {
 	
 	public ScaledIcon(String path) {
 	
-		ImageIcon icon = new ImageIcon(getClass().getResource(path));
-		Image scaled = icon.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*icon.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*icon.getIconHeight()), Image.SCALE_SMOOTH);
+		scaledIcon = new ImageIcon(getClass().getResource(path));
+		Image scaled = scaledIcon.getImage().getScaledInstance((int)Math.ceil(GameConstants.aspectRelX*scaledIcon.getIconWidth()), (int)Math.ceil(GameConstants.aspectRelY*scaledIcon.getIconHeight()), Image.SCALE_SMOOTH);
 		scaledIcon = new ImageIcon(scaled);
 	}
 	

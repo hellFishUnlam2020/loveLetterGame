@@ -1,166 +1,156 @@
 package jpanels;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
-import interfaces.ScreenConstants;
+import interfaces.GameConstants;
 import loveLetter.Player;
 import view.MatchFrame;
 
-public class LobbyPanel extends JPanel{
-	
+public class LobbyPanel extends JPanel {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2816319407817472061L;
-	
+
 	private JButton invalidButton;
 	private JButton validButton;
 	private JLabel backgroundLabel;
-	private List<Player>players;
-	
+	private List<Player> players;
+
 	public LobbyPanel() {
-		
+
 		players = new ArrayList<Player>(3);
-		
-		setSize(ScreenConstants.width, ScreenConstants.height);
+
+		setSize(GameConstants.screenSize);
 		setLayout(null);
 		setBorder(null);
-		
+
 		addInvalidStart();
 		addValidStart();
 		addBackButton();
 		addConfigButton();
-		addPlayer(1254, 530);
+		addButtonAddPlayer(1254, 530);
 		addBackgroundLabel();
 	}
-	
+
 	private void addBackgroundLabel() {
 		backgroundLabel = new JLabel();
 		backgroundLabel.setIcon(new ScaledIcon("/images/lobby.png").getScaledIcon());
 		backgroundLabel.setSize(backgroundLabel.getIcon().getIconWidth(), backgroundLabel.getIcon().getIconHeight());
 		add(backgroundLabel);
 	}
-	
+
 	private void addInvalidStart() {
-		invalidButton = new CreateButton(new ScaledIcon("/images/lobbyinvalid.png").getScaledIcon(), 860, 820);
+		invalidButton = new CreateButton("/images/lobbyinvalid.png", 860, 820, null);
 		add(invalidButton);
 	}
-	
+
 	private void addValidStart() {
-		validButton = new CreateButton(new ScaledIcon("/images/lobbyValid.png").getScaledIcon(), 860, 820);
+		validButton = new CreateButton("/images/lobbyValid.png", 860, 820, null);
 		validButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				new MatchFrame(players, 5);
-				((JFrame)getTopLevelAncestor()).dispose();
+				((JFrame) getTopLevelAncestor()).dispose();
 			}
 		});
 		add(validButton);
 	}
-	
+
 	private void addBackButton() {
-		JButton backButton = new CreateButton(new ScaledIcon("/images/back.png").getScaledIcon(), 606, 262);
+		JButton backButton = new CreateButton("/images/back.png", 606, 262, null);
 		backButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JFrame frame = (JFrame)getTopLevelAncestor();
+				JFrame frame = (JFrame) getTopLevelAncestor();
 				frame.getContentPane().removeAll();
 				frame.getContentPane().add(new CreateGame());
 				frame.repaint();
 			}
 		});
-		add(backButton);	
+		add(backButton);
 	}
-	
+
 	private void addConfigButton() {
-		JButton configButton = new CreateButton(new ScaledIcon("/images/config2.png").getScaledIcon(), 1254, 268);
+		JButton configButton = new CreateButton("/images/config2.png", 1254, 268, null);
 		configButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				//TODO
+				// TODO
 			}
 		});
-		add(configButton);	
+		add(configButton);
 	}
-	
-	private void addPlayer(int x, int y) {
-		String nombre = "Matias";
-		
-		JButton addButton = new CreateButton(new ScaledIcon("/images/back.png").getScaledIcon(), x, y);
-		addButton.setText(nombre);
-		addButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				addPlayer(new Player(nombre));
-			}
-		});
-		add(addButton);
-	}
-	
-	private void add1stPlayer() {
-										
-		JLabel backLabel = new JLabel();
-		backLabel.setIcon(new ScaledIcon("/images/lobbyP1.png").getScaledIcon());
-		backLabel.setBounds((int)Math.ceil(759*ScreenConstants.aspectRelX), (int)Math.ceil(412*ScreenConstants.aspectRelY), backLabel.getIcon().getIconWidth(), backLabel.getIcon().getIconHeight());
-		
-		JLabel nombreLabel = new JLabel(players.get(0).getName());
-		nombreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		nombreLabel.setFont(new Font("Vivaldi", Font.BOLD | Font.ITALIC, 25));
-		nombreLabel.setForeground(Color.black);
-		nombreLabel.setBounds((int)Math.ceil(858*ScreenConstants.aspectRelX), (int)Math.ceil(436*ScreenConstants.aspectRelY), (int)Math.ceil(288*ScreenConstants.aspectRelY), (int)Math.ceil(37*ScreenConstants.aspectRelY));
-		
-		add(nombreLabel);
-		add(backLabel);
-		
-	}
-	
-	private void add2ndPlayer() {
-		
-		ImageIcon im2 = new ImageIcon(LobbyPanel.class.getResource("/images/lobbyP2.png"));
-		Image scaled2 = im2.getImage().getScaledInstance((int)Math.ceil(ScreenConstants.aspectRelX*im2.getIconWidth()), (int)Math.ceil(ScreenConstants.aspectRelY*im2.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		JLabel backLabel = new JLabel();
-		backLabel.setIcon(new ImageIcon(scaled2));
-		backLabel.setBounds((int)Math.ceil(759*ScreenConstants.aspectRelX), (int)Math.ceil(506*ScreenConstants.aspectRelY), backLabel.getIcon().getIconWidth(), backLabel.getIcon().getIconHeight());
-		
-		JLabel nombreLabel = new JLabel(players.get(1).getName());
-		nombreLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		nombreLabel.setFont(new Font("Vivaldi", Font.BOLD | Font.ITALIC, 25));
-		nombreLabel.setForeground(Color.black);
-		nombreLabel.setBounds((int)Math.ceil(858*ScreenConstants.aspectRelX), (int)Math.ceil(530*ScreenConstants.aspectRelY), (int)Math.ceil(288*ScreenConstants.aspectRelY), (int)Math.ceil(37*ScreenConstants.aspectRelY));
-		
-		add(nombreLabel);
-		add(backLabel);
-		
-		validButton.setVisible(true);
-		invalidButton.setVisible(false);
-	}
-	
-	public void refresh() {
-		
-		if(players.size() == 1)
-			add1stPlayer();
-		else {
-			add2ndPlayer();			
+
+	private void addButtonAddPlayer(int x, int y) {
+		String[] nombres = { "Matias", "Gabriel", "Mauro" };
+
+		int i = 0;
+		for (String nombre : nombres) {
+			JButton addButton = new CreateButton("/images/back.png", x, y, null);
+			addButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					addPlayer(new Player(nombre));
+				}
+			});
+			addButton.setLocation(addButton.getX(), addButton.getY() + (addButton.getIcon().getIconHeight() + 35) * i);
+			add(addButton);
+			i++;
 		}
-		setComponentZOrder(backgroundLabel, getComponentCount()-1);
-		repaint();
-		((JFrame)getTopLevelAncestor()).repaint();
 	}
-	
+
+	private void addPlayer(int nro) {
+
+		int gap = 94;
+		JLabel backLabel = new JLabel();
+		backLabel.setIcon(new ScaledIcon("/images/lobbyP"+(nro+1)+".png").getScaledIcon());
+		backLabel.setBounds((int) Math.ceil(759 * GameConstants.aspectRelX),
+				(int) Math.ceil(412 + gap*nro * GameConstants.aspectRelY), backLabel.getIcon().getIconWidth(),
+				backLabel.getIcon().getIconHeight());
+
+		JLabel nombreLabel = new TextLabel(new Rectangle(858, 436 + gap*nro, 288, 37), Color.black, 30f);
+		nombreLabel.setText(players.get(nro).getName());
+
+		add(nombreLabel);
+		add(backLabel);
+
+	}
+
+	public void refresh() {
+
+		switch (players.size()) {
+		case 1:
+			addPlayer(0);
+			break;
+		case 2:
+			addPlayer(1);
+			validButton.setVisible(true);
+			invalidButton.setVisible(false);
+			break;
+		case 3:
+			addPlayer(2);
+			break;
+		case 4:
+			addPlayer(3);
+			break;
+		}
+		setComponentZOrder(backgroundLabel, getComponentCount() - 1);
+		repaint();
+		((JFrame) getTopLevelAncestor()).repaint();
+	}
+
 	public void addPlayer(Player player) {
 		players.add(player);
 		refresh();

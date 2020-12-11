@@ -33,11 +33,6 @@ public class Princess extends Card {
 	@Override
 	public void play(Player currentPlayer) {
 		
-		RuleAdmin admin = RuleAdmin.getRuleadmin();
-//		Player targetPlayer = admin.choosePlayer(currentPlayer, true);
-	
-//		admin.resetElected();
-		
 		applyEffect(currentPlayer, null);
 	}
 	

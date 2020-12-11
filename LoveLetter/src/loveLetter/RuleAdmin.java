@@ -1,8 +1,10 @@
 package loveLetter;
 
+import javax.swing.JFrame;
+
 import cards.Card;
 import cards.CardType;
-import view.CardPickerFrame;
+import jpanels.CardPickerPanel;
 import view.PlayerPickerFrame;
 import viewCommunication.CardElegible;
 import viewCommunication.PlayerElegible;
@@ -76,8 +78,12 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 		 * return cardName;
 		 */
 
-		CardPickerFrame cfp = new CardPickerFrame();
-		cfp.setCardEligile(this);
+		JFrame frame = (JFrame) currentPlayer.getLabel().getTopLevelAncestor();
+		CardPickerPanel cfp = new CardPickerPanel();
+		cfp.setCardElegible(this);
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(cfp);
+		frame.getContentPane().repaint();
 		
 		while(cardEleceted == null) {
 			try {
@@ -183,7 +189,5 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 	@Override
 	public void cardElected(Card card) {
 		this.cardEleceted = card;
-		
 	}
-
 }

@@ -1,5 +1,7 @@
 package jpanels;
 
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -8,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import interfaces.ScreenConstants;
+import interfaces.GameConstants;
 
 public class GameSelection extends JPanel{
 
@@ -19,7 +21,7 @@ public class GameSelection extends JPanel{
 	
 	public GameSelection() {		
 		
-		setSize(ScreenConstants.width, ScreenConstants.height);
+		setSize(GameConstants.screenSize);
 		setLayout(null);
 		setBorder(null);
 		
@@ -41,7 +43,9 @@ public class GameSelection extends JPanel{
 	}
 	
 	private void addSingClass() {		
-		JButton singClass = new CreateButton(new ScaledIcon("/images/selectClass.png").getScaledIcon(), 795, 381);
+		JButton singClass = new CreateButton("/images/selectClass.png", 789, 374, "/images/selectClassOver.png");
+		JLabel text = new TextLabel(new Rectangle(798, 374, singClass.getIcon().getIconWidth(), singClass.getIcon().getIconHeight()), Color.black, 35f);
+		text.setText("Classic");
 		singClass.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -49,10 +53,11 @@ public class GameSelection extends JPanel{
 			}
 		});
 		add(singClass);
+		add(text);
 	}
 	
 	public void addBackButton() {
-		JButton backButton = new CreateButton(new ScaledIcon("/images/createBack.png").getScaledIcon(), 621, 262);
+		JButton backButton = new CreateButton("/images/createBack.png", 621, 262, null);
 		backButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -67,7 +72,7 @@ public class GameSelection extends JPanel{
 	
 	
 	private void addL2pButton() {				
-		JButton l2pButton = new CreateButton(new ScaledIcon("/images/selectLearn.png").getScaledIcon(), 795, 462);
+		JButton l2pButton = new CreateButton("/images/selectLearn.png", 789, 459, "/images/selectL2pOver.png");
 		l2pButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -78,7 +83,7 @@ public class GameSelection extends JPanel{
 	}
 	
 	private void addPrivMulti() {				
-		JButton privMulti = new CreateButton(new ScaledIcon("/images/selectPrivMulti.png").getScaledIcon(), 795, 701);
+		JButton privMulti = new CreateButton("/images/selectPrivMulti.png", 789, 698, "/images/selectPrivOver.png");
 		privMulti.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -88,7 +93,7 @@ public class GameSelection extends JPanel{
 		add(privMulti);
 	}
 	private void addPubMulti() {				
-		JButton pubMulti = new CreateButton(new ScaledIcon("/images/selectPubMulti.png").getScaledIcon(), 795, 619);
+		JButton pubMulti = new CreateButton("/images/selectPubMulti.png", 789, 616, "/images/selectPublicOver.png");
 		pubMulti.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

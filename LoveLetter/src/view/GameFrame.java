@@ -2,11 +2,12 @@ package view;
 
 import javax.swing.JFrame;
 
-import interfaces.ScreenConstants;
+import cards.Card;
+import interfaces.GameConstants;
 import jpanels.MainMenu;
 import loveLetter.Player;
 
-public class GameScreen extends JFrame {
+public class GameFrame extends JFrame {
 
 	/**
 	 * 
@@ -16,7 +17,7 @@ public class GameScreen extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public GameScreen(Player player) {
+	public GameFrame(Player player) {
 		this.player = player;
 		initialize();
 	}
@@ -27,17 +28,26 @@ public class GameScreen extends JFrame {
 	private void initialize() {
 	
 		setTitle("Love Letter");
-		setIconImage(ScreenConstants.logo);
+		setIconImage(GameConstants.logo);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(ScreenConstants.width, ScreenConstants.height);
+		setSize(GameConstants.width, GameConstants.height);
 		setResizable(false);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		getContentPane().add(new MainMenu());
+		
 	}
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public void cardElected(Card card) {
+		CardPreviewFrame cardPreview = new CardPreviewFrame(card);
+		cardPreview.init();
+		cardPreview.setFocusable(true);
+		cardPreview.requestFocusInWindow();
+		cardPreview.setVisible(true);
 	}
 }

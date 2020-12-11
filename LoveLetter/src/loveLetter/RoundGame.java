@@ -2,8 +2,6 @@ package loveLetter;
 
 import java.util.List;
 
-import org.junit.rules.DisableOnDebug;
-
 public class RoundGame {
 
 	private List<Player> players;

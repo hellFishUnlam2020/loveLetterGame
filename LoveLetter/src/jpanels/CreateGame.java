@@ -10,8 +10,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import interfaces.ScreenConstants;
-import view.GameScreen;
+import interfaces.GameConstants;
+import view.GameFrame;
 
 public class CreateGame extends JPanel{
 
@@ -23,7 +23,7 @@ public class CreateGame extends JPanel{
 	
 	public CreateGame(){
 
-		setSize(ScreenConstants.width, ScreenConstants.height);
+		setSize(GameConstants.screenSize);
 		setLayout(null);
 		setBorder(null);
 		
@@ -38,12 +38,12 @@ public class CreateGame extends JPanel{
 		
 		JLabel backgroundLabel = new JLabel();
 		backgroundLabel.setIcon(new ScaledIcon("/images/create.png").getScaledIcon());
-		backgroundLabel.setSize(backgroundLabel.getIcon().getIconWidth(), backgroundLabel.getIcon().getIconHeight());
+		backgroundLabel.setSize(getSize());
 		add(backgroundLabel);
 	}
 	
 	private void addBackButton() {
-		JButton backButton = new CreateButton(new ScaledIcon("/images/createBack.png").getScaledIcon(), 606, 262);
+		JButton backButton = new CreateButton("/images/createBack.png", 606, 262, null);
 		backButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -58,7 +58,7 @@ public class CreateGame extends JPanel{
 	}
 	
 	private void addCreateButton() {
-		JButton createButton = new CreateButton(new ScaledIcon("/images/createGame.png").getScaledIcon(), 798, 497);
+		JButton createButton = new CreateButton("/images/createGame.png", 794, 493, "/images/createGameOver.png");
 		createButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -70,7 +70,7 @@ public class CreateGame extends JPanel{
 	}
 	
 	private void addJoinButton() {
-		JButton joinButton = new CreateButton(new ScaledIcon("/images/joinGame.png").getScaledIcon(), 798, 595);
+		JButton joinButton = new CreateButton("/images/joinGame.png", 794, 591, "/images/joinGameOver.png");
 		joinButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -85,7 +85,7 @@ public class CreateGame extends JPanel{
 		
 		JLabel label = new JLabel();
 		label.setIcon(new ScaledIcon("/images/lobbyCreated.png").getScaledIcon());
-		label.setBounds(0, (int)Math.ceil(115 * ScreenConstants.aspectRelY), label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
+		label.setBounds(0, (int)Math.ceil(115 * GameConstants.aspectRelY), label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
 		label.setVisible(false);
 		add(new TextLabel(new Rectangle(75, 120, 127, 30), Color.yellow, 24));
 		add(new TextLabel(new Rectangle(25, 150, 200, 30), Color.white, 20));
@@ -94,23 +94,31 @@ public class CreateGame extends JPanel{
 	
 	public void joinLobby() {
 		
-		GameScreen frame = (GameScreen)getTopLevelAncestor();
-		frame.getContentPane().removeAll();
-		frame.getContentPane().add(lobby);
-		frame.repaint();
-		
-		lobby.addPlayer(frame.getPlayer());
+		if(lobby == null) {
+			((JLabel)getComponent(0)).setText("Lobby");
+			((JLabel)getComponent(1)).setText("Create Game First");
+			getComponent(2).setVisible(true);
+		} else {
+			GameFrame frame = (GameFrame)getTopLevelAncestor();
+			frame.getContentPane().removeAll();
+			frame.getContentPane().add(lobby);
+			frame.repaint();
+			
+			lobby.addPlayer(frame.getPlayer());
+		}
 	}
 	
 	public void createLobby() {
-		lobby = new LobbyPanel();
-		try {
-			Thread.sleep(200);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if(lobby == null) {
+			lobby = new LobbyPanel();
+			((JLabel)getComponent(0)).setText("Lobby");
+			((JLabel)getComponent(1)).setText("Game created");
+			getComponent(2).setVisible(true);
 		}
-		((JLabel)getComponent(0)).setText("Lobby");
-		((JLabel)getComponent(1)).setText("Game created");
-		getComponent(2).setVisible(true);
+		else {
+			((JLabel)getComponent(0)).setText("Lobby");
+			((JLabel)getComponent(1)).setText("Another Game Is Run");
+			getComponent(2).setVisible(true);
+		}
 	}
 }

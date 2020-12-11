@@ -10,7 +10,7 @@ public class GameFont {
 	
 	public GameFont() {
 		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/BLKCHCRY.TTF"));
+			font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/font/Minion Pro Bold Cond Caption.otf"));
 		} catch (FontFormatException | IOException e) {
 			e.printStackTrace();
 		}

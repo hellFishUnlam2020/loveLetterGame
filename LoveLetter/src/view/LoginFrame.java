@@ -21,28 +21,29 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
-import interfaces.ScreenConstants;
+import interfaces.GameConstants;
+import jpanels.BackgroundLabel;
 import jpanels.CreateButton;
 import jpanels.GameFont;
 import jpanels.ScaledIcon;
 import jpanels.TextLabel;
 import loveLetter.Player;
-import viewCommunication.UserLoggable;
 
-public class LoginFrame extends JFrame implements UserLoggable {
+public class LoginFrame extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2468719791156400022L;
+	private Dimension componentSize;
+	private int xComponentAlligment;
+
 	private JTextField userField;
 	private JPasswordField passField;
-	private Dimension size;
 
 	private JButton enterButton;
 	private JLabel backgroundLabel;
 	private Font font = new GameFont().getFont().deriveFont(35f);
-	private Player player;
 
 	private JLabel errorBack;
 	private TextLabel errorText1;
@@ -56,43 +57,49 @@ public class LoginFrame extends JFrame implements UserLoggable {
 	 */
 	public LoginFrame() {
 
+		ImageIcon background = new ImageIcon(getClass().getResource("/Images/login.jpg"));
+		
 		setTitle("Login");
-		setSize(ScreenConstants.width, ScreenConstants.height);
-		setIconImage(ScreenConstants.logo);
+		setIconImage(GameConstants.logo);
 		setResizable(false);
 		setUndecorated(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBackground(new Color(0, 0, 0, 90));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
+		
+		setBounds((GameConstants.width-background.getIconWidth())/2, (GameConstants.height-background.getIconHeight())/2, background.getIconWidth(), background.getIconHeight());
+		
+		componentSize = new Dimension(200, 50);
+		xComponentAlligment = (getWidth() - componentSize.width) / 2;
 
-		size = new Dimension(200, 50);
-
-		addBackground();
+		addBackground(background);
 		addUserField();
 		addPassField();
 		addEnterButton();
 		addLoginError();
+		
 		addUserTiny();
 		addPassTiny();
 
 		getContentPane().setComponentZOrder(backgroundLabel, getContentPane().getComponentCount() - 1);
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					dispose();
+				}
+			}
+		});
 		setVisible(true);
-		enterButton.requestFocus();
+		requestFocus();
+		
 	}
 
 	// ---------------------------------------------------------------
 	// Screen config
 	// BackgroundLabel
 
-	public void addBackground() {
-		backgroundLabel = new JLabel();
-
-		backgroundLabel.setIcon(new ImageIcon(LoginFrame.class.getResource("/Images/login.jpg")));
-		backgroundLabel.setBackground(getBackground());
-		backgroundLabel.setSize(backgroundLabel.getIcon().getIconWidth(), backgroundLabel.getIcon().getIconHeight());
-		backgroundLabel.setLocation((ScreenConstants.width - backgroundLabel.getIcon().getIconWidth()) / 2,
-				(ScreenConstants.height - backgroundLabel.getIcon().getIconHeight()) / 2);
-
+	public void addBackground(ImageIcon icon) {
+		backgroundLabel = new BackgroundLabel(new Dimension(icon.getIconWidth(), icon.getIconHeight()), icon);
 		getContentPane().add(backgroundLabel);
 	}
 
@@ -101,17 +108,16 @@ public class LoginFrame extends JFrame implements UserLoggable {
 	public void addUserField() {
 
 		userField = new JTextField();
-		userField.setForeground(Color.white);
 		userField.setOpaque(false);
+		userField.setForeground(Color.white);
 		userField.setFont(font.deriveFont(20f));
 		userField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255, 255, 255)));
-		userField.setBounds((ScreenConstants.width - size.width) / 2, backgroundLabel.getY() + 15, size.width,
-				size.height);
+		userField.setBounds(xComponentAlligment, 15, componentSize.width, componentSize.height);
 		userField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					isValidUserName();
+					validUserName();
 			}
 		});
 		userField.addFocusListener(new FocusAdapter() {
@@ -119,14 +125,14 @@ public class LoginFrame extends JFrame implements UserLoggable {
 			public void focusLost(FocusEvent e) {
 				if (userField.getText().isEmpty()) {
 					userBack.setFont(userBack.getFont().deriveFont(20f));
-					userBack.setSize(size.width, size.height);
+					userBack.setSize(componentSize.width, componentSize.height);
 				}
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
 				userBack.setFont(userBack.getFont().deriveFont(13f));
-				userBack.setSize(size.width / 3, size.height / 4);
+				userBack.setSize(componentSize.width / 3, componentSize.height / 4);
 				errorBack.setVisible(false);
 				errorText1.setText("");
 				errorText2.setText("");
@@ -137,7 +143,7 @@ public class LoginFrame extends JFrame implements UserLoggable {
 	}
 
 	public void addUserTiny() {
-		userBack = new TextLabel(new Rectangle(userField.getX(), userField.getY(), size.width, size.height),
+		userBack = new TextLabel(new Rectangle(xComponentAlligment, userField.getY(), componentSize.width, componentSize.height),
 				Color.white, 20f);
 		userBack.setText("Username");
 		userBack.setHorizontalAlignment(SwingConstants.LEFT);
@@ -152,12 +158,12 @@ public class LoginFrame extends JFrame implements UserLoggable {
 		passField.setForeground(Color.white);
 		passField.setOpaque(false);
 		passField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255, 255, 255)));
-		passField.setBounds(userField.getX(), userField.getY() + size.height + 10, size.width, size.height);
+		passField.setBounds(xComponentAlligment, componentSize.height + 15, componentSize.width, componentSize.height);
 		passField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
-					isValidUserName();
+					validUserName();
 			}
 		});
 		passField.addFocusListener(new FocusAdapter() {
@@ -165,14 +171,14 @@ public class LoginFrame extends JFrame implements UserLoggable {
 			public void focusLost(FocusEvent e) {
 				if (passField.getPassword().length == 0) {
 					passBack.setFont(passBack.getFont().deriveFont(20f));
-					passBack.setSize(size.width, size.height);
+					passBack.setSize(componentSize.width, componentSize.height);
 				}
 			}
 
 			@Override
 			public void focusGained(FocusEvent e) {
 				passBack.setFont(passBack.getFont().deriveFont(13f));
-				passBack.setSize(size.width / 3, size.height / 4);
+				passBack.setSize(componentSize.width / 3, componentSize.height / 4);
 				errorBack.setVisible(false);
 				errorText1.setText("");
 				errorText2.setText("");
@@ -183,7 +189,7 @@ public class LoginFrame extends JFrame implements UserLoggable {
 
 	public void addPassTiny() {
 
-		passBack = new TextLabel(new Rectangle(passField.getX(), passField.getY(), size.width, size.height),
+		passBack = new TextLabel(new Rectangle(passField.getX(), passField.getY(), componentSize.width, componentSize.height),
 				Color.white, 20f);
 		passBack.setText("Password");
 		passBack.setHorizontalAlignment(SwingConstants.LEFT);
@@ -193,7 +199,7 @@ public class LoginFrame extends JFrame implements UserLoggable {
 	// EnterButton
 
 	public void addEnterButton() {
-		enterButton = new CreateButton(passField.getX(), passField.getY() + size.height + 25, size.width, size.height);
+		enterButton = new CreateButton(passField.getX(), passField.getY() + componentSize.height + 25, componentSize.width, componentSize.height);
 		enterButton.setText("Ingresar");
 		enterButton.setFont(font);
 		enterButton.setForeground(new Color(238, 222, 155));
@@ -201,18 +207,18 @@ public class LoginFrame extends JFrame implements UserLoggable {
 		enterButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				isValidUserName();
+				validUserName();
 			}
 		});
 		enterButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				enterButton.setFont(enterButton.getFont().deriveFont(Font.BOLD));
+				enterButton.setFont(enterButton.getFont().deriveFont(40f));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				enterButton.setFont(enterButton.getFont().deriveFont(Font.PLAIN));
+				enterButton.setFont(enterButton.getFont().deriveFont(35f));
 			}
 		});
 		getContentPane().add(enterButton);
@@ -242,19 +248,16 @@ public class LoginFrame extends JFrame implements UserLoggable {
 	// ---------------------------------------------------------------
 	// Event methods
 
-	private boolean isValidUserName() {
-		boolean validName = true;
+	private void validUserName() {
 
 		if (userField.getText().isEmpty() || userField.getText().equals("Username")) {
 			errorBack.setVisible(true);
 			errorText1.setText("Nombre de Usuario");
 			errorText2.setText("Incorrecto");
-			validName = false;
 		} else {
 			userLogged(userField.getText());
 			dispose();
 		}
-		return validName;
 	}
 
 	// ---------------------------------------------------------------
@@ -275,9 +278,7 @@ public class LoginFrame extends JFrame implements UserLoggable {
 		});
 	}
 
-	@Override
 	public void userLogged(String name) {
-		player = new Player(name);
-		new GameScreen(player).setVisible(true);
+		new GameFrame(new Player(name)).setVisible(true);
 	}
 }

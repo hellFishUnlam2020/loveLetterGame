@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cards.Card;
-import jpanels.PlayerLabel;
+import jpanels.PlayerPanel;
 
 public class Player implements Comparable<Player> {
 	
@@ -14,7 +14,7 @@ public class Player implements Comparable<Player> {
 	private List<Card> cards = new LinkedList<Card>();
 	private int cantRoundPlayedCards;
 	private Match match;
-	private PlayerLabel label;
+	private PlayerPanel label;
 	
 	private boolean isTurn = false;
 	private boolean isProtected = false;
@@ -184,11 +184,11 @@ public class Player implements Comparable<Player> {
 		cards.remove(n);
 	}
 
-	public PlayerLabel getLabel() {
+	public PlayerPanel getLabel() {
 		return label;
 	}
 
-	public void setLabel(PlayerLabel label) {
+	public void setLabel(PlayerPanel label) {
 		this.label = label;
 	}
 	

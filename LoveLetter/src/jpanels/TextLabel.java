@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import interfaces.ScreenConstants;
+import interfaces.GameConstants;
 
 public class TextLabel extends JLabel {
 
@@ -18,10 +18,10 @@ public class TextLabel extends JLabel {
 	private Font font = new GameFont().getFont();
 	public TextLabel(Rectangle r, Color fontColor, float fontSize) {
 		
-		setBounds((int)Math.ceil(r.x * ScreenConstants.aspectRelX), (int)Math.ceil(r.y * ScreenConstants.aspectRelY), (int)Math.ceil(r.width * ScreenConstants.aspectRelX), (int)Math.ceil(r.height * ScreenConstants.aspectRelY));
+		setBounds((int)Math.ceil(r.x * GameConstants.aspectRelX), (int)Math.ceil(r.y * GameConstants.aspectRelY), (int)Math.ceil(r.width * GameConstants.aspectRelX), (int)Math.ceil(r.height * GameConstants.aspectRelY));
 		setFont(font.deriveFont(fontSize));
 		setForeground(fontColor);
 		setHorizontalAlignment(SwingConstants.CENTER);
-		
+		setVerticalAlignment(SwingConstants.CENTER);
 	}
 }

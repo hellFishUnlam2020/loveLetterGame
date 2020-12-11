@@ -9,23 +9,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import cards.Card;
-import interfaces.ScreenConstants;
+import interfaces.GameConstants;
 import loveLetter.Deck;
-import view.CardPickerFrame;
-import view.CardPreviewFrame;
-import viewCommunication.CardElegible;
 
-public class MainMenu extends JPanel implements CardElegible{
+public class MainMenu extends JPanel{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8521929087087608231L;
-
+	
 	public MainMenu() {
-						
-		setSize(ScreenConstants.width, ScreenConstants.height);
+		
+		setSize(GameConstants.screenSize);
 		setLayout(null);
 		
 		addPlayButton();		
@@ -35,7 +31,6 @@ public class MainMenu extends JPanel implements CardElegible{
 		addConfigButton();
 		addExitButon();
 		addBackground();
-		
 	}
 	
 	private void addBackground() {
@@ -48,22 +43,25 @@ public class MainMenu extends JPanel implements CardElegible{
 	}
 	
 	private void addShowCardsButton() {
-		JButton showCardsButton = new CreateButton(new ScaledIcon("/images/mainCards.png").getScaledIcon(), 748, 966);
+		
+		JButton showCardsButton = new CreateButton("/images/mainCards.png", 748, 966, null);
 		showCardsButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				showCardPickerFrame();
+				JFrame frame = (JFrame)getTopLevelAncestor();
+				frame.getContentPane().removeAll();
+				frame.getContentPane().add(new CardPickerPanel());
+				frame.repaint();
 			}
 		});
 		add(showCardsButton);
 	}
 	
 	private void addPlayButton() {
-		JButton playButton = new CreateButton(new ScaledIcon("/images/mainPlay.png").getScaledIcon(), 840, 746);
+		JButton playButton = new CreateButton("/images/mainPlay.png", 840, 746, "/images/mainPlayClicked.png");
 		playButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
 				JFrame frame = (JFrame)getTopLevelAncestor();
 				frame.getContentPane().removeAll();
 				frame.getContentPane().add(new GameSelection());
@@ -71,23 +69,23 @@ public class MainMenu extends JPanel implements CardElegible{
 			}
 		});
 		add(playButton);
-
 	}
 	
 	private void addProfileButton() {
-		JButton profileButton = new CreateButton(new ScaledIcon("/images/mainProfile.png").getScaledIcon(), 860, 966);
+		JButton profileButton = new CreateButton("/images/mainProfile.png", 860, 966, null);
 
 		add(profileButton);
 
 	}	
 	
 	private void addStatsButton() {		
-		JButton statsButton = new CreateButton(new ScaledIcon("/images/mainStats.png").getScaledIcon(), 969, 964);
+		JButton statsButton = new CreateButton("/images/mainStats.png", 969, 964, null);
+		
 		add(statsButton);
 	}
 
 	private void addConfigButton() {
-		JButton configButton = new CreateButton(new ScaledIcon("/images/mainConfig.png").getScaledIcon(), 1083, 966);
+		JButton configButton = new CreateButton("/images/mainConfig.png", 1083, 966, null);
 		configButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -98,7 +96,7 @@ public class MainMenu extends JPanel implements CardElegible{
 	} 
 	
 	private void addExitButon() {
-		JButton exitButton = new CreateButton(new ScaledIcon("/images/mainExit.png").getScaledIcon(), 1726, 84);
+		JButton exitButton = new CreateButton("/images/mainExit.png", 1726, 84, null);
 		exitButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -108,18 +106,4 @@ public class MainMenu extends JPanel implements CardElegible{
 		add(exitButton);
 	}
 	
-	
-	public void showCardPickerFrame() {
-		CardPickerFrame cardPicker = new CardPickerFrame();
-		cardPicker.setCardEligile(this);
-	}
-
-	@Override
-	public void cardElected(Card card) {
-		CardPreviewFrame cardPreview = new CardPreviewFrame(card);
-		cardPreview.init();
-		cardPreview.setFocusable(true);
-		cardPreview.requestFocusInWindow();
-		cardPreview.setVisible(true);
-	}
 }
