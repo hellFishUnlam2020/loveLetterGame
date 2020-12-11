@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import interfaces.GameConstants;
-import loveLetter.Deck;
 
 public class MainMenu extends JPanel{
 

@@ -23,11 +23,11 @@ public class AffectionPanel extends JPanel {
 			JLabel label = new JLabel();
 			label.setIcon(affection);
 			label.setSize(affection.getIconWidth(), affection.getIconHeight());
-			label.setLocation((int)Math.ceil(GameConstants.aspectRelX * affection.getIconWidth()*i), 0);
+			label.setLocation(affection.getIconWidth()*i, 0);
 			add(label);
 		}
 		
 		setSize(affection.getIconWidth()*cant, affection.getIconHeight());
-		setLocation((int)Math.ceil(GameConstants.aspectRelX * (x + offset - (cant+0.1)/2*affection.getIconWidth())), (int)Math.floor(GameConstants.aspectRelY * y));
+		setLocation((int) (x + offset - (cant+0.1)/2*affection.getIconWidth()), y);
 	}
 }

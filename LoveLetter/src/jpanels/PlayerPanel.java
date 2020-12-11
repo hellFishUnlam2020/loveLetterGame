@@ -30,8 +30,6 @@ public class PlayerPanel extends JPanel {
 	private JLabel protectedLabel;
 	
 	public PlayerPanel(Player player, int nroPlayer, int tamTotal, int aff) {
-
-//		this.player = player;
 		
 		setSize(GameConstants.screenSize);
 		setOpaque(false);
@@ -49,14 +47,14 @@ public class PlayerPanel extends JPanel {
 			add(card1);
 			add(card2);
 			
-			add(new AffectionPanel(playerLabel.getX(), playerLabel.getY() + 40 , aff, playerLabel.getIcon().getIconWidth()/2, "/images/boardToken.png"));
+			add(new AffectionPanel(playerLabel.getX(), playerLabel.getY() + (int)Math.floor(GameConstants.aspectRelY * 40) , aff, playerLabel.getIcon().getIconWidth()/2, "/images/boardToken.png"));
 			add(playerLabel);
 			
 		} else {
-			playerLabel = new BackgroundLabel( ((GameConstants.width / tamTotal)*(nroPlayer-1)) - 350/2,  40, "/images/boardP" + nroPlayer + ".png");
+			playerLabel = new BackgroundLabel( ((GameConstants.width / tamTotal+350/3)*(nroPlayer-1))-350/2, 40, "/images/boardP" + nroPlayer + ".png");
 			protectedLabel = new TextLabel(new Rectangle(playerLabel.getX(), 208 ,playerLabel.getWidth(), 40), Color.black, 35f);
 			
-			JLabel name = new TextLabel(new Rectangle(playerLabel.getX(), 135, playerLabel.getWidth(), 40), new Color(230,190,148), 25f);
+			JLabel name = new TextLabel(new Rectangle((int) (playerLabel.getX()/GameConstants.aspectRelX), 135, playerLabel.getWidth(), 40), new Color(230,190,148), 25f);
 			name.setText(player.getName());
 			
 			add(name);	
@@ -67,7 +65,7 @@ public class PlayerPanel extends JPanel {
 			add(card1);
 			add(card2);
 			
-			add(new AffectionPanel(playerLabel.getX(), 170, aff, playerLabel.getIcon().getIconWidth()/2, "/images/boardToken.png"));
+			add(new AffectionPanel(playerLabel.getX(), (int)Math.floor(GameConstants.aspectRelY * 170), aff, playerLabel.getIcon().getIconWidth()/2, "/images/boardToken.png"));
 			add(playerLabel);
 		}
 		

@@ -1,6 +1,7 @@
 package jpanels;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -115,12 +116,12 @@ public class LobbyPanel extends JPanel {
 
 		int gap = 94;
 		JLabel backLabel = new JLabel();
-		backLabel.setIcon(new ScaledIcon("/images/lobbyP"+(nro+1)+".png").getScaledIcon());
-		backLabel.setBounds((int) Math.ceil(759 * GameConstants.aspectRelX),
-				(int) Math.ceil(412 + gap*nro * GameConstants.aspectRelY), backLabel.getIcon().getIconWidth(),
-				backLabel.getIcon().getIconHeight());
+		backLabel.setIcon(new ScaledIcon("/images/lobbyP" + (nro + 1) + ".png").getScaledIcon());
+		Dimension location = new ScaledBounds(759,412+gap*nro).getScaledDim();
+		backLabel.setLocation(location.width, location.height);
+		backLabel.setSize(backLabel.getIcon().getIconWidth(),backLabel.getIcon().getIconHeight());
 
-		JLabel nombreLabel = new TextLabel(new Rectangle(858, 436 + gap*nro, 288, 37), Color.black, 30f);
+		JLabel nombreLabel = new TextLabel(new Rectangle(858, 436 + gap * nro, 288, 37), Color.black, 30f);
 		nombreLabel.setText(players.get(nro).getName());
 
 		add(nombreLabel);

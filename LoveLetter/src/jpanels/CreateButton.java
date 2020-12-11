@@ -30,7 +30,7 @@ public class CreateButton extends JButton {
 	}
 	
 	public CreateButton(int x, int y, int width, int height) {
-		setBounds((int)Math.ceil(GameConstants.aspectRelX * x), (int)Math.floor(GameConstants.aspectRelY * y), width, height);
+		setBounds((int)Math.ceil(GameConstants.aspectRelX * x), (int)Math.floor(GameConstants.aspectRelY * y),(int)Math.ceil(GameConstants.aspectRelX * width), (int)Math.floor(GameConstants.aspectRelY * height));
 		setContentAreaFilled(false);
 		setBorderPainted(false);
 		setIgnoreRepaint(true);

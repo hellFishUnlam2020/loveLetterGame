@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import cards.Card;
 import interfaces.GameConstants;
 import loveLetter.Deck;
-import view.GameFrame;
 import viewCommunication.CardElegible;
 
 public class CardPickerPanel extends JPanel{

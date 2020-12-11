@@ -1,5 +1,8 @@
 package view;
 
+import java.awt.EventQueue;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
 import cards.Card;
@@ -49,5 +52,17 @@ public class GameFrame extends JFrame {
 		cardPreview.setFocusable(true);
 		cardPreview.requestFocusInWindow();
 		cardPreview.setVisible(true);
+	}
+	public static void main(String[] args) {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					new GameFrame(new Player("Nahuel")).setVisible(true);;
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 }

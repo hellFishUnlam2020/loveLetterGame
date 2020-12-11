@@ -1,7 +1,5 @@
 package jpanels;
 
-import java.awt.Dimension;
-
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -21,8 +19,8 @@ public class BackgroundLabel extends JLabel {
 	
 	}
 	
-	public BackgroundLabel(Dimension size, ImageIcon icon) {
+	public BackgroundLabel(ImageIcon icon) {
 		setIcon(icon);
-		setSize(size);
+		setSize(icon.getIconWidth(), icon.getIconHeight());
 	}
 }
