@@ -5,9 +5,10 @@ import java.util.List;
 
 import cards.Card;
 import jpanels.PlayerPanel;
+import cards.CardType;
 
 public class Player implements Comparable<Player> {
-	
+
 	private String name;
 	private int matchPoints;
 	private Status status;
@@ -48,7 +49,6 @@ public class Player implements Comparable<Player> {
 		this.match = match;
 	}
 
-
 	public String getName() {
 		return name;
 	}
@@ -71,8 +71,11 @@ public class Player implements Comparable<Player> {
 
 	public void setStatus(Status status) {
 		this.status = status;
-		label.setStatus("Disabled", true);
-		setTurn(false);
+		
+		if(status == Status.DISABLE)
+			label.setStatus("Disable", true);
+		if(status == Status.PROTECTED)
+			label.setStatus("Protected", true);
 	}
 
 	public List<Card> getCards() {
@@ -85,7 +88,7 @@ public class Player implements Comparable<Player> {
 	}
 
 	public void increaseMatchPoint() {
-		this.matchPoints ++;
+		this.matchPoints++;
 	}
 
 	public int getCantRoundPlayedCards() {
@@ -101,42 +104,69 @@ public class Player implements Comparable<Player> {
 	}
 
 	public void discardCard(Card card) {
-		
+
 		this.getCards().remove(card);
 	}
-	
+
 	public void playCard() {
 
 		// Un approach
 
-		while(label.getCardSelected() == null) {
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		Card card;
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+
+		// se chequea si se posee Condesa+Rey o Condesa+Principe
+		if (admin.playerHasCountessCard(this) && admin.playerHasToPlayCountessCard(this)) {
+			card = getCardOfType(CardType.countess);
+			card.play(this);
+
+		} else {
+
+			while(label.getCardSelected() == null) {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
+			
+			card = label.getCardSelected();
+			removeCard(label.getNCardSelected());
+			label.resetCardSelected();
+
+			card.play(this); // Agrego el jugador que debe la juega
+
 		}
-		label.getCardSelected().play(this);  //Agrego el jugador que debe la juega
-		removeCard(label.getNCardSelected());
-		label.resetCardSelected();
-		
-		//---------------------------------------------
-		
-	
+
+		// ---------------------------------------------
+
 		// otro approach
-		
+
 		/*
 		 * aca deberiamos seleccionar una carta de las 2 que tenemos en mano, por el
 		 * momento elegimos siempre la primera
 		 */
-		
-//		RuleAdmin admin = RuleAdmin.getRuleadmin();
-//		Card cardChoosed = admin.chooseCard(this);
-//		cardChoosed.play(this); //el metodo play recibe el currentPlayer 
 
-		//---------------------------------------------
-		
+		// RuleAdmin admin = RuleAdmin.getRuleadmin();
+		// Card cardChoosed = admin.chooseCard(this);
+		// cardChoosed.play(this); //el metodo play recibe el currentPlayer
+
+		// ---------------------------------------------
+
 		this.cantRoundPlayedCards++;
+	}
+
+	public Card getCardOfType(CardType type) {
+
+		Card cardResult = null;
+
+		for (Card card : this.getCards()) {
+
+			if (card.getType().equals(type))
+				cardResult = card;
+		}
+
+		return cardResult;
 	}
 
 	@Override
