@@ -131,10 +131,10 @@ public class Player implements Comparable<Player> {
 			}
 			
 			card = label.getCardSelected();
+			card.play(this);
 			removeCard(label.getNCardSelected());
 			label.resetCardSelected();
 
-			card.play(this); // Agrego el jugador que debe la juega
 
 		}
 

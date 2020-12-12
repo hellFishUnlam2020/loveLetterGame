@@ -96,8 +96,9 @@ public class RoundGame {
 		
 		for(int i = 0; i<players.size(); i++) {
 			if(players.get(i).getStatus() == Status.DISABLE) {
+				players.get(i).setTurn(false);
 				eliminatePlayerFromRound(players.get(i));
-				playerPlaying=i-1;
+				playerPlaying=index-1;
 			}
 		}
 		/*Por cada carta que se levanta del mazo deberia comprobarse si el jugador posee
