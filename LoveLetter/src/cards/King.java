@@ -39,7 +39,9 @@ public class King extends Card {
 		
 		admin.resetElected();
 		
-		applyEffect(currentPlayer, targetPlayer);
+		if (!targetPlayer.isProtected()) {
+			applyEffect(currentPlayer, targetPlayer);
+		}
 		
 	}
 	
@@ -48,8 +50,7 @@ public class King extends Card {
 		
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
 		
-		if(!targetPlayer.isProtected())
-			admin.swapCardsBetweenPlayers(currentPlayer,targetPlayer);
+		admin.swapCardsBetweenPlayers(currentPlayer,targetPlayer);
 	}
 	
 	

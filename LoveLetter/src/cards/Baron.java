@@ -35,8 +35,10 @@ public class Baron extends Card {
 		Player targetPlayer = admin.choosePlayer(currentPlayer, false);
 
 		admin.resetElected();
-
-		applyEffect(currentPlayer, targetPlayer);
+		
+		if (!targetPlayer.isProtected()) {
+			applyEffect(currentPlayer, targetPlayer);
+		}
 	}
 
 	@Override

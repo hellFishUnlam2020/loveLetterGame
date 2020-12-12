@@ -42,7 +42,9 @@ public class Priest extends Card {
 	
 		admin.resetElected();
 		
-		applyEffect(currentPlayer,targetPlayer);
+		if (!targetPlayer.isProtected()) {
+			applyEffect(currentPlayer, targetPlayer);
+		}
 	}
 
 	@Override
@@ -50,7 +52,6 @@ public class Priest extends Card {
 	
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
 		
-		if(!targetPlayer.isProtected())
-			admin.showPlayerCards(targetPlayer);
+		admin.showPlayerCards(targetPlayer);
 	}
 }
