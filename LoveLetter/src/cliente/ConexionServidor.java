@@ -37,6 +37,16 @@ public class ConexionServidor implements MouseListener {
 		this.salidaDatos = new DataOutputStream(socket.getOutputStream());
 	}
 	
+	public void comenzarPartida()
+	{
+		try {
+			this.salidaDatos.writeUTF(gson.toJson(new Paquete(Comando.COMENZAR_PARTIDA, player.getName())));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void ingresarLobby(Player player) 
 	{
 		this.player = player;

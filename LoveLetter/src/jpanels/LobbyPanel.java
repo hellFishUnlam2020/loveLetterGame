@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import cliente.ConexionServidor;
 import interfaces.GameConstants;
 import loveLetter.Player;
 import view.GameFrame;
@@ -29,8 +30,9 @@ public class LobbyPanel extends JPanel {
 	private JButton validButton;
 	private JLabel backgroundLabel;
 	private List<Player> players;
+	private ConexionServidor conexion;
 
-	public LobbyPanel(GameFrame frame) {
+	public LobbyPanel(GameFrame frame, ConexionServidor conexion) {
 
 		players = new ArrayList<Player>(3);
 
@@ -44,6 +46,8 @@ public class LobbyPanel extends JPanel {
 		addConfigButton();
 		addButtonAddPlayer(1254, 530);
 		addBackgroundLabel();
+		
+		this.conexion = conexion;
 	}
 
 	private void addBackgroundLabel() {
@@ -63,6 +67,7 @@ public class LobbyPanel extends JPanel {
 		validButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				conexion.comenzarPartida();
 				new MatchFrame(players, 5, frame);
 				((JFrame) getTopLevelAncestor()).dispose();
 			}
@@ -157,9 +162,15 @@ public class LobbyPanel extends JPanel {
 		repaint();
 		((JFrame) getTopLevelAncestor()).repaint();
 	}
-
+	
 	public void addPlayer(Player player) {
 		players.add(player);
 		refresh();
 	}
+		               
+	public List<Player> getPlayers() {
+		return players;
+	}
+	
+	
 }

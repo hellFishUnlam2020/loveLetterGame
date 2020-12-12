@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 
 import interfaces.GameConstants;
 import view.GameFrame;
-
+import view.MatchFrame;
 import cliente.ConexionServidor;
 import comandos.Comando;
 import loveLetter.Player;
@@ -145,7 +145,7 @@ public class CreateGame extends JPanel{
 		if(lobby == null) {
 			((JLabel)getComponent(0)).setText("Lobby");
 			getComponent(2).setVisible(true);
-			lobby = new LobbyPanel(frame);
+			lobby = new LobbyPanel(frame, conexion);
 		}
 		
 
@@ -159,24 +159,21 @@ public class CreateGame extends JPanel{
 	}
 	
 	public void recibirMensajeServidor() {
-		//String mensaje;
 		boolean conectado = true;
 		while (conectado) {
 			try {
 				Paquete paquete = conexion.leer();
-				System.out.println(paquete.getNombreJugador());
-				System.out.println(paquete.getComando());
 				if(paquete.getComando().equals(Comando.INGRESO_JUGADOR_LOBBY)) {
-					if(frame != null) {
-						System.out.println(frame);
-						System.out.println(frame.getPlayer());
-					}
-					if(frame != null && frame.getPlayer() != null && !frame.getPlayer().getName().equals(paquete.getNombreJugador())) {
-						System.out.println("agregue jugador al lobby");
+					if(!frame.getPlayer().getName().equals(paquete.getNombreJugador())) {
 						lobby.addPlayer(new Player(paquete.getNombreJugador()));
 						frame.getContentPane().add(lobby);
 						frame.repaint();	
 					}					
+				} else if(paquete.getComando().equals(Comando.COMENZO_PARTIDA)) {
+					if(!frame.getPlayer().getName().equals(paquete.getNombreJugador())) {
+						new MatchFrame(lobby.getPlayers(), 5, frame);
+						frame.dispose();
+					}	
 				}
 			} catch (IOException e) {
 				conectado = false;

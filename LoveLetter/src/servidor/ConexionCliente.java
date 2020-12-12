@@ -49,20 +49,24 @@ public class ConexionCliente extends Thread {
 				mensajeRecibido = entradaDatos.readUTF();
 				System.out.println("MENSAJE RECIBIDO SERVER: " + mensajeRecibido.toString());
 				Paquete paquete = gson.fromJson(mensajeRecibido, Paquete.class);
+				List<Player> players = this.match.getPlayers();
 				if (paquete.getComando().equals(Comando.INGRESAR_LOBBY)) {
 					this.match.agregarJugador(new Player(paquete.getNombreJugador()));
-				}
-
-				List<Player> players = this.match.getPlayers();
-				Iterator<Socket> clientesIterator = clientes.iterator();
-				while (clientesIterator.hasNext()) {
-					Socket socket = clientesIterator.next();
-					
-					for(Player player : players) {
-						(new DataOutputStream(socket.getOutputStream())).writeUTF(gson.toJson(new Paquete(Comando.INGRESO_JUGADOR_LOBBY, player.getName())));
+					Iterator<Socket> clientesIterator = clientes.iterator();
+					while (clientesIterator.hasNext()) {
+						Socket socket = clientesIterator.next();
+						
+						for(Player player : players) {
+							(new DataOutputStream(socket.getOutputStream())).writeUTF(gson.toJson(new Paquete(Comando.INGRESO_JUGADOR_LOBBY, player.getName())));
+						}
 					}
-//					(new DataOutputStream(socket.getOutputStream())).writeUTF(gson.toJson(new Paquete(Comando.NADA,
-//							"soy servidor acción producida por " + paquete.getNombreJugador())));
+				} else if(paquete.getComando().equals(Comando.COMENZAR_PARTIDA)) {
+					Iterator<Socket> clientesIterator = clientes.iterator();
+					while (clientesIterator.hasNext()) {
+						Socket socket = clientesIterator.next();
+						(new DataOutputStream(socket.getOutputStream())).writeUTF(gson.toJson(new Paquete(Comando.COMENZO_PARTIDA, paquete.getNombreJugador())));
+						
+					}
 				}
 			} catch (IOException e) {
 				conectado = false;
