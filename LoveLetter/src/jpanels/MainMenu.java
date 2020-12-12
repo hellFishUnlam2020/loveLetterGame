@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import interfaces.GameConstants;
+import view.GameFrame;
 
 public class MainMenu extends JPanel{
 
@@ -18,13 +19,14 @@ public class MainMenu extends JPanel{
 	 */
 	private static final long serialVersionUID = 8521929087087608231L;
 	private JLabel background;
-	public MainMenu() {
+	
+	public MainMenu(GameFrame gameFrame) {
 		
 		setSize(GameConstants.screenSize);
 		setLayout(null);
 		
-		addPlayButton();		
-		addShowCardsButton();
+		addPlayButton(gameFrame);		
+		addShowCardsButton(gameFrame);
 		addProfileButton();
 		addStatsButton();
 		addConfigButton();
@@ -41,7 +43,7 @@ public class MainMenu extends JPanel{
 		add(background);
 	}
 	
-	private void addShowCardsButton() {
+	private void addShowCardsButton(GameFrame gameFrame) {
 		
 		JButton showCardsButton = new CreateButton("/images/mainCards.png", 748, 966, null);
 		showCardsButton.addMouseListener(new MouseAdapter() {
@@ -49,7 +51,7 @@ public class MainMenu extends JPanel{
 			public void mouseClicked(MouseEvent e) {
 				JFrame frame = (JFrame)getTopLevelAncestor();
 				frame.getContentPane().removeAll();
-				frame.getContentPane().add(new CardPickerPanel());
+				frame.getContentPane().add(new CardPickerPanel(gameFrame));
 				frame.getContentPane().add(background);
 				frame.repaint();
 			}
@@ -57,14 +59,14 @@ public class MainMenu extends JPanel{
 		add(showCardsButton);
 	}
 	
-	private void addPlayButton() {
+	private void addPlayButton(GameFrame gameFrame) {
 		JButton playButton = new CreateButton("/images/mainPlay.png", 840, 746, "/images/mainPlayClicked.png");
 		playButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JFrame frame = (JFrame)getTopLevelAncestor();
 				frame.getContentPane().removeAll();
-				frame.getContentPane().add(new GameSelection());
+				frame.getContentPane().add(new GameSelection(gameFrame));
 				frame.repaint();
 			}
 		});

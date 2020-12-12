@@ -38,7 +38,7 @@ public class GameFrame extends JFrame {
 		setUndecorated(true);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
-		getContentPane().add(new MainMenu());
+		getContentPane().add(new MainMenu(this));
 		
 	}
 	

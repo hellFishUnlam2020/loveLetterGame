@@ -14,12 +14,17 @@ import java.util.LinkedList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import comandos.Comando;
+import loveLetter.Player;
+import paquetes.Paquete;
+
 public class ConexionServidor implements MouseListener {
 	private Socket socket;
 	private DataOutputStream salidaDatos;
 	private DataInputStream entradaDatos;
 	private Gson gson;
 	private GsonBuilder builder;
+	private Player player;
 
 	public ConexionServidor(String host, int puerto) throws UnknownHostException, IOException {
 		this.socket = new Socket(host, puerto);
@@ -31,20 +36,32 @@ public class ConexionServidor implements MouseListener {
 		this.entradaDatos = new DataInputStream(socket.getInputStream());
 		this.salidaDatos = new DataOutputStream(socket.getOutputStream());
 	}
+	
+	public void ingresarLobby(Player player) 
+	{
+		this.player = player;
+		
+		try {
+			this.salidaDatos.writeUTF(gson.toJson(new Paquete(Comando.INGRESAR_LOBBY, player.getName())));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-	public void leer() throws IOException {
-		String mensaje = this.entradaDatos.readUTF();
-		System.out.println("leer: " + mensaje.toString());
-
-//		PaqueteCarta paquete = gson.fromJson(mensaje, PaqueteCarta.class);
-//
-//		if (paquete.getComando().equals("3")) {
-//			this.mesa.cartelFinDeJuego();
-//			this.mesa.repaint();Match
-//		} else {
-//			this.mesa.addCarta(paquete.getCarta());
-//			this.mesa.repaint();
-//		}
+	public Paquete leer() throws IOException {
+		String mensajeRecibido = this.entradaDatos.readUTF();
+		Paquete paquete = gson.fromJson(mensajeRecibido, Paquete.class);
+		return paquete;
+	}
+	
+	public void escribir() {
+		try {
+			this.salidaDatos.writeUTF("envio algo");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

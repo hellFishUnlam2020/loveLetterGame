@@ -1,8 +1,10 @@
  package loveLetter;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import jpanels.MainMenu;
+import view.GameFrame;
 import view.MatchFrame;
 
 public class Match extends Thread{
@@ -17,16 +19,28 @@ public class Match extends Thread{
 	private Deck deck = new Deck();
 
 	private MatchFrame frame;
+	private GameFrame gameFrame;
 
 	private RoundGame roundGame;
 	
-	public Match(List<Player> players, int affecTok, MatchFrame frame) { //obligatorios para comenzar la partida	
+	public Match(List<Player> players, int affecTok, MatchFrame frame, GameFrame gameFrame) { //obligatorios para comenzar la partida	
 		
 		this.frame = frame;
 		this.affectionTokens = affecTok;
 		this.players = players;
+		this.gameFrame = gameFrame;
 	}
-
+	
+	public Match()
+	{
+		this.affectionTokens = 5;
+		this.players = new LinkedList<Player>();
+	}
+	
+	public void agregarJugador(Player jugador) {
+		this.players.add(jugador);
+	}
+	
 	public List<Player> getPlayers() {
 		return players;
 	}
@@ -78,7 +92,7 @@ public class Match extends Thread{
 	private void validateStartMatch() throws Exception {
 
 		if (getPlayers().size() < MIN_PLAYERS || getPlayers().size() > MAX_PLAYERS) {
-			throw new Exception("La cantidad de jugadores es insuficiente o excede el límite");
+			throw new Exception("La cantidad de jugadores es insuficiente o excede el lï¿½mite");
 		}
 
 	}
@@ -96,7 +110,7 @@ public class Match extends Thread{
 			player.setMatch(this);
 		startRound();
 		frame.getContentPane().removeAll();
-		frame.getContentPane().add(new MainMenu());
+		frame.getContentPane().add(new MainMenu(gameFrame));
 		frame.repaint();
 	}
 	
