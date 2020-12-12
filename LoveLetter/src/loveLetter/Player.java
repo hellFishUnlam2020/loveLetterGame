@@ -71,7 +71,8 @@ public class Player implements Comparable<Player> {
 
 	public void setStatus(Status status) {
 		this.status = status;
-		label.setProtected("Disabled", true);
+		label.setStatus("Disabled", true);
+		setTurn(false);
 	}
 
 	public List<Card> getCards() {
@@ -198,10 +199,10 @@ public class Player implements Comparable<Player> {
 	
 	public void setProteced(boolean val) {
 		isProtected = val;
-		label.setProtected("Protected", val);
+		label.setStatus("Protected", val);
 	}
 	
 	public void setAsWinner() {
-		label.setProtected("Winner", true);
+		label.setStatus("Winner", true);
 	}
 }

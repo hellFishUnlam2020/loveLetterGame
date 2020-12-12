@@ -1,5 +1,6 @@
 package jpanels;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -21,7 +22,7 @@ public class CardPickerPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = -646140357203059775L;
 	private Card[] cards;
-	private JLabel backLabel;
+	private JLabel background;
 	private CardElegible cardElegible;
 	
 	public void setCardElegible(CardElegible cardElegible) {
@@ -32,8 +33,10 @@ public class CardPickerPanel extends JPanel{
 		this.cards = new Deck().getCards();
 
 		setSize(GameConstants.screenSize);
+		setBackground(new Color(0,0,0,0));
 		setLayout(null);
 		setBorder(null);
+		
 		
 		addCards(0, cards.length / 2, 0);
 		addCards(cards.length / 2, cards.length, 1);
@@ -43,14 +46,15 @@ public class CardPickerPanel extends JPanel{
 
 	public void addBackground() {
 
-		backLabel = new JLabel();
-		backLabel.setIcon(new ScaledIcon("/images/cardPickerBack.png").getScaledIcon());
-		backLabel.setSize(backLabel.getIcon().getIconWidth(), backLabel.getIcon().getIconHeight());
-		add(backLabel);
+		background = new JLabel();
+		background.setIcon(new ScaledIcon("/images/cardPickerFrame.png").getScaledIcon());
+		background.setSize(background.getIcon().getIconWidth(), background.getIcon().getIconHeight());
+		background.setLocation((GameConstants.width - background.getIcon().getIconWidth())/2, (GameConstants.height - background.getIcon().getIconHeight())/2);
+		add(background);
 	}
 
 	public void addCancel() {
-		JButton cancelButton = new CreateButton("/images/cardPickerCancel.png", (GameConstants.width -  183) / 2 , GameConstants.height - 181, "/images/cardPickerCancelClicked.png");
+		JButton cancelButton = new CreateButton("/images/cardPickerCancel.png", (1920 -  183) / 2 , 1080 - 181, "/images/cardPickerCancelClicked.png");
 		cancelButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -69,7 +73,7 @@ public class CardPickerPanel extends JPanel{
 			Card card = cards[i];
 			ImageIcon cardIcon = new ImageIcon(getClass().getResource(card.getCardImageName()));
 
-			JButton button = new CreateButton(card.getCardImageName(), (GameConstants.width - 840) / 2 +  + cardIcon.getIconWidth()*(i<4?i:i-4), (GameConstants.height - 590) / 2 + cardIcon.getIconHeight() * row + 1, null);
+			JButton button = new CreateButton(card.getCardImageName(), (1920 - 840) / 2 + cardIcon.getIconWidth()*(i<4?i:i-4), (1080 - 590) / 2 + cardIcon.getIconHeight() * row + 1, null);
 			button.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

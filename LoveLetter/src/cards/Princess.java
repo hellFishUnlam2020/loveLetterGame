@@ -33,15 +33,12 @@ public class Princess extends Card {
 	@Override
 	public void play(Player currentPlayer) {
 		
-		applyEffect(currentPlayer, null);
+		RuleAdmin admin = RuleAdmin.getRuleadmin();
+		admin.disablePlayerFromRound(currentPlayer);
 	}
 	
 	@Override
 	public void applyEffect(Player currentPlayer, Player targePlayer) {
-		
-		RuleAdmin admin = RuleAdmin.getRuleadmin();
-		//mostrar mediante UI que se jugo la carta princesa y el jugador fue deshabilitado de la ronda
-		admin.disablePlayerFromRound(currentPlayer);
 		
 	}
 	

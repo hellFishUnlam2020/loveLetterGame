@@ -15,7 +15,7 @@ public class BackgroundLabel extends JLabel {
 	public BackgroundLabel(int x, int y, String path) {
 		
 		setIcon(new ScaledIcon(path).getScaledIcon());
-		setBounds((int)Math.ceil(x * GameConstants.aspectRelX), (int)Math.ceil(y * GameConstants.aspectRelY), getIcon().getIconWidth(), getIcon().getIconHeight());
+		setBounds((int)Math.ceil(x*GameConstants.aspectRelX),(int)Math.floor(y*GameConstants.aspectRelY), getIcon().getIconWidth(), getIcon().getIconHeight());
 	
 	}
 	

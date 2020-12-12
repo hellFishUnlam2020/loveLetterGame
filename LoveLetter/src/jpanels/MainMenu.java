@@ -17,7 +17,7 @@ public class MainMenu extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = 8521929087087608231L;
-	
+	private JLabel background;
 	public MainMenu() {
 		
 		setSize(GameConstants.screenSize);
@@ -34,11 +34,11 @@ public class MainMenu extends JPanel{
 	
 	private void addBackground() {
 		
-		JLabel backgroundImage = new JLabel();
-		backgroundImage.setIcon(new ScaledIcon("/images/main.png").getScaledIcon());
-		backgroundImage.setSize(getSize());
+		background = new JLabel();
+		background.setIcon(new ScaledIcon("/images/main.png").getScaledIcon());
+		background.setSize(getSize());
 		
-		add(backgroundImage);
+		add(background);
 	}
 	
 	private void addShowCardsButton() {
@@ -50,6 +50,7 @@ public class MainMenu extends JPanel{
 				JFrame frame = (JFrame)getTopLevelAncestor();
 				frame.getContentPane().removeAll();
 				frame.getContentPane().add(new CardPickerPanel());
+				frame.getContentPane().add(background);
 				frame.repaint();
 			}
 		});

@@ -11,11 +11,11 @@ public interface GameConstants {
 
 	public static final Image logo = Toolkit.getDefaultToolkit().getImage(GameFrame.class.getResource("/images/logo.png"));
 	
-	public static final int width = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
-//	public static final int width = 1920;
+//	public static final int width = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getWidth();
+	public static final int width = 1366;
 	
-	public static final int height = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
-//	public static final int height = 1080;
+//	public static final int height = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDisplayMode().getHeight();
+	public static final int height = 768;
 	
 	public static final Dimension screenSize = new Dimension(width, height);
 	

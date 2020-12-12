@@ -1,6 +1,7 @@
 package jpanels;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import cards.Card;
 import interfaces.GameConstants;
 import loveLetter.Player;
+import viewCommunication.PlayerElegible;
 
 public class PlayerPanel extends JPanel {
 
@@ -22,15 +24,24 @@ public class PlayerPanel extends JPanel {
 	
 	private Card cardSelected;
 	private int nCardSelected;
-//	private Player player;
+	
+	private PlayerElegible playerElegible;
+	private Player player;
 	
 	private JButton card1;
 	private	JButton card2;
 	
+	private JButton name;
+	
 	private JLabel protectedLabel;
+	
+	public void setPlayerElegible(PlayerElegible playerElegible) {
+		this.playerElegible = playerElegible;
+	}
 	
 	public PlayerPanel(Player player, int nroPlayer, int tamTotal, int aff) {
 		
+		this.player = player;
 		setSize(GameConstants.screenSize);
 		setOpaque(false);
 		setLayout(null);
@@ -41,8 +52,11 @@ public class PlayerPanel extends JPanel {
 			playerLabel = new BackgroundLabel(361, 902, "/images/boardP" + nroPlayer + ".png" );
 			protectedLabel = new TextLabel(new Rectangle((playerLabel.getX()), 862, playerLabel.getWidth(), 40), Color.black, 35f);
 			
-			card1 = new CreateButton(playerLabel.getX() + playerLabel.getWidth() + 20, GameConstants.height - 295, 210, 295);
-			card2 = new CreateButton(playerLabel.getX() + playerLabel.getWidth() + 210/2, GameConstants.height - 295, 210, 295);
+			name = new CreateButton(361, 902 + 5, 350, 40);
+			
+			add(name);
+			card1 = new CreateButton(361 + 350 + 20, 1080 - 295, 210, 295);
+			card2 = new CreateButton(361 + 350 + 210, 1080 - 295, 210, 295);
 			
 			add(card1);
 			add(card2);
@@ -51,16 +65,16 @@ public class PlayerPanel extends JPanel {
 			add(playerLabel);
 			
 		} else {
-			playerLabel = new BackgroundLabel( ((GameConstants.width / tamTotal+350/3)*(nroPlayer-1))-350/2, 40, "/images/boardP" + nroPlayer + ".png");
-			protectedLabel = new TextLabel(new Rectangle(playerLabel.getX(), 208 ,playerLabel.getWidth(), 40), Color.black, 35f);
+			int x = 480*(nroPlayer-1) - 175;
+			playerLabel = new BackgroundLabel(x, 40, "/images/boardP" + nroPlayer + ".png");
+			protectedLabel = new TextLabel(new Rectangle(x, 208, 350, 40), Color.black, 35f);
 			
-			JLabel name = new TextLabel(new Rectangle((int) (playerLabel.getX()/GameConstants.aspectRelX), 135, playerLabel.getWidth(), 40), new Color(230,190,148), 25f);
-			name.setText(player.getName());
+			name = new CreateButton(x, 135, 350, 40);
 			
 			add(name);	
 			
-			card1 = new CreateButton(playerLabel.getX() - 20, playerLabel.getY() + playerLabel.getHeight(), 210, 295);
-			card2 = new CreateButton(playerLabel.getX() - 210/2, playerLabel.getY() + playerLabel.getHeight(), 210, 295);
+			card1 = new CreateButton(x - 210/2, 40 + 168, 210, 295);
+			card2 = new CreateButton(x + 210/2, 40 + 168, 210, 295);
 			
 			add(card1);
 			add(card2);
@@ -68,7 +82,10 @@ public class PlayerPanel extends JPanel {
 			add(new AffectionPanel(playerLabel.getX(), (int)Math.floor(GameConstants.aspectRelY * 170), aff, playerLabel.getIcon().getIconWidth()/2, "/images/boardToken.png"));
 			add(playerLabel);
 		}
-		
+		name.setForeground(new Color(230,190,148));
+		name.setFont(new GameFont().getFont().deriveFont(25f));
+		name.setText(player.getName());
+		name.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		protectedLabel.setVisible(false);
 		
 		add(protectedLabel);	
@@ -100,6 +117,23 @@ public class PlayerPanel extends JPanel {
 		getTopLevelAncestor().repaint();
 	}
 	
+	public void setMouseListener() {
+		name.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				playerElegible.playerElected(player);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				name.setFont(name.getFont().deriveFont(30f));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				name.setFont(name.getFont().deriveFont(25f));
+			}
+		});
+	}
+	
 	public int getNCardSelected() {
 		return nCardSelected;
 	}
@@ -122,7 +156,7 @@ public class PlayerPanel extends JPanel {
 			card2.setIcon(null);
 	}
 	
-	public void setProtected(String text, boolean val) {
+	public void setStatus(String text, boolean val) {
 		protectedLabel.setText(text);
 		protectedLabel.setVisible(val);
 	}

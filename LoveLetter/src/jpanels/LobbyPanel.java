@@ -48,7 +48,7 @@ public class LobbyPanel extends JPanel {
 	private void addBackgroundLabel() {
 		backgroundLabel = new JLabel();
 		backgroundLabel.setIcon(new ScaledIcon("/images/lobby.png").getScaledIcon());
-		backgroundLabel.setSize(backgroundLabel.getIcon().getIconWidth(), backgroundLabel.getIcon().getIconHeight());
+		backgroundLabel.setSize(getSize());
 		add(backgroundLabel);
 	}
 
@@ -117,6 +117,7 @@ public class LobbyPanel extends JPanel {
 		int gap = 94;
 		JLabel backLabel = new JLabel();
 		backLabel.setIcon(new ScaledIcon("/images/lobbyP" + (nro + 1) + ".png").getScaledIcon());
+		
 		Dimension location = new ScaledBounds(759,412+gap*nro).getScaledDim();
 		backLabel.setLocation(location.width, location.height);
 		backLabel.setSize(backLabel.getIcon().getIconWidth(),backLabel.getIcon().getIconHeight());
