@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import cards.Card;
+import jpanels.PlayerPanel;
 import cards.CardType;
-import jpanels.PlayerLabel;
 
 public class Player implements Comparable<Player> {
 
@@ -15,7 +15,8 @@ public class Player implements Comparable<Player> {
 	private List<Card> cards = new LinkedList<Card>();
 	private int cantRoundPlayedCards;
 	private Match match;
-	private PlayerLabel label;
+	private PlayerPanel label;
+	
 	private boolean isTurn = false;
 	private boolean isProtected = false;
 	
@@ -70,10 +71,11 @@ public class Player implements Comparable<Player> {
 
 	public void setStatus(Status status) {
 		this.status = status;
+		
 		if(status == Status.DISABLE)
-			label.setProtected("Disable", true);
+			label.setStatus("Disable", true);
 		if(status == Status.PROTECTED)
-			label.setProtected("Protected", true);
+			label.setStatus("Protected", true);
 	}
 
 	public List<Card> getCards() {
@@ -213,11 +215,11 @@ public class Player implements Comparable<Player> {
 		cards.remove(n);
 	}
 
-	public PlayerLabel getLabel() {
+	public PlayerPanel getLabel() {
 		return label;
 	}
 
-	public void setLabel(PlayerLabel label) {
+	public void setLabel(PlayerPanel label) {
 		this.label = label;
 	}
 	
@@ -227,10 +229,10 @@ public class Player implements Comparable<Player> {
 	
 	public void setProteced(boolean val) {
 		isProtected = val;
-		label.setProtected("Protected", val);
+		label.setStatus("Protected", val);
 	}
 	
 	public void setAsWinner() {
-		label.setProtected("Winner", true);
+		label.setStatus("Winner", true);
 	}
 }

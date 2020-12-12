@@ -1,14 +1,10 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.Point;
-import java.awt.Toolkit;
+import java.awt.Rectangle;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
@@ -20,210 +16,256 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
+import interfaces.GameConstants;
+import jpanels.BackgroundLabel;
+import jpanels.CreateButton;
+import jpanels.GameFont;
+import jpanels.ScaledBounds;
+import jpanels.ScaledIcon;
+import jpanels.TextLabel;
 import loveLetter.Player;
-import viewCommunication.UserLoggable;
 
-public class LoginFrame extends JFrame implements UserLoggable{
+public class LoginFrame extends JFrame{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2468719791156400022L;
-	private JPanel panel;
+	private Dimension componentSize;
+	private int xComponentAlligment;
+
 	private JTextField userField;
 	private JPasswordField passField;
+
 	private JButton enterButton;
-	private JLabel loginErrorLabel;
-	private Dimension size;
-	private Dimension screen;
 	private JLabel backgroundLabel;
-	private ImageIcon back;
-	
-	private Player player;
+	private Font font = new GameFont().getFont().deriveFont(35f);
+
+	private JLabel errorBack;
+	private TextLabel errorText1;
+	private TextLabel errorText2;
+
+	private JLabel userBack;
+	private JLabel passBack;
+
 	/**
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-		screen = new Dimension(gd.getDisplayMode().getWidth(), gd.getDisplayMode().getHeight());
-
-		back = new ImageIcon(LoginFrame.class.getResource("/Images/login.jpg"));
-		size = new Dimension(200,50);
 		
-		setSize(screen);
+		ImageIcon icon = new ImageIcon(getClass().getResource("/images/login.jpg"));
+		
+		setTitle("Login");
+		setIconImage(GameConstants.logo);
 		setResizable(false);
 		setUndecorated(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("Login");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(LoginFrame.class.getResource("/images/logo.png")));
-		setBackground(new Color(0,0,0,90));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		getContentPane().setLayout(null);
 		
-		panel = new JPanel();
-		
-		panel.setLayout(null);
-		panel.setBorder(null);
-		panel.setBackground(getBackground());
-		panel.setSize(screen);
-		
-		getContentPane().add(panel);
-		
 		addBackground();
+		setSize(icon.getIconWidth(), icon.getIconHeight());
+
+		componentSize = new Dimension(200, 50);
+		xComponentAlligment = (getWidth() - componentSize.width) /2;
+				
 		addUserField();
 		addPassField();
 		addEnterButton();
 		addLoginError();
 		
-		panel.add(backgroundLabel);
+		addUserTiny();
+		addPassTiny();
+
+		getContentPane().setComponentZOrder(backgroundLabel, getContentPane().getComponentCount() - 1);
+		addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					dispose();
+				}
+			}
+		});
+		
+		setSize(backgroundLabel.getWidth(), backgroundLabel.getHeight());
+		setLocationRelativeTo(null);
 		setVisible(true);
-		enterButton.requestFocus();
+		requestFocus();
+		
 	}
-	
-	//---------------------------------------------------------------
-	//Screen config
-	
+
+	// ---------------------------------------------------------------
+	// Screen config
+	// BackgroundLabel
+
+	public void addBackground() {
+		backgroundLabel = new BackgroundLabel(new ScaledIcon("/Images/login.jpg").getScaledIcon());
+		getContentPane().add(backgroundLabel);
+	}
+
 	// UserField
-	
+
 	public void addUserField() {
+
 		userField = new JTextField();
-		userField.setForeground(Color.white);
-		userField.setText("Username");
 		userField.setOpaque(false);
-		userField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255,255,255)));
-		userField.setBounds(screen.width/2-size.width/2, backgroundLabel.getY()+15, size.width, size.height);
+		userField.setForeground(Color.white);
+		userField.setFont(font.deriveFont(20f));
+		userField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255, 255, 255)));
+		userField.setBounds(new ScaledBounds(xComponentAlligment, 15 , componentSize.width, componentSize.height).getScaledRect());
 		userField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER)
-					isValidUserName();
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					validUserName();
 			}
 		});
 		userField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (userField.getText().isEmpty()) {
-					userField.setText("Username");
+					userBack.setFont(userBack.getFont().deriveFont(20f));
+					userBack.setSize(componentSize.width, componentSize.height);
 				}
 			}
+
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (userField.getText().equals("Username"))
-					userField.setText("");
+				userBack.setFont(userBack.getFont().deriveFont(13f));
+				userBack.setSize(componentSize.width / 3, componentSize.height / 4);
+				errorBack.setVisible(false);
+				errorText1.setText("");
+				errorText2.setText("");
 			}
 		});
-		panel.add(userField);
-		
+		getContentPane().add(userField);
+
 	}
-	
+
+	public void addUserTiny() {
+		userBack = new TextLabel(new Rectangle(xComponentAlligment, 15, componentSize.width, componentSize.height),
+				Color.white, 20f);
+		userBack.setText("Username");
+		userBack.setHorizontalAlignment(SwingConstants.LEFT);
+		getContentPane().add(userBack);
+	}
+
 	// PassField
-	
+
 	public void addPassField() {
 		passField = new JPasswordField();
+		passField.setFont(font.deriveFont(20f));
 		passField.setForeground(Color.white);
-		passField.setText("contraseña");
 		passField.setOpaque(false);
-		passField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255,255,255)));
-		passField.setBounds(userField.getX(), userField.getY()+size.height+10, size.width, size.height);
+		passField.setBorder(new MatteBorder(0, 0, 1, 0, new Color(255, 255, 255)));
+		passField.setBounds(new ScaledBounds(xComponentAlligment, componentSize.height+15, componentSize.width, componentSize.height).getScaledRect());
 		passField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				if(e.getKeyCode() == KeyEvent.VK_ENTER)
-					isValidUserName();
+				if (e.getKeyCode() == KeyEvent.VK_ENTER)
+					validUserName();
 			}
 		});
 		passField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (String.valueOf(passField.getPassword()).isEmpty()) {
-					passField.setText("contraseña");
+				if (passField.getPassword().length == 0) {
+					passBack.setFont(passBack.getFont().deriveFont(20f));
+					passBack.setSize(componentSize.width, componentSize.height);
 				}
 			}
+
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (String.valueOf(passField.getPassword()).equals("contraseña"))
-					passField.setText("");
+				passBack.setFont(passBack.getFont().deriveFont(13f));
+				passBack.setSize(componentSize.width / 3, componentSize.height / 4);
+				errorBack.setVisible(false);
+				errorText1.setText("");
+				errorText2.setText("");
 			}
 		});
-		
-		panel.add(passField);
+		getContentPane().add(passField);
 	}
-	
+
+	public void addPassTiny() {
+
+		passBack = new TextLabel(new Rectangle(xComponentAlligment, componentSize.height +15, componentSize.width, componentSize.height),
+				Color.white, 20f);
+		passBack.setText("Password");
+		passBack.setHorizontalAlignment(SwingConstants.LEFT);
+		getContentPane().add(passBack);
+	}
+
 	// EnterButton
-	
+
 	public void addEnterButton() {
-		enterButton = new JButton("Ingresar");
-		enterButton.setOpaque(false);
-		enterButton.setContentAreaFilled(false);
-		enterButton.setBorder(null);
-		enterButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		enterButton.setBounds(passField.getX(), passField.getY()+size.height+25, size.width, size.height);
-		enterButton.setFont(new Font("Vivaldi", Font.BOLD | Font.ITALIC, 35));
-		enterButton.setForeground(Color.white);
-		enterButton.requestFocusInWindow();
+		enterButton = new CreateButton(xComponentAlligment, componentSize.height*2 + 40, componentSize.width, componentSize.height);
+		enterButton.setText("Ingresar");
+		enterButton.setFont(font);
+		enterButton.setForeground(new Color(238, 222, 155));
+		enterButton.setFocusPainted(false);
 		enterButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				isValidUserName();
+				validUserName();
 			}
 		});
-		panel.add(enterButton);
-	}
-	
-	// LoginErrorLabel
-	
-	public void addLoginError() {
-		loginErrorLabel = new JLabel();
-		loginErrorLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		loginErrorLabel.setVisible(false);
-		loginErrorLabel.setFont(new Font("Vivaldi", Font.BOLD | Font.ITALIC, 30));
-		loginErrorLabel.setForeground(Color.white);
-		loginErrorLabel.setBounds(enterButton.getX()-size.width/2, backgroundLabel.getHeight()+backgroundLabel.getY(), size.width*2, size.height);
-		loginErrorLabel.addFocusListener(new FocusAdapter() {
+		enterButton.addMouseListener(new MouseAdapter() {
 			@Override
-			public void focusLost(FocusEvent e) {
-				loginErrorLabel.setVisible(false);
+			public void mouseEntered(MouseEvent e) {
+				enterButton.setFont(enterButton.getFont().deriveFont(40f));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				enterButton.setFont(enterButton.getFont().deriveFont(35f));
 			}
 		});
-		panel.add(loginErrorLabel);
+		getContentPane().add(enterButton);
 	}
-	
-	// BackgroundLabel
-	
-	public void addBackground() {
-		backgroundLabel = new JLabel();
-		
-		backgroundLabel.setIcon(back);
-		backgroundLabel.setBackground(getBackground());
-		backgroundLabel.setSize(back.getIconWidth(), back.getIconHeight());
-		backgroundLabel.setLocation(new Point((screen.width-back.getIconWidth())/2, (screen.height-back.getIconHeight())/2));
+
+	// LoginErrorLabel
+
+	public void addLoginError() {
+		errorBack = new JLabel();
+		errorBack.setIcon(new ScaledIcon("/images/loginAlert.png").getScaledIcon());
+		errorBack.setBounds(new ScaledBounds(getWidth() - errorBack.getIcon().getIconWidth(), 0, errorBack.getIcon().getIconWidth(), errorBack.getIcon().getIconHeight()).getScaledRect());
+		errorBack.setVisible(false);
+
+		errorText1 = new TextLabel(
+				new Rectangle(getWidth()-errorBack.getWidth(), userField.getY(), 200, 30),
+				Color.white, 22f);
+		errorText2 = new TextLabel(
+				new Rectangle(getWidth()-errorBack.getWidth()-10, errorText1.getY() + errorText1.getHeight(), 200, 30), Color.white,
+				22f);
+
+		getContentPane().add(errorText1);
+		getContentPane().add(errorText2);
+		getContentPane().add(errorBack);
 	}
-	
-	//---------------------------------------------------------------
+
+	// ---------------------------------------------------------------
 	// Event methods
-	
-	private boolean isValidUserName() {
-		boolean validName = true;
-		
-		if(userField.getText().isEmpty()||userField.getText().equals("Username")) {
-			loginErrorLabel.setText("Nombre de Usuario Incorrecto");
-			loginErrorLabel.setVisible(true);
-			validName = false;
-		}
-		else {
+
+	private void validUserName() {
+
+		if (userField.getText().isEmpty() || userField.getText().equals("Username")) {
+			errorBack.setVisible(true);
+			errorText1.setText("Invalid");
+			errorText2.setText("Username");
+		} else {
 			userLogged(userField.getText());
 			dispose();
 		}
-		return validName;
 	}
-	
-	//---------------------------------------------------------------
-	//Main
+
+	// ---------------------------------------------------------------
+	// Main
 
 	/**
 	 * Launch the application.
@@ -232,8 +274,7 @@ public class LoginFrame extends JFrame implements UserLoggable{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginFrame window = new LoginFrame();
-					window.setVisible(true);
+					new LoginFrame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -241,10 +282,7 @@ public class LoginFrame extends JFrame implements UserLoggable{
 		});
 	}
 
-	@Override
 	public void userLogged(String name) {
-		player = new Player(name);
-		new GameScreen(player).setVisible(true);
+		new GameFrame(new Player(name)).setVisible(true);
 	}
 }
-

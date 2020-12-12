@@ -1,8 +1,8 @@
  package loveLetter;
 
-import java.awt.event.WindowEvent;
 import java.util.List;
 
+import jpanels.MainMenu;
 import view.MatchFrame;
 
 public class Match extends Thread{
@@ -95,7 +95,9 @@ public class Match extends Thread{
 		for (Player player : players)
 			player.setMatch(this);
 		startRound();
-		frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(new MainMenu());
+		frame.repaint();
 	}
 	
 }

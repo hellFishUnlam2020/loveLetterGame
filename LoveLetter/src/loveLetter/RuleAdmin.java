@@ -1,9 +1,11 @@
 package loveLetter;
 
+import javax.swing.JFrame;
+
 import cards.Card;
 import cards.CardType;
-import view.CardPickerFrame;
-import view.PlayerPickerFrame;
+import jpanels.CardPickerPanel;
+import view.MatchFrame;
 import viewCommunication.CardElegible;
 import viewCommunication.PlayerElegible;
 
@@ -47,8 +49,13 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 
 	public Player choosePlayer(Player player, boolean val) {
 		
-		PlayerPickerFrame cpf = new PlayerPickerFrame(player.getMatch().getPlayers(), player, val);
-		cpf.setPlayerElegible(this);
+		((MatchFrame)player.getLabel().getTopLevelAncestor()).setPickPlayer(true);
+		for(Player playerRound : player.getMatch().getPlayers()) {
+			if(player!=playerRound) {
+				playerRound.getLabel().setMouseListener();
+				playerRound.getLabel().setPlayerElegible(this);
+			}
+		}
 		
 		while(playerElected == null) {
 			try {
@@ -57,6 +64,7 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 				e.printStackTrace();
 			}
 		}
+		((MatchFrame)player.getLabel().getTopLevelAncestor()).setPickPlayer(false);
 		return playerElected;
 	}
 
@@ -76,8 +84,13 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 		 * return cardName;
 		 */
 
-		CardPickerFrame cfp = new CardPickerFrame(new Deck().getCards());
-		cfp.setCardEligile(this);
+		JFrame frame = (JFrame) currentPlayer.getLabel().getTopLevelAncestor();
+		CardPickerPanel cfp = new CardPickerPanel();
+		cfp.setCardElegible(this);
+		
+		frame.getContentPane().add(cfp);
+		frame.getContentPane().setComponentZOrder(cfp, 0);
+		frame.getContentPane().repaint();
 		
 		while(cardEleceted == null) {
 			try {
@@ -86,7 +99,8 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 				e.printStackTrace();
 			}
 		}
-		
+		frame.getContentPane().remove(cfp);
+		frame.repaint();
 		return cardEleceted;
 	}
 
@@ -183,7 +197,5 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 	@Override
 	public void cardElected(Card card) {
 		this.cardEleceted = card;
-		
 	}
-
 }

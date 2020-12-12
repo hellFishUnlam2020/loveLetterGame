@@ -50,7 +50,7 @@ public class PlayerPickerFrame extends JFrame{
 		aspectRelY = (double)screenDim.height/1080;
 		
 		setTitle("Love Letter");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(GameScreen.class.getResource("/images/logo.png")));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(GameFrame.class.getResource("/images/logo.png")));
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

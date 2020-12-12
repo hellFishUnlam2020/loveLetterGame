@@ -54,10 +54,12 @@ public class Baron extends Card {
 			else
 				n = 1;
 			
-			if (currentPlayer.getCards().get(n).getLevel() > targetPlayer.getCards().get(0).getLevel())
-				admin.disablePlayerFromRound(targetPlayer);
-			else
-				admin.disablePlayerFromRound(currentPlayer);
+			for(Card card : targetPlayer.getCards()) {
+				if (currentPlayer.getCards().get(n).getLevel() > card.getLevel())
+					admin.disablePlayerFromRound(targetPlayer);
+				else
+					admin.disablePlayerFromRound(currentPlayer);
+			}
 		}
 
 	}

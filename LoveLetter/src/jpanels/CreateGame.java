@@ -1,19 +1,17 @@
 package jpanels;
 
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Image;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import loveLetter.Player;
+import interfaces.GameConstants;
+import view.GameFrame;
 
 public class CreateGame extends JPanel{
 
@@ -21,67 +19,38 @@ public class CreateGame extends JPanel{
 	 * 
 	 */
 	private static final long serialVersionUID = -3492739264759917878L;
-	private double aspectRelX;
-	private double aspectRelY;
-	private Dimension screenDim;
-	private JFrame gameFrame;
-	private JLabel backgroundLabel;
-	private Player player;
 	private LobbyPanel lobby;
 	
-	public CreateGame(JFrame gameFrame, Player player){
-		
-		this.gameFrame = gameFrame;
-		this.player = player;
-		
-		screenDim = gameFrame.getSize();
-		
-		aspectRelX = (double)screenDim.width/1920;
-		aspectRelY = (double)screenDim.height/1080;
-	
-		
-		setSize(screenDim);
+	public CreateGame(){
+
+		setSize(GameConstants.screenSize);
 		setLayout(null);
 		setBorder(null);
 		
-		addBackgroundLabel();
+		addCreated();
 		addBackButton();
 		addCreateButton();
 		addJoinButton();
-		
-		add(backgroundLabel);
-		
-		setVisible(true);
-		gameFrame.repaint();
+		addBackgroundLabel();
 	}
 	
 	private void addBackgroundLabel() {
 		
-		ImageIcon back = new ImageIcon(GameSelection.class.getResource("/images/create.png"));
-		Image scaledBack = back.getImage().getScaledInstance((int)Math.ceil(aspectRelX*back.getIconWidth()), (int)Math.ceil(aspectRelY*back.getIconHeight()), Image.SCALE_SMOOTH);
-		
-		backgroundLabel = new JLabel();
-		backgroundLabel.setIcon(new ImageIcon(scaledBack));
-		backgroundLabel.setSize(backgroundLabel.getIcon().getIconWidth(), backgroundLabel.getIcon().getIconHeight());
+		JLabel backgroundLabel = new JLabel();
+		backgroundLabel.setIcon(new ScaledIcon("/images/create.png").getScaledIcon());
+		backgroundLabel.setSize(getSize());
+		add(backgroundLabel);
 	}
 	
 	private void addBackButton() {
-		ImageIcon backIcon = new ImageIcon(GameSelection.class.getResource("/images/createBack.png"));
-		Image scaledBackIcon = backIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*backIcon.getIconWidth()), (int)Math.ceil(aspectRelY*backIcon.getIconHeight()), Image.SCALE_SMOOTH);
-				
-		JButton backButton = new JButton();
-		createButton(backButton);
-		backButton.setIcon(new ImageIcon(scaledBackIcon));
-		backButton.setBounds((int)Math.ceil(606*aspectRelX), (int)Math.ceil(262*aspectRelY), backButton.getIcon().getIconWidth(), backButton.getIcon().getIconHeight());
-		backButton.setToolTipText("Back");
+		JButton backButton = new CreateButton("/images/createBack.png", 606, 262, null);
 		backButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				for (Component comp : gameFrame.getContentPane().getComponents()) {
-					gameFrame.remove(comp);
-				}
-				
-				gameFrame.getContentPane().add(new GameSelection(gameFrame, player));
+				JFrame frame = (JFrame)getTopLevelAncestor();
+				frame.getContentPane().removeAll();
+				frame.getContentPane().add(new GameSelection());
+				frame.repaint();
 			}
 		});
 		add(backButton);
@@ -89,20 +58,11 @@ public class CreateGame extends JPanel{
 	}
 	
 	private void addCreateButton() {
-		
-		ImageIcon createIcon = new ImageIcon(GameSelection.class.getResource("/images/createGame.png"));
-		Image scaledBackIcon = createIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*createIcon.getIconWidth()), (int)Math.ceil(aspectRelY*createIcon.getIconHeight()), Image.SCALE_SMOOTH);
-				
-		JButton createButton = new JButton();
-		createButton(createButton);
-		createButton.setIcon(new ImageIcon(scaledBackIcon));
-		createButton.setBounds((int)Math.ceil(798*aspectRelX), (int)Math.ceil(497*aspectRelY), createButton.getIcon().getIconWidth(), createButton.getIcon().getIconHeight());
-		createButton.setToolTipText("Create");
+		JButton createButton = new CreateButton("/images/createGame.png", 794, 493, "/images/createGameOver.png");
 		createButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				lobby = new LobbyPanel(gameFrame);
-				joinLobby();
+				createLobby();
 			}
 		});
 		add(createButton);
@@ -110,15 +70,7 @@ public class CreateGame extends JPanel{
 	}
 	
 	private void addJoinButton() {
-		
-		ImageIcon joinIcon = new ImageIcon(GameSelection.class.getResource("/images/joinGame.png"));
-		Image scaledBackIcon = joinIcon.getImage().getScaledInstance((int)Math.ceil(aspectRelX*joinIcon.getIconWidth()), (int)Math.ceil(aspectRelY*joinIcon.getIconHeight()), Image.SCALE_SMOOTH);
-				
-		JButton joinButton = new JButton();
-		createButton(joinButton);
-		joinButton.setIcon(new ImageIcon(scaledBackIcon));
-		joinButton.setBounds((int)Math.ceil(798*aspectRelX), (int)Math.ceil(595*aspectRelY), joinButton.getIcon().getIconWidth(), joinButton.getIcon().getIconHeight());
-		joinButton.setToolTipText("Join");
+		JButton joinButton = new CreateButton("/images/joinGame.png", 794, 591, "/images/joinGameOver.png");
 		joinButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -129,22 +81,44 @@ public class CreateGame extends JPanel{
 		
 	}
 	
-	private void createButton(JButton button) {
-		button.setContentAreaFilled(false);
-		button.setBorderPainted(false);
-		button.setIgnoreRepaint(true);
-		button.setOpaque(false);
-		button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		button.setBorder(null);
+	private void addCreated() {
+		
+		JLabel label = new JLabel();
+		label.setIcon(new ScaledIcon("/images/lobbyCreated.png").getScaledIcon());
+		label.setBounds(0, (int)Math.ceil(115 * GameConstants.aspectRelY), label.getIcon().getIconWidth(), label.getIcon().getIconHeight());
+		label.setVisible(false);
+		add(new TextLabel(new Rectangle(75, 120, 127, 30), Color.yellow, 24));
+		add(new TextLabel(new Rectangle(25, 150, 200, 30), Color.white, 20));
+		add(label);
 	}
 	
 	public void joinLobby() {
-		for (Component comp : gameFrame.getContentPane().getComponents()) {
-			gameFrame.remove(comp);
-		}
 		
-		lobby.addPlayer(player);
-		gameFrame.getContentPane().add(lobby);
+		if(lobby == null) {
+			((JLabel)getComponent(0)).setText("Lobby");
+			((JLabel)getComponent(1)).setText("Create Game First");
+			getComponent(2).setVisible(true);
+		} else {
+			GameFrame frame = (GameFrame)getTopLevelAncestor();
+			frame.getContentPane().removeAll();
+			frame.getContentPane().add(lobby);
+			frame.repaint();
+			
+			lobby.addPlayer(frame.getPlayer());
+		}
 	}
 	
+	public void createLobby() {
+		if(lobby == null) {
+			lobby = new LobbyPanel();
+			((JLabel)getComponent(0)).setText("Lobby");
+			((JLabel)getComponent(1)).setText("Game created");
+			getComponent(2).setVisible(true);
+		}
+		else {
+			((JLabel)getComponent(0)).setText("Lobby");
+			((JLabel)getComponent(1)).setText("Another Game Is Run");
+			getComponent(2).setVisible(true);
+		}
+	}
 }
