@@ -53,7 +53,7 @@ public class LobbyPanel extends JPanel {
 	}
 
 	private void addInvalidStart() {
-		invalidButton = new CreateButton("/images/lobbyinvalid.png", 860, 820, null);
+		invalidButton = new CreateButton("/images/lobbyInvalid.png", 860, 820, null);
 		add(invalidButton);
 	}
 

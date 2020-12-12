@@ -57,7 +57,6 @@ public class LoginFrame extends JFrame{
 	 * Create the frame.
 	 */
 	public LoginFrame() {
-		
 		ImageIcon icon = new ImageIcon(getClass().getResource("/images/login.jpg"));
 		
 		setTitle("Login");
@@ -104,7 +103,7 @@ public class LoginFrame extends JFrame{
 	// BackgroundLabel
 
 	public void addBackground() {
-		backgroundLabel = new BackgroundLabel(new ScaledIcon("/Images/login.jpg").getScaledIcon());
+		backgroundLabel = new BackgroundLabel(new ScaledIcon("/images/login.jpg").getScaledIcon());
 		getContentPane().add(backgroundLabel);
 	}
 
