@@ -115,6 +115,16 @@ public class Player implements Comparable<Player> {
 		Card card;
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
 
+		//primero debemos chequear si estaba protected, si es asi le quitamos la proteccion
+		
+		if( this.isProtected()) {
+			this.setProteced(false);
+			this.setProtected(false);
+			this.setStatus(Status.AVAILABLE);
+			
+		}
+		
+		
 		// se chequea si se posee Condesa+Rey o Condesa+Principe
 		if (admin.playerHasCountessCard(this) && admin.playerHasToPlayCountessCard(this)) {
 			card = getCardOfType(CardType.countess);
@@ -211,6 +221,10 @@ public class Player implements Comparable<Player> {
 		}
 	}
 	
+	public void setProtected(boolean isProtected) {
+		this.isProtected = isProtected;
+	}
+
 	public void removeCard(int n) {
 		cards.remove(n);
 	}
@@ -234,5 +248,10 @@ public class Player implements Comparable<Player> {
 	
 	public void setAsWinner() {
 		label.setStatus("Winner", true);
+	}
+	
+	public boolean isDisabled() {
+		
+		return this.getStatus().equals(Status.DISABLE);
 	}
 }

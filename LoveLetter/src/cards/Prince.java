@@ -43,7 +43,9 @@ public class Prince extends Card {
 
 		admin.resetElected();
 
-		applyEffect(currentPlayer, targetPlayer);
+		if (!targetPlayer.isProtected()) {
+			applyEffect(currentPlayer, targetPlayer);
+		}
 
 	}
 
@@ -52,9 +54,8 @@ public class Prince extends Card {
 
 		RuleAdmin admin = RuleAdmin.getRuleadmin();
 		
-		if (!targetPlayer.isProtected()) {
-			admin.discardCardsFromPlayer(targetPlayer);
-			admin.dealCardForPlayer(targetPlayer);
-		}
+		admin.discardCardsFromPlayer(targetPlayer);
+		admin.dealCardForPlayer(targetPlayer);
+		
 	}
 }

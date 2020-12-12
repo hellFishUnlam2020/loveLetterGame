@@ -37,7 +37,9 @@ public class Guard extends Card {
 
 		admin.resetElected();
 
-		applyEffect(currentPlayer, targetPlayer);
+		if (!targetPlayer.isProtected()) {
+			applyEffect(currentPlayer, targetPlayer);
+		}
 	}
 
 	@Override
@@ -49,13 +51,12 @@ public class Guard extends Card {
 
 		admin.resetCardElected();
 
-		if (!targetPlayer.isProtected()) {
 			for (Card card : targetPlayer.getCards()) { // verificamos si adivino la carta
 				if (card.getType() == cardChoosed.getType())
 					admin.disablePlayerFromRound(targetPlayer); // se deshabilita el player en la ronda
 			}
 		}
-	}
+	
 
 	@Override
 	public String getCardImageName() {

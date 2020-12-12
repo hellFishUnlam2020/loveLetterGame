@@ -92,6 +92,22 @@ public class PlayerPanel extends JPanel {
 
 	}
 	
+	public JButton getCard1() {
+		return card1;
+	}
+
+	public void setCard1(JButton card1) {
+		this.card1 = card1;
+	}
+
+	public JButton getCard2() {
+		return card2;
+	}
+
+	public void setCard2(JButton card2) {
+		this.card2 = card2;
+	}
+
 	public void setCard(Card card) {
 				
 		if(card1.getIcon() == null) {

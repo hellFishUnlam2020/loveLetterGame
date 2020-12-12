@@ -49,6 +49,8 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 
 	public Player choosePlayer(Player player, boolean val) {
 		
+		boolean ciclar = true;
+		
 		((MatchFrame)player.getLabel().getTopLevelAncestor()).setPickPlayer(true);
 		for(Player playerRound : player.getMatch().getPlayers()) {
 			if(player!=playerRound) {
@@ -57,7 +59,15 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 			}
 		}
 		
-		while(playerElected == null) {
+		//while(playerElected == null || playerElected.isDisabled()) {
+		while(ciclar) {
+			
+			if(playerElected != null && !playerElected.isDisabled())
+				ciclar = false;
+						
+				
+/*			if(playerElected.isDisabled())
+				System.out.println("El jugador se encuentra deshabilitado. Elegir otro jugador.");*/
 			try {
 				Thread.sleep(50);
 			} catch (InterruptedException e) {
@@ -106,8 +116,20 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 
 	public void swapCardsBetweenPlayers(Player currentPlayer, Player targetPlayer) {
 
-		Card cardCurrentPlayer = currentPlayer.getCards().get(0);
-		Card cardTargetPlayer = targetPlayer.getCards().get(0);
+		Card cardCurrentPlayer = null;// = currentPlayer.getCards().get(0);
+		Card cardTargetPlayer = null;//targetPlayer.getCards().get(0);
+		
+		for (Card card : currentPlayer.getCards()) {
+			
+			if(!card.getType().equals(CardType.king))
+				cardCurrentPlayer = card;
+		}
+		
+		for (Card card : targetPlayer.getCards()) {
+			cardTargetPlayer = card;
+		}
+		
+		
 
 		currentPlayer.getCards().remove(0);
 		targetPlayer.getCards().remove(0);
@@ -125,6 +147,7 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 
 	public void applySafeBlock(Player player) {
 		player.setStatus(Status.PROTECTED);
+		player.setProtected(true);
 	}
 
 	public void showPlayerCards(Player player) {
@@ -147,6 +170,17 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 
 		for (Card card : player.getCards()) {
 			player.discardCard(card);
+
+		}
+		player.getLabel().getCard1().setIcon(null);		
+		player.getLabel().getCard2().setIcon(null);
+		player.getLabel().repaint();
+		
+		try {
+			Thread.sleep(2*1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

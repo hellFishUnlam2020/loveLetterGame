@@ -48,8 +48,7 @@ public class RoundGame {
 				if (players.get(i).getStatus().equals(Status.AVAILABLE)) {
 					for (int j = 0; j < players.size(); j++) {
 						if (i != j && players.get(j).getStatus().equals(Status.AVAILABLE)) {
-							winnerPlayer = players.get(i).compareTo(players.get(j)) == 1 ? players.get(i)
-									: players.get(j);
+							winnerPlayer = players.get(i).compareTo(players.get(j)) == 1 ? players.get(i): players.get(j);
 						}
 					}
 				}
@@ -85,14 +84,21 @@ public class RoundGame {
 		players.get(index).setTurn(true);
 		
 		// TODO: El jugador debe elegir la carta. Fake
+		
+		try {
+			Thread.sleep(2*1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		players.get(index).addCard(deck.popCard());
 		players.get(index).playCard();
 
-		for(int i = 0; i < players.size(); i++) {
+	/*	for(int i = 0; i < players.size(); i++) {
 			if(i != index && players.get(i).getStatus()!= Status.DISABLE) {
 				players.get(i).setProteced(false);
 			}
-		}
+		}*/
 		
 		for(int i = 0; i<players.size(); i++) {
 			if(players.get(i).getStatus() == Status.DISABLE) {
