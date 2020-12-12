@@ -13,8 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import cliente.ConexionServidor;
 import interfaces.GameConstants;
 import loveLetter.Player;
+import view.GameFrame;
 import view.MatchFrame;
 
 public class LobbyPanel extends JPanel {
@@ -28,8 +30,9 @@ public class LobbyPanel extends JPanel {
 	private JButton validButton;
 	private JLabel backgroundLabel;
 	private List<Player> players;
+	private ConexionServidor conexion;
 
-	public LobbyPanel() {
+	public LobbyPanel(GameFrame frame, ConexionServidor conexion) {
 
 		players = new ArrayList<Player>(3);
 
@@ -38,11 +41,13 @@ public class LobbyPanel extends JPanel {
 		setBorder(null);
 
 		addInvalidStart();
-		addValidStart();
+		addValidStart(frame);
 		addBackButton();
 		addConfigButton();
 		addButtonAddPlayer(1254, 530);
 		addBackgroundLabel();
+		
+		this.conexion = conexion;
 	}
 
 	private void addBackgroundLabel() {
@@ -53,16 +58,17 @@ public class LobbyPanel extends JPanel {
 	}
 
 	private void addInvalidStart() {
-		invalidButton = new CreateButton("/images/lobbyinvalid.png", 860, 820, null);
+		invalidButton = new CreateButton("/images/lobbyInvalid.png", 860, 820, null);
 		add(invalidButton);
 	}
 
-	private void addValidStart() {
+	private void addValidStart(GameFrame frame) {
 		validButton = new CreateButton("/images/lobbyValid.png", 860, 820, null);
 		validButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new MatchFrame(players, 5);
+				conexion.comenzarPartida();
+				new MatchFrame(players, 5, frame);
 				((JFrame) getTopLevelAncestor()).dispose();
 			}
 		});
@@ -143,18 +149,28 @@ public class LobbyPanel extends JPanel {
 			break;
 		case 3:
 			addPlayer(2);
+			validButton.setVisible(true);
+			invalidButton.setVisible(false);
 			break;
 		case 4:
 			addPlayer(3);
+			validButton.setVisible(true);
+			invalidButton.setVisible(false);
 			break;
 		}
 		setComponentZOrder(backgroundLabel, getComponentCount() - 1);
 		repaint();
 		((JFrame) getTopLevelAncestor()).repaint();
 	}
-
+	
 	public void addPlayer(Player player) {
 		players.add(player);
 		refresh();
 	}
+		               
+	public List<Player> getPlayers() {
+		return players;
+	}
+	
+	
 }

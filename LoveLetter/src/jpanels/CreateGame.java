@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -12,6 +14,11 @@ import javax.swing.JPanel;
 
 import interfaces.GameConstants;
 import view.GameFrame;
+import view.MatchFrame;
+import cliente.ConexionServidor;
+import comandos.Comando;
+import loveLetter.Player;
+import paquetes.Paquete;
 
 public class CreateGame extends JPanel{
 
@@ -20,6 +27,10 @@ public class CreateGame extends JPanel{
 	 */
 	private static final long serialVersionUID = -3492739264759917878L;
 	private LobbyPanel lobby;
+	
+	private ConexionServidor conexion;
+	
+	private GameFrame frame;
 	
 	public CreateGame(){
 
@@ -32,6 +43,40 @@ public class CreateGame extends JPanel{
 		addCreateButton();
 		addJoinButton();
 		addBackgroundLabel();
+		
+		String host = "localhost";
+		int puerto = 59002;
+		
+		try {
+			conexion = new ConexionServidor(host, puerto);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public CreateGame(GameFrame gameFrame){
+
+		setSize(GameConstants.screenSize);
+		setLayout(null);
+		setBorder(null);
+		
+		addCreated();
+		addBackButton();
+		addCreateButton();
+		addJoinButton();
+		addBackgroundLabel();
+		
+		String host = "localhost";
+		int puerto = 59002;
+		frame = gameFrame;
+		
+		try {
+			conexion = new ConexionServidor(host, puerto);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void addBackgroundLabel() {
@@ -47,14 +92,12 @@ public class CreateGame extends JPanel{
 		backButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JFrame frame = (JFrame)getTopLevelAncestor();
 				frame.getContentPane().removeAll();
-				frame.getContentPane().add(new GameSelection());
+				frame.getContentPane().add(new GameSelection(frame));
 				frame.repaint();
 			}
 		});
-		add(backButton);
-		
+		add(backButton);		
 	}
 	
 	private void addCreateButton() {
@@ -62,7 +105,12 @@ public class CreateGame extends JPanel{
 		createButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				createLobby();
+				try {
+					createLobby();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		add(createButton);
@@ -74,7 +122,7 @@ public class CreateGame extends JPanel{
 		joinButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				joinLobby();
+				joinLobby(frame);
 			}
 		});
 		add(joinButton);
@@ -92,33 +140,61 @@ public class CreateGame extends JPanel{
 		add(label);
 	}
 	
-	public void joinLobby() {
+	public void joinLobby(GameFrame frame) {
 		
 		if(lobby == null) {
 			((JLabel)getComponent(0)).setText("Lobby");
-			((JLabel)getComponent(1)).setText("Create Game First");
 			getComponent(2).setVisible(true);
-		} else {
-			GameFrame frame = (GameFrame)getTopLevelAncestor();
-			frame.getContentPane().removeAll();
-			frame.getContentPane().add(lobby);
-			frame.repaint();
-			
-			lobby.addPlayer(frame.getPlayer());
+			lobby = new LobbyPanel(frame, conexion);
+		}
+		
+
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(lobby);
+		frame.repaint();		
+		
+		lobby.addPlayer(frame.getPlayer());
+		
+		conexion.ingresarLobby(frame.getPlayer());
+	}
+	
+	public void recibirMensajeServidor() {
+		boolean conectado = true;
+		while (conectado) {
+			try {
+				Paquete paquete = conexion.leer();
+				if(paquete.getComando().equals(Comando.INGRESO_JUGADOR_LOBBY)) {
+					if(!frame.getPlayer().getName().equals(paquete.getNombreJugador())) {
+						lobby.addPlayer(new Player(paquete.getNombreJugador()));
+						frame.getContentPane().add(lobby);
+						frame.repaint();	
+					}					
+				} else if(paquete.getComando().equals(Comando.COMENZO_PARTIDA)) {
+					if(!frame.getPlayer().getName().equals(paquete.getNombreJugador())) {
+						new MatchFrame(lobby.getPlayers(), 5, frame);
+						frame.dispose();
+					}	
+				}
+			} catch (IOException e) {
+				conectado = false;
+				System.out.println("conexion leer exception");
+			}
 		}
 	}
 	
-	public void createLobby() {
-		if(lobby == null) {
-			lobby = new LobbyPanel();
-			((JLabel)getComponent(0)).setText("Lobby");
-			((JLabel)getComponent(1)).setText("Game created");
-			getComponent(2).setVisible(true);
-		}
-		else {
-			((JLabel)getComponent(0)).setText("Lobby");
-			((JLabel)getComponent(1)).setText("Another Game Is Run");
-			getComponent(2).setVisible(true);
-		}
+	public void createLobby() throws UnknownHostException, IOException {
+		((JLabel)getComponent(0)).setText("Lobby");
+		((JLabel)getComponent(1)).setText("Ingresa directamente");
+//		if(lobby == null) {
+//			lobby = new LobbyPanel();
+//			((JLabel)getComponent(0)).setText("Lobby");
+//			((JLabel)getComponent(1)).setText("Game created");
+//			getComponent(2).setVisible(true);
+//		}
+//		else {
+//			((JLabel)getComponent(0)).setText("Lobby");
+//			((JLabel)getComponent(1)).setText("Another Game Is Run");
+//			getComponent(2).setVisible(true);
+//		}
 	}
 }

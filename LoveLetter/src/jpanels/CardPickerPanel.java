@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import cards.Card;
 import interfaces.GameConstants;
 import loveLetter.Deck;
+import view.GameFrame;
 import viewCommunication.CardElegible;
 
 public class CardPickerPanel extends JPanel{
@@ -24,12 +25,13 @@ public class CardPickerPanel extends JPanel{
 	private Card[] cards;
 	private JLabel background;
 	private CardElegible cardElegible;
+	private GameFrame frame;
 	
 	public void setCardElegible(CardElegible cardElegible) {
 		this.cardElegible = cardElegible;
 	}
 
-	public CardPickerPanel() {
+	public CardPickerPanel(GameFrame frame) {
 		this.cards = new Deck().getCards();
 
 		setSize(GameConstants.screenSize);
@@ -42,6 +44,8 @@ public class CardPickerPanel extends JPanel{
 		addCards(cards.length / 2, cards.length, 1);
 		addCancel();
 		addBackground();
+		
+		this.frame = frame;
 	}
 
 	public void addBackground() {
@@ -58,9 +62,8 @@ public class CardPickerPanel extends JPanel{
 		cancelButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JFrame frame =  (JFrame)getTopLevelAncestor();
 				frame.getContentPane().removeAll();
-				frame.getContentPane().add(new MainMenu());
+				frame.getContentPane().add(new MainMenu(frame));
 				frame.repaint();
 			}
 		});

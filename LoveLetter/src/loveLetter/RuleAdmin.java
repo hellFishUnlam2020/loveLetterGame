@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import cards.Card;
 import cards.CardType;
 import jpanels.CardPickerPanel;
+import view.GameFrame;
 import view.MatchFrame;
 import viewCommunication.CardElegible;
 import viewCommunication.PlayerElegible;
@@ -16,6 +17,14 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 	private Board board;
 	private Player playerElected;
 	private Card cardEleceted;
+	private GameFrame frame;
+	
+	public RuleAdmin() {
+	}
+	
+	public RuleAdmin(GameFrame frame) {
+		this.frame = frame;
+	}
 	
 	public Board getBoard() {
 		return board;
@@ -85,7 +94,7 @@ public class RuleAdmin implements PlayerElegible, CardElegible{
 		 */
 
 		JFrame frame = (JFrame) currentPlayer.getLabel().getTopLevelAncestor();
-		CardPickerPanel cfp = new CardPickerPanel();
+		CardPickerPanel cfp = new CardPickerPanel(this.frame);
 		cfp.setCardElegible(this);
 		
 		frame.getContentPane().add(cfp);

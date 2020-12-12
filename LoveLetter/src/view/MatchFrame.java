@@ -26,7 +26,7 @@ public class MatchFrame extends JFrame {
 	private List<Player>players;
 	private TextLabel pickPlayer;
 	
-	public MatchFrame(List<Player>players, int aff) {
+	public MatchFrame(List<Player>players, int aff, GameFrame gameFrame) {
 		
 		this.aff = aff;
 		this.players = players;
@@ -64,7 +64,7 @@ public class MatchFrame extends JFrame {
 		
 		setVisible(true);
 		
-		Match match = new Match(players, 5, this);
+		Match match = new Match(players, 5, this, gameFrame);
 		match.setName("Match");
 		match.start();
 		
@@ -82,21 +82,21 @@ public class MatchFrame extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		ArrayList<Player>players = new ArrayList<Player>();
-		
-		players.add(new Player("Nahuel"));
-		players.add(new Player("Esteban"));
-		players.add(new Player("Gabriel"));
-		players.add(new Player("Mauro"));
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new MatchFrame(players, 5);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//		ArrayList<Player>players = new ArrayList<Player>();
+//		
+//		players.add(new Player("Nahuel"));
+//		players.add(new Player("Esteban"));
+//		players.add(new Player("Gabriel"));
+//		players.add(new Player("Mauro"));
+//		
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					new MatchFrame(players, 5);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 	}
 }
